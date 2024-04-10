@@ -3,7 +3,6 @@ package principal;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
-
 import database.DB;
 import filemanager.FileManager;
 import util.Util;
@@ -28,8 +27,6 @@ public class Principal {
 			do	{
 				
 				menu.executarMenu();
-				
-//				Menu.executarMenu();
 				
 				programaLigado = conferirProgramaLigado();
 			} while (programaLigado); 
