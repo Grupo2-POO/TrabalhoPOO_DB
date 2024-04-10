@@ -145,5 +145,13 @@ public final class Util {
 		}
 	}
 	
+	public static String formatarCPF(String cpf) {
+        return cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+    }
+	
+	public static String removerSimbolosCPF(String cpf) {
+        return cpf.replaceAll("[^0-9]", "");
+    }
+	
 	
 }
