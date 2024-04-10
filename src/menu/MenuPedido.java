@@ -30,13 +30,15 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	private void cadastraPedidos() {
+		
+		@SuppressWarnings("unused")
 		Cliente clienteNovo = new Cliente();
+		
+		Util.printMessage("Para efetuar um novo pedido, precisamos de um cliente ");
+		
 		MenuBuscarCliente buscarCliente = new MenuBuscarCliente(ConstantesMenu.menuBuscarCliente, scanner);
 		buscarCliente.executarMenu();
 		
-		
-		
-		System.out.println("1 - Incluir pedido novo");
-		
+				
 	}
 }
