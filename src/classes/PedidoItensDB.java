@@ -36,13 +36,12 @@ public class PedidoItensDB{
 				JOIN 
 				    public.produto pr ON pi.idproduto = pr.idproduto
 				JOIN
-				    public.pedido p ON pi.idpedido = p.idpedido
-				JOIN
-				    public.cliente c ON p.idcliente = c.idcliente;
+				    public.cliente c ON pi.idcliente = c.idcliente;
 				""";
 		
 		try(var conn = DB.connect()){
 			Statement statement = conn.createStatement();
+			
 			var response = statement.executeQuery(sql);
 			
 			int qtd = 0;
@@ -66,24 +65,15 @@ public class PedidoItensDB{
 						response.getString("telefone")
 						
 						);
-				
-				Pedido pedido = new Pedido(
-						response.getInt("idpedido"),
-						cliente,
-						response.getDate("dtemissao"),
-						response.getDate("dtentrega"),
-						response.getString("observacao")
-						);
-				
-				qtd = response.getInt("qtproduto");
+
 				
 				PedidoItens pedidoItem = new PedidoItens(
-														 produto.getValorVenda() * qtd,
+														 produto.getValorVenda(),
 														 response.getDouble("vldesconto"),
 														 produto,
-														 pedido,
+														 cliente,
 														 produto.getId(),
-														 qtd
+														 response.getInt("qtproduto")
 														);
 				relacao.add(pedidoItem);
 			}

@@ -87,9 +87,13 @@ public final class FileManager {
 	private static String readFile(String path) { 
 		// Funcao ler, ela vai receber os paths necessarios para efetuar a leitura do arquivo
 		
-		StringBuilder content = new StringBuilder(); // Otimizacao para criar uma String - utiliza-se o Builder
+		StringBuilder content = new StringBuilder(); 
+		
+		// Otimizacao para criar uma String - utiliza-se o Builder
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) { //ler o arquivo, bem parecido com criar o arquivo do path
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) { 
+        	
+        	//ler o arquivo, bem parecido com criar o arquivo do path
             String line;
             while ((line = reader.readLine()) != null) {
                 content.append(line).append("\n");

@@ -3,17 +3,28 @@ package classes;
 import util.Util;
 
 public record PedidoItens
-		(double valorTotal,
+		(double valorUnitario,
 		double valorDesconto,
 		Produto produto,
-		Pedido pedido,
+		Cliente cliente,
 		int idPedidoitem,
-		int quantidade_produto) 
+		int quantidadeProduto) 
 {
-	public String toString() {
-		return  Util.linhaSimples(20) + "\nidPedidoitem: " 
-				+ idPedidoitem + pedido + "\n"
-				+ produto + "\nQuantidade pedido: " + quantidade_produto + "\nValor total do pedido: " + Util.converterMonetario(valorTotal)
-				+ "\nValor Desconto: " + Util.converterMonetario(valorDesconto) + "\n" + Util.linhaSimples(20) + "\n";
+	public int getQuantidadeProduto() {
+		return quantidadeProduto;
 	}
+
+	public String toString() {
+		return  "\nidPedidoitem: " 
+				+ idPedidoitem + cliente + "\n"
+				+ produto + "\nQuantidade pedido: " + quantidadeProduto 
+				+ "\nValor Unitário do Produto: " + Util.converterMonetario(valorUnitario)
+				+ "\nValor Desconto: " + Util.converterMonetario(valorDesconto)
+				+ "\n";
+	}
+	
+	public double getValorTotal() {
+		return valorUnitario * quantidadeProduto;
+	}
+
 }

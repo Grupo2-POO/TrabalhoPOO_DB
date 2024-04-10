@@ -21,4 +21,48 @@ public final class ConstantesMenu {
 			" 4- Voltar ao menu inicial\t\n"
 	};
 	
+	public static final String[] menuCliente = {
+			"\n\t- == MENU DE CLIENTES == -",
+			"  ° Escolha uma opção: \t \n",
+			" 1- Adicionar um cliente novo\t\n",
+			" 2- Buscar clientes\t\n",
+			" 3- Alterar cliente\t\n",
+			" 4- Voltar ao menu inicial\t\n"
+	};
+	
+	public static final String[] menuProduto = {
+			"\n\t- == MENU DE PRODUTO == -",
+			"  ° Escolha uma opção: \t \n",
+			" 1- Cadastrar produto\t\n",
+			" 2- Consultar produto\t\n",
+			" 3- Alterar produto\t\n",
+			" 4- Voltar ao menu inicial\t\n"
+	};
+	
+	public static final String[] menuBuscarCliente = {
+			"\n\t- == COMO DESEJA BUSCAR O CLIENTE? == -",
+			"  ° Escolha uma opção: \t \n",
+			" 1- Buscar por cpf\t\n",
+			" 2- Buscar por nome\t\n",
+			" 3- Buscar por código\t\n",
+			" 4- Voltar ao menu inicial\t\n"
+	};
+	
+	public static final String[] menuBuscarProduto = {
+			"\n\t- == MENU BUSCAR PRODUTO == -",
+			"  ° Escolha uma opção: \t \n",
+			" 1- Buscar por cpf\t\n",
+			" 2- Buscar por nome\t\n",
+			" 3- Buscar por código\t\n",
+			" 4- Voltar ao menu inicial\t\n"
+	};
+	
+	public static final String[] menuBuscarPedido = {
+			"\n\t- == MENU BUSCAR PRODUTO == -",
+			"  ° Escolha uma opção: \t \n",
+			" 1- Buscar por código\t\n",
+			" 2- Buscar por data de emissão\t\n",
+			" 3- Buscar por data de entrega\t\n",
+			" 4- Voltar ao menu inicial\t\n"
+	};
 }

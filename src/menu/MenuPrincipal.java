@@ -19,7 +19,6 @@ public class MenuPrincipal extends NossoMenu {
 	}
 
 	private static void menuPedido() {
-		System.out.println("HEY THERE");
 		MenuPedido menuPedido = new MenuPedido(ConstantesMenu.menuPedido, scanner);
 		menuPedido.executarMenu();
 		

@@ -38,11 +38,11 @@ public class PrincipalTeste {
 //					System.out.println(p.toString());
 //				}
 //				
-//				ArrayList<Pedido> todosPedidos = PedidoDB.buscarTodosPedidos();
-//				for (Pedido p : todosPedidos) {
-//					System.out.println(p.toString());
-//				
-//				}
+				ArrayList<Pedido> todosPedidos = PedidoDB.buscarTodosPedidos();
+				for (Pedido p : todosPedidos) {
+					System.out.println(p.toString());
+				
+				}
 				
 //				ArrayList<PedidoItens> relacaoPedidoItem = PedidoItensDB.relacaoPedidoItem();
 //				for(PedidoItens relacao : relacaoPedidoItem) {
@@ -67,6 +67,7 @@ public class PrincipalTeste {
 			statement.executeUpdate(FileManager.readDBCreateFile());
 			statement.executeUpdate(FileManager.readDBInsertFile());
 			FileManager.createConfirmationFile();
+			
 			
 		} catch (SQLException error) {
 			System.err.println(error.getMessage());
