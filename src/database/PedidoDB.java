@@ -1,11 +1,14 @@
-package classes;
+package database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import database.DB;
+import classes.Cliente;
+import classes.Pedido;
+import classes.PedidoItens;
+import classes.Produto;
 
 public class PedidoDB {
 		

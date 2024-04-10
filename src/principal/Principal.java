@@ -8,7 +8,6 @@ import database.DB;
 import filemanager.FileManager;
 import util.Util;
 import menu.ConstantesMenu;
-import menu.Menu;
 import menu.MenuPrincipal;
 
 public class Principal {
@@ -29,8 +28,6 @@ public class Principal {
 			do	{
 				
 				menu.executarMenu();
-				
-//				Menu.executarMenu();
 				
 				programaLigado = conferirProgramaLigado();
 			} while (programaLigado); 

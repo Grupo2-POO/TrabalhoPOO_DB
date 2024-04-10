@@ -1,11 +1,11 @@
-package classes;
+package database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import database.DB;
+import classes.Produto;
 
 public class ProdutoDB {
 	
