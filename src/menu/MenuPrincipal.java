@@ -8,10 +8,6 @@ public class MenuPrincipal extends NossoMenu {
 		super(constantes, scanner);
 	}
 
-	public  void executar() {
-		executarMenu();
-	}
-
 	@Override
 	public void processarOpcao(int opcao) {
 		switch (opcao) {

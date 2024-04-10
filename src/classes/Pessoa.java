@@ -29,6 +29,6 @@ public abstract class Pessoa {
 	
 	@Override
 	public String toString() {
-		return "Nome = " + nome + " \ncpf = " + cpf + " \ndata_nascimento = " + Util.novaDT(data_nascimento);
+		return "Nome: " + nome + " \nCPF: " + cpf + " \nData de nascimento: " + Util.novaDT(data_nascimento);
 	}
 }

@@ -21,6 +21,4 @@ public final class ConstantesMenu {
 			" 4- Voltar ao menu inicial\t\n"
 	};
 	
-	
-
 }

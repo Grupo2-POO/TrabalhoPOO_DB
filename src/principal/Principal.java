@@ -7,7 +7,9 @@ import java.util.Scanner;
 import database.DB;
 import filemanager.FileManager;
 import util.Util;
+import menu.ConstantesMenu;
 import menu.Menu;
+import menu.MenuPrincipal;
 
 public class Principal {
 	
@@ -16,13 +18,17 @@ public class Principal {
 	
 	public static void main(String[] args) {
 		
-		boolean hasConnectedToDb = connectToDatabase();
-		
+		boolean hasConnectedToDb = conectarAoDatabase();
+		// cria o menu principal
+		MenuPrincipal menu = new MenuPrincipal(ConstantesMenu.menuPrincipal, scanner);
+
 		do {
 			System.out.println("Conectado com sucesso!");
 			do	{
 				
-				Menu.executarMenu();
+				menu.executarMenu();
+				
+//				Menu.executarMenu();
 				
 				programaLigado = conferirProgramaLigado();
 			} while (programaLigado); 
@@ -41,7 +47,7 @@ public class Principal {
 		
 	}
 	
-	public static boolean connectToDatabase() {
+	public static boolean conectarAoDatabase() {
 		
 		try (var connection = DB.connect()) {
 			

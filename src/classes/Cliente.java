@@ -8,7 +8,7 @@ public class Cliente extends Pessoa {
 	private String endereco;
 	private String telefone;
 
-	public Cliente(String nome, String cpf, Date data_nascimento, int idCliente, String endereco, String telefone) {
+	public Cliente(int idCliente, String nome, String cpf, Date data_nascimento, String endereco, String telefone) {
 		super(nome, cpf, data_nascimento);
 		this.idCliente = idCliente;
 		this.endereco = endereco;
@@ -17,7 +17,7 @@ public class Cliente extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "\n" + super.toString()+"\nidCliente: " + idCliente + " \nEndereco: " + endereco + " \ntelefone = " + telefone;
+		return "\nidCliente: " + idCliente + "\n\n" + super.toString() + "\n\nEndereco: " + endereco + " \nContato: " + telefone;
 	}
 
 	public String getEndereco() {

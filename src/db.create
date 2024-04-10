@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS public.cliente
 CREATE TABLE IF NOT EXISTS public.pedido
 (
     idpedido serial NOT NULL,
+    idcliente integer NOT NULL REFERENCES public.cliente(idcliente) ON UPDATE NO ACTION ON DELETE NO ACTION,
     dtemissao date,
     dtentrega date,
-    valortotal numeric(10, 2),
     observacao text COLLATE pg_catalog."default",
     CONSTRAINT pedido_pkey PRIMARY KEY (idpedido)
 );
@@ -40,7 +40,6 @@ CREATE TABLE IF NOT EXISTS public.pedidoitens
     idpedidoitem serial NOT NULL,
     idpedido integer REFERENCES public.pedido(idpedido) ON UPDATE NO ACTION ON DELETE NO ACTION,
     idproduto integer REFERENCES public.produto(idproduto) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    idcliente_pedidoitens integer NOT NULL REFERENCES public.cliente(idcliente) ON UPDATE NO ACTION ON DELETE NO ACTION,
     vlunitario numeric(10, 2),
     qtproduto integer NOT NULL,
     vldesconto numeric(10, 2),

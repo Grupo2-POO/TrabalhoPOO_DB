@@ -23,13 +23,12 @@ public class ClienteDB {
 			// executar a resposta enquanto tiver cliente dentro do array, usando o next 
 			while (response.next()) { // String nome, String cpf, Date data_nascimento, int idCliente, String endereco, String telefone
 				Cliente cliente = new Cliente(
+						response.getInt("idcliente"),
 						response.getString("nome"),
 						response.getString("cpf"),
 						response.getDate("dtnascimento"),
-						response.getInt("idcliente"),
 						response.getString("endereco"),
 						response.getString("telefone")
-						
 						);
 				clientes.add(cliente);
 				

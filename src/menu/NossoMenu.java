@@ -17,14 +17,12 @@ public abstract class NossoMenu {
 		NossoMenu.scanner = scanner;
 	}
 	
-	
 	public void executarMenu() {
 		mostrar();
 		processarOpcao(pegarOpcaoInt());
 	}
 	
 	private void mostrar() {
-		
 		for(int i = 0; i < constantes.length; i++) {
 			System.out.print(constantes[i]);
 			if(i == 0) {
@@ -43,8 +41,6 @@ public abstract class NossoMenu {
 		return opcao;
 	}
 	
-
-
 	public abstract void processarOpcao(int opcao);
 
 }
