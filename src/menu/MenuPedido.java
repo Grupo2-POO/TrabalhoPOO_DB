@@ -46,14 +46,26 @@ public final class MenuPedido extends NossoMenu {
 
 	private void cadastraPedidos() {
 		
-		@SuppressWarnings("unused")
-		Cliente clienteNovo = new Cliente();
-		
 		Util.printMessage("Para efetuar um novo pedido, precisamos de um cliente ");
 		
+		@SuppressWarnings("unused")
 		MenuBuscarCliente buscarCliente = new MenuBuscarCliente(ConstantesMenu.menuBuscarCliente, scanner);
+
 		buscarCliente.executarMenu();
 		
+		Cliente cliente = buscarCliente.getCliente();
+		
+		while (cliente == null) {
+			
+			cliente = buscarCliente.getCliente();
+			if(cliente == null) {
+				Util.printMessage("Cliente não encontrado! Tente de novo!");
+				buscarCliente.executarMenu();
+			}
+		} 
+		
+		Util.printMessage("Cliente encontrado: ");
+		System.out.println(cliente.toString());
 				
 	}
 

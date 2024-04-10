@@ -40,4 +40,57 @@ public class ClienteDB {
 		return clientes;
 		
 	}
+
+	public static Cliente buscaClientePorCPF(String cpf) {
+	    
+	    String sql = "SELECT * FROM cliente WHERE cpf='" + cpf + "'";
+	    
+	    
+	    return executarConsultaCompletaCliente(sql);
+	}
+	
+	public static Cliente buscaClientePorCodigo(int codigo) {
+		    
+	    String sql = "SELECT * FROM cliente WHERE idcliente='" + codigo + "'";
+	    
+	    
+	    return executarConsultaCompletaCliente(sql);
+	}
+	
+	public static Cliente buscaClientePorNome(String nome) {
+	    
+	    String sql = "SELECT * FROM cliente WHERE nome='" + nome + "'";
+	    
+	    
+	    return executarConsultaCompletaCliente(sql);
+	}
+	
+	
+	
+	private static Cliente executarConsultaCompletaCliente(String sql) {
+			Cliente cliente = new Cliente();
+			try (Connection connection = DB.connect()) {
+		        Statement statement = connection.createStatement();
+		        var response = statement.executeQuery(sql);
+		        if (response.next()) {
+		            cliente = new Cliente(
+		                response.getInt("idcliente"),
+		                response.getString("nome"),
+		                response.getString("cpf"),
+		                response.getDate("dtnascimento"),
+		                response.getString("endereco"),
+		                response.getString("telefone")
+		            );
+		        } else {
+		            return null;
+		        }
+		        
+		    } catch (SQLException error) {
+//		        System.err.println(error.getMessage());
+		        return null;
+		    }
+			return cliente;
+	}
+
+
 }

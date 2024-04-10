@@ -50,6 +50,25 @@ public final class Util {
 		
 	}
 	
+	public static String pedeLinha(String message, Scanner input) {
+	    System.out.println(message);
+	    StringBuilder rawBuilder = new StringBuilder();
+	    input.nextLine();
+	    String line = input.nextLine(); // Read the first line of input
+
+	    // Check if the first line is empty (Enter key pressed)
+	    if (line.isEmpty()) {
+	        return ""; // Return empty string if Enter key was pressed immediately
+	    }
+
+	    // Append the first line of input to the StringBuilder
+	    rawBuilder.append(line);
+	    rawBuilder.append("\n"); // Add newline character to maintain line breaks
+
+	    return rawBuilder.toString().trim();
+	}
+
+	
 	public static String askInputLine(String message, Scanner input) {
 	    //input.next(); // Consume the newline character from previous input
 	    System.out.println(message);
