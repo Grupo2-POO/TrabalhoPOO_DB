@@ -1,4 +1,4 @@
-# Trabalho-poo-Grupo2- Serratec
+# Trabalho-POO-Grupo2- Serratec
 Trabalho de Pogramação Orientada a Objetos do Grupo 2 - Serratec
 
 ## Descrição
