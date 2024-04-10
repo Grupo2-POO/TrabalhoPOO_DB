@@ -15,7 +15,6 @@ public class PedidoItensDB{
 			    p.idpedido,
 				p.dtemissao,
 				p.dtentrega,
-				p.valortotal,
 				p.observacao,
 			    c.idcliente,
 			    c.nome,
@@ -39,7 +38,7 @@ public class PedidoItensDB{
 				JOIN
 				    public.pedido p ON pi.idpedido = p.idpedido
 				JOIN
-				    public.cliente c ON pi.idcliente_pedidoitens = c.idcliente;
+				    public.cliente c ON p.idcliente = c.idcliente;
 				""";
 		
 		try(var conn = DB.connect()){
@@ -58,33 +57,32 @@ public class PedidoItensDB{
 						response.getString("categoria")
 						);
 				
-				Pedido pedido = new Pedido(
-						response.getInt("idpedido"),
-						response.getDate("dtemissao"),
-						response.getDate("dtentrega"),
-						response.getDouble("valortotal"),
-						response.getString("observacao")
-						);
-				
 				Cliente cliente = new Cliente(
+						response.getInt("idcliente"),
 						response.getString("nome"),
 						response.getString("cpf"),
 						response.getDate("dtnascimento"),
-						response.getInt("idcliente"),
 						response.getString("endereco"),
 						response.getString("telefone")
 						
 						);
 				
-				//(double valorUnitario, double valorDesconto, Produto produto, int idPedidoitem, int quantidade_produto)
+				Pedido pedido = new Pedido(
+						response.getInt("idpedido"),
+						cliente,
+						response.getDate("dtemissao"),
+						response.getDate("dtentrega"),
+						response.getString("observacao")
+						);
+				
 				qtd = response.getInt("qtproduto");
 				
-				PedidoItens pedidoItem = new PedidoItens(produto.getValorVenda() * qtd,
+				PedidoItens pedidoItem = new PedidoItens(
+														 produto.getValorVenda() * qtd,
 														 response.getDouble("vldesconto"),
 														 produto,
-														 cliente,
 														 pedido,
-														 response.getInt("idpedidoitem"),
+														 produto.getId(),
 														 qtd
 														);
 				relacao.add(pedidoItem);

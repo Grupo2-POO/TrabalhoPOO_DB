@@ -44,10 +44,10 @@ public class PrincipalTeste {
 //				
 //				}
 				
-				ArrayList<PedidoItens> relacaoPedidoItem = PedidoItensDB.relacaoPedidoItem();
-				for(PedidoItens relacao : relacaoPedidoItem) {
-					System.out.println(relacao.toString());
-				}
+//				ArrayList<PedidoItens> relacaoPedidoItem = PedidoItensDB.relacaoPedidoItem();
+//				for(PedidoItens relacao : relacaoPedidoItem) {
+//					System.out.println(relacao.toString());
+//				}
 			}
 			
 	}

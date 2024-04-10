@@ -17,7 +17,6 @@ public class DatabaseConfig {
 	
     private static final Properties properties = new Properties();
     
-   
     public static void initializeDB() {
     	if(!FileManager.dbPropertiesExist()) {
 			Util.printMessage("Não foi possível encontrar o arquivo 'db.properties'. Isso deve significar que você está executando isso pela primeira vez!");
