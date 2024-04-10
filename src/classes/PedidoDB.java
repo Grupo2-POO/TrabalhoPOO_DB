@@ -34,12 +34,12 @@ public class PedidoDB {
 			    pi.vldesconto
 				FROM 
 				    public.pedido p
-				JOIN 
-				    public.produto pr ON pr.idproduto = p.idproduto
-				JOIN
-				    public.cliente c ON p.idcliente = c.idcliente
 			    JOIN
-				   public.pedidoitens pi ON pi.idpedido = p.idpedido;
+				   public.pedidoitens pi ON pi.idpedidoitem = p.idpedidoitem
+				JOIN 
+				    public.produto pr ON pr.idproduto = pi.idproduto
+				JOIN
+				    public.cliente c ON pi.idcliente = c.idcliente;
 				""";
 		
 		

@@ -33,12 +33,10 @@ public class PedidoItensDB{
 				pi.vldesconto
 				FROM 
 				    public.pedidoitens pi
-			    JOIN
-				    public.pedido p ON pi.idpedido = p.idpedido
 				JOIN 
-				    public.produto pr ON p.idproduto = pr.idproduto
+				    public.produto pr ON pi.idproduto = pr.idproduto
 				JOIN
-				    public.cliente c ON p.idcliente = c.idcliente;
+				    public.cliente c ON pi.idcliente = c.idcliente;
 				""";
 		
 		try(var conn = DB.connect()){

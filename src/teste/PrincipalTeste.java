@@ -68,6 +68,7 @@ public class PrincipalTeste {
 			statement.executeUpdate(FileManager.readDBInsertFile());
 			FileManager.createConfirmationFile();
 			
+			
 		} catch (SQLException error) {
 			System.err.println(error.getMessage());
 		}
