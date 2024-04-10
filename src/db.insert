@@ -1,15 +1,16 @@
 INSERT INTO public.cliente (nome, cpf, dtnascimento, endereco, telefone) 
 VALUES 
-    ('João Silva', '123.456.789-00', '1980-05-15', 'Rua Principal, 123, Cidade Nova', '(22) 1234-5678'),
-    ('Maria Santos', '987.654.321-00', '1992-09-20', 'Av. das Flores, 456, Bairro Centro', '(22) 2345-6789'),
-    ('Antônio Oliveira', '111.222.333-00', '1975-12-10', 'Rua dos Pinheiros, 789, Vila Bela', '(22) 3456-7890'),
-    ('Ana Souza', '444.555.666-00', '1988-03-25', 'Travessa das Palmeiras, 321, Largo do Sol', '(21) 4567-8901'),
-    ('Pedro Pereira', '777.888.999-00', '1995-07-18', 'Alameda dos Ipês, 654, Praça Principal', '(21) 5678-9012'),
-    ('Carla Almeida', '333.222.111-00', '1983-11-30', 'Praça das Oliveiras, 987, Rua da Paz', '(22) 6789-0123'),
-    ('Fernando Lima', '666.777.888-00', '1970-01-05', 'Avenida dos Coqueiros, 159, Travessa da Esperança', '(21) 7890-1234'),
-    ('Amanda Costa', '999.888.777-00', '1990-06-12', 'Rodovia das Águas, 753, Estrada da Esperança', '(22) 8901-2345'),
-    ('José Carvalho', '222.333.444-00', '1978-08-22', 'Estrada do Sol, 852, Alameda dos Sonhos', '(22) 9012-3456'),
-    ('Juliana Fernandes', '555.444.333-00', '1986-04-08', 'Rua das Estrelas, 369, Beco da Lua', '(21) 0123-4567');
+    ('João Silva', '12345678900', '1980-05-15', 'Rua Principal, 123, Cidade Nova', '(22) 1234-5678'),
+    ('Maria Santos', '98765432100', '1992-09-20', 'Av. das Flores, 456, Bairro Centro', '(22) 2345-6789'),
+    ('Antônio Oliveira', '11122233300', '1975-12-10', 'Rua dos Pinheiros, 789, Vila Bela', '(22) 3456-7890'),
+    ('Ana Souza', '44455566600', '1988-03-25', 'Travessa das Palmeiras, 321, Largo do Sol', '(21) 4567-8901'),
+    ('Pedro Pereira', '77788899900', '1995-07-18', 'Alameda dos Ipês, 654, Praça Principal', '(21) 5678-9012'),
+    ('Carla Almeida', '33322211100', '1983-11-30', 'Praça das Oliveiras, 987, Rua da Paz', '(22) 6789-0123'),
+    ('Fernando Lima', '66677788800', '1970-01-05', 'Avenida dos Coqueiros, 159, Travessa da Esperança', '(21) 7890-1234'),
+    ('Amanda Costa', '99988877700', '1990-06-12', 'Rodovia das Águas, 753, Estrada da Esperança', '(22) 8901-2345'),
+    ('José Carvalho', '22233344400', '1978-08-22', 'Estrada do Sol, 852, Alameda dos Sonhos', '(22) 9012-3456'),
+    ('Juliana Fernandes', '55544433300', '1986-04-08', 'Rua das Estrelas, 369, Beco da Lua', '(21) 0123-4567');
+
 
 INSERT INTO public.produto (descricao, vlcusto, vlvenda, quantidade, categoria) 
 VALUES 

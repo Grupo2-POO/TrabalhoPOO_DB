@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS public.cliente
 (
     idcliente serial NOT NULL,
     nome character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    cpf character varying(14) COLLATE pg_catalog."default" NOT NULL,
+    cpf character varying(11) COLLATE pg_catalog."default" NOT NULL,
     dtnascimento date,
     endereco character varying(200) COLLATE pg_catalog."default",
     telefone character varying(20) COLLATE pg_catalog."default",
