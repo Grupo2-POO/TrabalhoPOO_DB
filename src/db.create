@@ -14,16 +14,6 @@ CREATE TABLE IF NOT EXISTS public.cliente
     CONSTRAINT cliente_pkey PRIMARY KEY (idcliente)
 );
 
-CREATE TABLE IF NOT EXISTS public.pedido
-(
-    idpedido serial NOT NULL,
-    idcliente integer NOT NULL REFERENCES public.cliente(idcliente) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    dtemissao date,
-    dtentrega date,
-    observacao text COLLATE pg_catalog."default",
-    CONSTRAINT pedido_pkey PRIMARY KEY (idpedido)
-);
-
 CREATE TABLE IF NOT EXISTS public.produto
 (
     idproduto serial NOT NULL,
@@ -35,11 +25,24 @@ CREATE TABLE IF NOT EXISTS public.produto
     CONSTRAINT produto_pkey PRIMARY KEY (idproduto)
 );
 
+CREATE TABLE IF NOT EXISTS public.pedido
+(
+    idpedido serial NOT NULL,
+    idcliente integer NOT NULL REFERENCES public.cliente(idcliente) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    idproduto integer NOT NULL REFERENCES public.produto(idproduto) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    vltotal numeric(10, 2),
+    dtemissao date,
+    dtentrega date,
+    observacao text COLLATE pg_catalog."default",
+    CONSTRAINT pedido_pkey PRIMARY KEY (idpedido)
+);
+
+
+
 CREATE TABLE IF NOT EXISTS public.pedidoitens
 (
     idpedidoitem serial NOT NULL,
     idpedido integer REFERENCES public.pedido(idpedido) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    idproduto integer REFERENCES public.produto(idproduto) ON UPDATE NO ACTION ON DELETE NO ACTION,
     vlunitario numeric(10, 2),
     qtproduto integer NOT NULL,
     vldesconto numeric(10, 2),

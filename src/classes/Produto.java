@@ -12,8 +12,10 @@ public record Produto
 {
 	@Override
 	public String toString() {
-		return 	"idProduto: " + idProduto + "\n\n" + descricao + "\nvalorCusto = "
-				+ Util.converterMonetario(valorCusto) + "\nValor Venda: " + Util.converterMonetario(valorVenda)
+		return 	"\nidProduto: " 
+				+ idProduto 
+				+ "\n" 
+				+ descricao
 				+ "\nQuantidade no estoque:  " + quantidade + "\nCategoria: " + categoria + "\n";
 	}
 

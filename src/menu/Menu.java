@@ -19,7 +19,7 @@ public class Menu {
 		processarOpcao(pegarOpcao());
 	}
 		
-	public static void mostrarMenu() {
+	private static void mostrarMenu() {
  		
 		System.out.println("\n\t- GERADOR DE PEDIDOS 2MIL! -");
 		System.out.println(Util.linhaSimples(40) + "\n" +
@@ -141,8 +141,6 @@ public class Menu {
 		}
 		return opcaoPedido;
 	}
-	
-	
 	
 	
 	

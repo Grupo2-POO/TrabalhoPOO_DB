@@ -11,8 +11,38 @@ public class PedidoDB {
 		
 	public static ArrayList<Pedido> buscarTodosPedidos() {
 		ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
-		String sql = "SELECT * FROM pedido "
-					+ "JOIN cliente on pedido.idcliente = cliente.idcliente;";
+		String sql = """
+				SELECT 
+			    p.idpedido,
+				p.dtemissao,
+				p.dtentrega,
+				p.observacao,
+			    c.idcliente,
+			    c.nome,
+			    c.cpf,
+			    c.dtnascimento,
+			    c.endereco,
+			    c.telefone,
+			    pr.idproduto,
+			    pr.descricao,
+			    pr.vlcusto,
+			    pr.quantidade,
+			    pr.vlvenda,
+			    pr.categoria,
+			    pi.vlunitario,
+			    pi.qtproduto,
+			    pi.vldesconto
+				FROM 
+				    public.pedido p
+				JOIN 
+				    public.produto pr ON pr.idproduto = p.idproduto
+				JOIN
+				    public.cliente c ON p.idcliente = c.idcliente
+			    JOIN
+				   public.pedidoitens pi ON pi.idpedido = p.idpedido;
+				""";
+		
+		
 		try (Connection connection = DB.connect()) {
 			Statement statement = connection.createStatement();
 			var response = statement.executeQuery(sql);
@@ -27,13 +57,34 @@ public class PedidoDB {
 						response.getString("telefone")
 						);
 				
+				Produto produto = new Produto(
+						response.getInt("idproduto"),
+						response.getDouble("vlcusto"),
+						response.getDouble("vlvenda"),
+						response.getInt("quantidade"),
+						response.getString("descricao"),
+						response.getString("categoria")
+						);
+				
+				PedidoItens pedidoItens = new PedidoItens(
+						 produto.getValorVenda(),
+						 response.getDouble("vldesconto"),
+						 produto,
+						 cliente,
+						 produto.getId(),
+						 response.getInt("qtproduto")
+						);
+				
 				Pedido pedido = new Pedido(
 						response.getInt("idpedido"),
-						cliente,
+						pedidoItens,
+						produto.getValorVenda() * pedidoItens.getQuantidadeProduto(),
 						response.getDate("dtemissao"),
 						response.getDate("dtentrega"),
 						response.getString("observacao")
 						);
+				
+		
 				
 				pedidos.add(pedido);
 						

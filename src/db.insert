@@ -55,34 +55,35 @@ VALUES
 	('Placa de Vídeo NVIDIA GeForce RTX 3080', 5000.00, 6000.00, 4, 'Componentes de Computador');
 
 
-INSERT INTO public.pedido (idcliente, dtemissao, dtentrega, observacao) 
+INSERT INTO public.pedido (idcliente, idproduto, dtemissao, dtentrega, observacao) 
 VALUES 
-	(1, '2024-04-01', '2024-04-10', 'Pedido para cliente A+'),
-	(2, '2024-03-28', '2024-04-05', 'Urgente: entrega imediata'),
-	(2, '2024-03-25', '2024-04-12', 'Pedido grande, necessita transporte especial'),
-	(3, '2024-03-20', '2024-04-08', 'Cliente X solicitou alterações no pedido'),
-	(4, '2024-03-15', '2024-04-20', 'Pedido internacional, prazo de entrega estendido'),
-	(5, '2024-03-10', '2024-04-09', 'Cliente Y pagará adiantado'),
-	(6, '2024-03-05', '2024-04-15', 'Pedido padrão, entrega conforme contrato'),
-	(7, '2024-03-01', '2024-04-18', 'Cliente X pediu para adicionar itens adicionais'),
-	(8, '2024-02-25', '2024-04-11', 'Pedido especial, produtos sob encomenda'),
-	(9, '2024-02-20', '2024-04-06', 'Cliente Y solicita entrega em endereço alternativo'),
-	(10, '2024-04-03', '2024-04-05', 'Cliente X solicita entrega veloz');
+    (1, 23, '2024-04-01', '2024-04-10', 'Pedido para cliente A+'),
+    (2, 12, '2024-03-28', '2024-04-05', 'Urgente: entrega imediata'),
+    (2, 35, '2024-03-25', '2024-04-12', 'Pedido grande, necessita transporte especial'),
+    (3, 7, '2024-03-20', '2024-04-08', 'Cliente X solicitou alterações no pedido'),
+    (4, 16, '2024-03-15', '2024-04-20', 'Pedido internacional, prazo de entrega estendido'),
+    (5, 38, '2024-03-10', '2024-04-09', 'Cliente Y pagará adiantado'),
+    (6, 19, '2024-03-05', '2024-04-15', 'Pedido padrão, entrega conforme contrato'),
+    (7, 27, '2024-03-01', '2024-04-18', 'Cliente X pediu para adicionar itens adicionais'),
+    (8, 4, '2024-02-25', '2024-04-11', 'Pedido especial, produtos sob encomenda'),
+    (9, 31, '2024-02-20', '2024-04-06', 'Cliente Y solicita entrega em endereço alternativo'),
+    (10, 5, '2024-04-03', '2024-04-05', 'Cliente X solicita entrega veloz');
+
 
 	
 INSERT INTO public.pedidoitens
-(idpedido, idproduto, qtproduto)
+(idpedido, qtproduto)
 VALUES
-	(1, 30, 5),
-	(1, 21, 2),
-	(2, 10, 1),
-	(2, 3, 2),
-	(2, 14, 5),
-	(3, 2, 7),
-	(4, 12, 7),
-	(5, 5, 9),
-	(6, 8, 1),
-	(7, 4, 1),
-	(8, 8, 2),
-	(9, 9, 2),
-	(10, 23, 1);
+    (1, 5),
+    (1, 2),
+    (2, 1),
+    (2, 2),
+    (2, 5),
+    (3, 7),
+    (4, 7),
+    (5, 9),
+    (6, 1),
+    (7, 1),
+    (8, 2),
+    (9, 2),
+    (10, 1);

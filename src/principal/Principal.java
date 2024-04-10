@@ -14,11 +14,13 @@ import menu.MenuPrincipal;
 public class Principal {
 	
 	private static boolean programaLigado = true; 
+	
 	private static Scanner scanner = new Scanner(System.in);		
 	
 	public static void main(String[] args) {
 		
 		boolean hasConnectedToDb = conectarAoDatabase();
+		
 		// cria o menu principal
 		MenuPrincipal menu = new MenuPrincipal(ConstantesMenu.menuPrincipal, scanner);
 
@@ -58,7 +60,11 @@ public class Principal {
 			}
 			
 			Statement statement = connection.createStatement();
+			
+			
 			statement.executeUpdate(FileManager.readDBCreateFile());
+			
+			
 			statement.executeUpdate(FileManager.readDBInsertFile());
 			FileManager.createConfirmationFile();
 			
