@@ -1,11 +1,9 @@
-package database;
+package classes;
 
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import classes.Cliente;
-import classes.PedidoItens;
-import classes.Produto;
+import database.DB;
 
 public class PedidoItensDB{
 	public static ArrayList<PedidoItens> relacaoPedidoItem(){

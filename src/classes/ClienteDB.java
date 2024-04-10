@@ -1,4 +1,4 @@
-package database;
+package classes;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-import classes.Cliente;
+import database.DB;
 
 public class ClienteDB {
 	

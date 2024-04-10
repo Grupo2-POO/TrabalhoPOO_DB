@@ -5,14 +5,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import classes.Cliente;
+import classes.ClienteDB;
 import classes.Pedido;
+import classes.PedidoDB;
 import classes.PedidoItens;
 import classes.Produto;
-import database.ClienteDB;
+import classes.ProdutoDB;
+import classes.PedidoItensDB;
 import database.DB;
-import database.PedidoDB;
-import database.PedidoItensDB;
-import database.ProdutoDB;
 import filemanager.FileManager;
 
 public class PrincipalTeste {

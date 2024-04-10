@@ -3,7 +3,7 @@ package menu;
 import java.util.Scanner;
 
 import classes.Cliente;
-import database.ClienteDB;
+import classes.ClienteDB;
 import util.Util;
 
 public class MenuBuscarCliente extends NossoMenu {
