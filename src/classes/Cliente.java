@@ -15,6 +15,10 @@ public class Cliente extends Pessoa {
 		this.telefone = telefone;
 	}
 
+	public Cliente() {
+		super();
+	}
+
 	@Override
 	public String toString() {
 		return "\nidCliente: " + idCliente + "\n\n" + super.toString() + "\n\nEndereco: " + endereco + " \nContato: " + telefone;

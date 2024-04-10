@@ -17,6 +17,11 @@ public abstract class Pessoa {
 		this.data_nascimento = data_nascimento;
 		
 	}
+	
+	public Pessoa() {
+		super();
+	}
+
 	public String getNome() {
 		return nome;
 	}

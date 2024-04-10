@@ -2,6 +2,7 @@ package menu;
 
 import java.util.Scanner;
 
+import classes.Cliente;
 import util.Util;
 
 public final class MenuPedido extends NossoMenu {
@@ -14,7 +15,7 @@ public final class MenuPedido extends NossoMenu {
 	@Override
 	public void processarOpcao(int opcao) {
 		switch (opcao) {
-		case 1: Util.printMessage("Cadastro de pedidos vai rolar aqui"); break;
+		case 1: cadastraPedidos(); break;
 		case 2: Util.printMessage("Consulta de pedidos vai rolar aqui"); break;
 		case 3: Util.printMessage("Alteração de pedidos vai rolar aqui"); break; 
 		case 4: {
@@ -27,5 +28,15 @@ public final class MenuPedido extends NossoMenu {
 			}
 		}
 	}
-
+	
+	private void cadastraPedidos() {
+		Cliente clienteNovo = new Cliente();
+		MenuBuscarCliente buscarCliente = new MenuBuscarCliente(ConstantesMenu.menuBuscarCliente, scanner);
+		buscarCliente.executarMenu();
+		
+		
+		
+		System.out.println("1 - Incluir pedido novo");
+		
+	}
 }
