@@ -6,7 +6,7 @@ import classes.Cliente;
 import database.ClienteDB;
 import util.Util;
 
-public class MenuBuscarCliente extends NossoMenu {
+public final class MenuBuscarCliente extends NossoMenu {
 	
 	private Cliente cliente;
 

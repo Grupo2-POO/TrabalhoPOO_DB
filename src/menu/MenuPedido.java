@@ -32,23 +32,10 @@ public final class MenuPedido extends NossoMenu {
 		
 	}
 	
-	public void cadastrarPedidos() {
-		
-		
-	}
-	public void consultarPedidos() {
-		
-	}
-	
-	public void alterarPedidos() {
-		
-	}
-
 	private void cadastraPedidos() {
 		
 		Util.printMessage("Para efetuar um novo pedido, precisamos de um cliente ");
 		
-		@SuppressWarnings("unused")
 		MenuBuscarCliente buscarCliente = new MenuBuscarCliente(ConstantesMenu.menuBuscarCliente, scanner);
 
 		buscarCliente.executarMenu();
@@ -66,7 +53,7 @@ public final class MenuPedido extends NossoMenu {
 		
 		Util.printMessage("Cliente encontrado: ");
 		System.out.println(cliente.toString());
-				
+		
 	}
 
 }
