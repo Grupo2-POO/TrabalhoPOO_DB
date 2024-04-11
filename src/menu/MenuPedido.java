@@ -9,10 +9,13 @@ import database.PedidoItensDB;
 import util.Util;
 
 public final class MenuPedido extends NossoMenu {
+	
+	PedidoItensDB pedidoItensDB;
 
 	public MenuPedido(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		// TODO Auto-generated constructor stub
+		pedidoItensDB = new PedidoItensDB();
 	}
 
 	@Override
@@ -32,7 +35,6 @@ public final class MenuPedido extends NossoMenu {
 				break; 
 			}
 		}
-		
 	}
 	
 	private void cadastraPedidos() {
@@ -75,41 +77,46 @@ public final class MenuPedido extends NossoMenu {
 
 		System.out.println(produto.toString());
 		
-		int qtdExtra = 0;
+		int qtd = 1;
 		
 		int qtdMaxima = produto.getQuantidade();
 		
-		while(qtdExtra <= 0 || qtdExtra > qtdMaxima) {
+		while(qtd <= 1 || qtd > qtdMaxima) {
 			
-			qtdExtra = Integer.parseInt(Util.askIntegerInput("\nInsira a quantidade extra\n", scanner));
+			qtd = Integer.parseInt(Util.askIntegerInput("\nInsira a quantidade extra\n", scanner));
 			
-			if(qtdExtra <= 0) {
+			if(qtd <= 0) {
 				System.out.println("Quantidade não pode ser negativa!");
 			}
 			
-			if(qtdExtra > qtdMaxima) {
+			if(qtd > qtdMaxima) {
 				System.out.println("Quantidade não pode ser maior que o estoque!");
 			}
 		}
-
+		
+		// todo processar o desconto?
+		double vlDesconto = 0.0;
 		
 		// cria um pedido item a adicionar ao database
 		
+		String sql = String.format(
+				"insert into %s"
+				+ "(idcliente, idproduto, vlunitario, vldesconto, qtproduto) "
+				+ "values('%s','%s', '%s', '%s', '%s');",
+				"pedidoitens",
+				cliente.getIdCliente(),
+				produto.getId(),
+				produto.getValorVenda(),
+				vlDesconto,
+				qtd
+				);
+		
+		Util.printMessage(
+				"\nAdicionando o pedidoitem com " 
+						+ qtd + " " + produto.descricao() + "\nNão estamos dando nenhum desconto ainda");
 
-//		String sql = String.format("insert into %s(idcliente, idproduto, vldesconto, qtproduto) values('%s','%s');",
-//				"pedidoitens"
-//				);
-		
-		
-//		PedidoItensDB.adicionarPedidoItem(sql);
-		
-		
-				
-		
-		
-
-		
-		
+		// adiciona o pedido item
+		pedidoItensDB.adicionar(sql);
 		
 	}
 

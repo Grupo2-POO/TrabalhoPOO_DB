@@ -4,7 +4,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import classes.Cliente;
 import classes.Pedido;
+import classes.PedidoItens;
 import database.ClienteDB;
 import database.DB;
 import database.PedidoDB;
@@ -28,11 +30,11 @@ public class PrincipalTeste {
 				PedidoItensDB pedidoItensDB = new PedidoItensDB();
 				
 //				Util.wait(10);
-//				ArrayList<Cliente> todosClientes = clienteDB.buscarTodos();
-//				for (int i = 0; i < todosClientes.size(); i++ ) {
-//					Cliente cliente = todosClientes.get(i);
-//					System.out.println(cliente.toString());
-//				}
+				ArrayList<Cliente> todosClientes = clienteDB.buscarTodos();
+				for (int i = 0; i < todosClientes.size(); i++ ) {
+					Cliente cliente = todosClientes.get(i);
+					System.out.println(cliente.toString());
+				}
 //				
 //				ArrayList<Produto> todosProdutos = produtoDB.buscarTodos();
 //				// Exemplo de for each loop:
@@ -42,15 +44,15 @@ public class PrincipalTeste {
 //					System.out.println(p.toString());
 //				}
 //				
-				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
-				for (Pedido p : todosPedidos) {
-					System.out.println(p.toString());
-				}
-				
-//				ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
-//				for(PedidoItens relacao : relacaoPedidoItem) {
-//					System.out.println(relacao.toString());
+//				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
+//				for (Pedido p : todosPedidos) {
+//					System.out.println(p.toString());
 //				}
+				
+				ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
+				for(PedidoItens relacao : relacaoPedidoItem) {
+					System.out.println(relacao.toString());
+				}
 			}
 			
 	}

@@ -57,9 +57,7 @@ public class Principal {
 			
 			Statement statement = connection.createStatement();
 			
-			
 			statement.executeUpdate(FileManager.readDBCreateFile());
-			
 			
 			statement.executeUpdate(FileManager.readDBInsertFile());
 			FileManager.createConfirmationFile();
