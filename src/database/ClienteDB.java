@@ -59,7 +59,7 @@ public class ClienteDB {
 	
 	public static Cliente buscaClientePorNome(String nome) {
 	    
-	    String sql = "SELECT * FROM cliente WHERE nome='" + nome + "'";
+	    String sql = "SELECT * FROM cliente WHERE nome ilike '%" + nome + "%'";
 	    
 	    
 	    return executarConsultaCompletaCliente(sql);

@@ -34,8 +34,8 @@ public final class MenuBuscarCliente extends NossoMenu {
 	
 	private void buscaPorCPF() {
 		String cpf = "";
-		while(cpf.length() < 1 || cpf.length() > 11) {
-			cpf = Util.askIntegerInput("Informe o CPF:", scanner).trim();
+		while(cpf.length() < 1 || cpf.length() > 14) {
+			cpf = Util.validateCPF("Informe o CPF:", scanner).trim();
 		}
 		System.out.println("Buscando o CPF: " + cpf);
 		cliente = ClienteDB.buscaClientePorCPF(cpf);

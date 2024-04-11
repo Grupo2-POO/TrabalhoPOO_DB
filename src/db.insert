@@ -72,17 +72,18 @@ VALUES
     (10, 14, 1.10, 1);
 
 
-INSERT INTO public.pedido (idpedidoitem, dtemissao, dtentrega, observacao) 
+INSERT INTO public.pedido (idpedidoitem, observacao) 
 VALUES 
-    (1, '2024-04-01', '2024-04-10', 'Pedido para cliente A+'),
-    (2, '2024-03-28', '2024-04-05', 'Urgente: entrega imediata'),
-    (10, '2024-03-25', '2024-04-12', 'Pedido grande, necessita transporte especial'),
-    (3, '2024-03-20', '2024-04-08', 'Cliente X solicitou alterações no pedido'),
-    (4, '2024-03-15', '2024-04-20', 'Pedido internacional, prazo de entrega estendido'),
-    (5, '2024-03-10', '2024-04-09', 'Cliente Y pagará adiantado'),
-    (6, '2024-03-05', '2024-04-15', 'Pedido padrão, entrega conforme contrato'),
-    (7, '2024-03-01', '2024-04-18', 'Cliente X pediu para adicionar itens adicionais'),
-    (8, '2024-02-25', '2024-04-11', 'Pedido especial, produtos sob encomenda'),
-    (9, '2024-02-20', '2024-04-06', 'Cliente Y solicita entrega em endereço alternativo');
+    (1, 'Pedido para cliente A+'),
+    (1, 'Cliente é corno'),
+    (2, 'Urgente: entrega imediata'),
+    (10, 'Pedido grande, necessita transporte especial'),
+    (3, 'Cliente X solicitou alterações no pedido'),
+    (4, 'Pedido internacional, prazo de entrega estendido'),
+    (5, 'Cliente Y pagará adiantado'),
+    (6, 'Pedido padrão, entrega conforme contrato'),
+    (7, 'Cliente X pediu para adicionar itens adicionais'),
+    (8, 'Pedido especial, produtos sob encomenda'),
+    (9, 'Cliente Y solicita entrega em endereço alternativo');
 
 END;

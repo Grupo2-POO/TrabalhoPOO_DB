@@ -2,18 +2,10 @@ package teste;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
-import classes.Cliente;
-import classes.Pedido;
-import classes.PedidoItens;
-import classes.Produto;
-import database.ClienteDB;
 import database.DB;
-import database.PedidoDB;
-import database.PedidoItensDB;
-import database.ProdutoDB;
 import filemanager.FileManager;
+import menu.MenuBuscarProduto;
 
 public class PrincipalTeste {
 		
@@ -38,11 +30,11 @@ public class PrincipalTeste {
 //					System.out.println(p.toString());
 //				}
 //				
-				ArrayList<Pedido> todosPedidos = PedidoDB.buscarTodosPedidos();
-				for (Pedido p : todosPedidos) {
-					System.out.println(p.toString());
-				
-				}
+//				ArrayList<Pedido> todosPedidos = PedidoDB.buscarTodosPedidos();
+//				for (Pedido p : todosPedidos) {
+//					System.out.println(p.toString());
+//				
+//				}
 				
 //				ArrayList<PedidoItens> relacaoPedidoItem = PedidoItensDB.relacaoPedidoItem();
 //				for(PedidoItens relacao : relacaoPedidoItem) {

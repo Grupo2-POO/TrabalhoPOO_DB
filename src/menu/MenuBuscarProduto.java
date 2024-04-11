@@ -16,10 +16,7 @@ public class MenuBuscarProduto extends NossoMenu {
 	
 	@Override
 	public void executarMenu() {
-		buscaPorCodigo();
-		
 		super.executarMenu();
-		
 	}
 
 	@Override
@@ -28,8 +25,9 @@ public class MenuBuscarProduto extends NossoMenu {
 
 		case 1: buscaPorCodigo(); break;
 		case 2: {
-				Util.printMessage("Voltando ao menu inicial de pedidos vai rolar aqui"); 
-				break; 
+			MenuPrincipal menuPrincipal = new MenuPrincipal(ConstantesMenu.menuPrincipal, scanner);
+			menuPrincipal.executarMenu();
+			break; 
 			}
 		}
 		

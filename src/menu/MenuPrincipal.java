@@ -29,7 +29,8 @@ public class MenuPrincipal extends NossoMenu {
 	}
 	
 	private static void menuProduto() {
-		
+		MenuProduto menuProduto = new MenuProduto(ConstantesMenu.menuProduto, scanner);
+		menuProduto.executarMenu();
 	}
 
 }

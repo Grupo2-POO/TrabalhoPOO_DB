@@ -27,6 +27,13 @@ public class ProdutoDB {
 	    
 	    return executarConsultaCompletaProduto(sql);
 	}
+	
+	public static Produto buscaProdutoPorNome(String nome) {
+	    
+	    String sql = "SELECT * FROM produto WHERE descricao '%" + nome + "%'";
+	    
+	    return executarConsultaCompletaProduto(sql);
+	}
 
 	private static Produto executarConsultaCompletaProduto(String sql) {
 		try (Connection connection = DB.connect()) {

@@ -125,6 +125,25 @@ public final class Util {
 		return inputString;
 	}
 	
+	public static String validateCPF(String message, Scanner input) {
+	String inputString = "";
+		
+		while(!inputString.matches("-?\\d+")) {
+			System.out.println(message);
+			inputString = input.next();
+			
+			if(inputString.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+				inputString = Util.removerSimbolosCPF(inputString);
+			}
+			
+			if(!inputString.matches("-?\\d+")) {
+				System.out.println("\nInput inválido!");
+			}
+		}
+		
+		return inputString;
+	}
+	
 	public static boolean validateInput(Scanner input) {
 		String message = "Can we proceed? Input 1 for YES or 2 for NO";
 		int choice = 0;
