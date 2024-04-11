@@ -10,6 +10,8 @@ public record Produto
 		String descricao,
 		String categoria) 
 {
+
+
 	@Override
 	public String toString() {
 		return 	"\nidProduto: " 
@@ -25,5 +27,9 @@ public record Produto
 
 	public int getId() {
 		return idProduto;
+	}
+	
+	public int getQuantidade() {
+		return quantidade;
 	}
 }

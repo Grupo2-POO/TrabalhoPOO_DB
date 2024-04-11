@@ -31,10 +31,8 @@ public final class ConstantesMenu {
 	public static final String[] menuProduto = {
 			"\n\t- == MENU DE PRODUTO == -",
 			"  ° Escolha uma opção: \t \n",
-			" 1- Cadastrar produto\t\n",
-			" 2- Consultar produto\t\n",
-			" 3- Alterar produto\t\n",
-			" 4- Voltar ao menu inicial\t\n"
+			" 1- Consultar produto\t\n",
+			" 2- Voltar ao menu inicial\t\n"
 	};
 	
 	public static final String[] menuBuscarCliente = {
@@ -47,16 +45,14 @@ public final class ConstantesMenu {
 	};
 	
 	public static final String[] menuBuscarProduto = {
-			"\n\t- == MENU BUSCAR PRODUTO == -",
+			"\n\t- == DESEJA BUSCAR UM NOVO PRODUTO? == -",
 			"  ° Escolha uma opção: \t \n",
-			" 1- Buscar por cpf\t\n",
-			" 2- Buscar por nome\t\n",
-			" 3- Buscar por código\t\n",
-			" 4- Voltar ao menu inicial\t\n"
+			" 1- Sim\t\n",
+			" 2- Não\t\n"
 	};
 	
 	public static final String[] menuBuscarPedido = {
-			"\n\t- == MENU BUSCAR PRODUTO == -",
+			"\n\t- == MENU BUSCAR PEDIDO == -",
 			"  ° Escolha uma opção: \t \n",
 			" 1- Buscar por código\t\n",
 			" 2- Buscar por data de emissão\t\n",

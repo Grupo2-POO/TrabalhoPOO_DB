@@ -132,6 +132,25 @@ public final class Util {
 		return inputString;
 	}
 	
+	public static String validateCPF(String message, Scanner input) {
+	String inputString = "";
+		
+		while(!inputString.matches("-?\\d+")) {
+			System.out.println(message);
+			inputString = input.next();
+			
+			if(inputString.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+				inputString = Util.removerSimbolosCPF(inputString);
+			}
+			
+			if(!inputString.matches("-?\\d+")) {
+				System.out.println("\nInput inválido!");
+			}
+		}
+		
+		return inputString;
+	}
+	
 	public static boolean validateInput(Scanner input) {
 		String message = "Can we proceed? Input 1 for YES or 2 for NO";
 		int choice = 0;
@@ -159,5 +178,14 @@ public final class Util {
 	public static String removerSimbolosCPF(String cpf) {
         return cpf.replaceAll("[^0-9]", "");
     }
+	
+
+	public static String removerUltimosCaracteres(String texto) {
+	    if (texto == null || texto.length() < 2) {
+	        return texto; 
+	    }
+	    // retorna texto sem os dois últimos caracteres
+	    return texto.substring(0, texto.length() - 2); 
+	}
 	
 }
