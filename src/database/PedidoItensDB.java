@@ -8,6 +8,7 @@ import classes.PedidoItens;
 import classes.Produto;
 
 public class PedidoItensDB{
+	
 	public static ArrayList<PedidoItens> relacaoPedidoItem(){
 		ArrayList<PedidoItens> relacao = new ArrayList<PedidoItens>();
 		
@@ -74,7 +75,8 @@ public class PedidoItensDB{
 														 response.getDouble("vldesconto"),
 														 produto,
 														 cliente,
-														 produto.getId(),
+														 // CONFERIR ISSO A ID DO PRODUTO
+														 response.getInt("idpedidoitem"),
 														 response.getInt("qtproduto")
 														);
 				relacao.add(pedidoItem);
@@ -85,4 +87,10 @@ public class PedidoItensDB{
 		}
 		return relacao;
 	}
+
+	
+	
+	
+
+	
 }

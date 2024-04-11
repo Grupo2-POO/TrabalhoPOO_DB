@@ -5,19 +5,35 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import classes.Cliente;
 import classes.Produto;
 
 public class ProdutoDB {
 	
 	public static ArrayList<Produto> buscarTodosProdutos() {
-		ArrayList<Produto> produtos = new ArrayList<Produto>();
+		
 		String sql = "SELECT * FROM produto";
 		
+		ArrayList<Produto> produtos = new ArrayList<Produto>();
+		
+		produtos.add(executarConsultaCompletaProduto(sql));
+		
+		return produtos;
+	}
+	
+	public static Produto buscaProdutoPorCodigo(int codigo) {
+	    
+	    String sql = "SELECT * FROM produto WHERE idproduto='" + codigo + "'";
+	    
+	    return executarConsultaCompletaProduto(sql);
+	}
+
+	private static Produto executarConsultaCompletaProduto(String sql) {
 		try (Connection connection = DB.connect()) {
-			Statement statement = connection.createStatement();
-			var response = statement.executeQuery(sql);
-			while (response.next()) {
-				Produto produto = new Produto(
+	        Statement statement = connection.createStatement();
+	        var response = statement.executeQuery(sql);
+	        if (response.next()) {
+	        	Produto produto = new Produto(
 						response.getInt("idproduto"),
 						response.getDouble("vlcusto"),
 						response.getDouble("vlvenda"),
@@ -25,13 +41,15 @@ public class ProdutoDB {
 						response.getString("descricao"),
 						response.getString("categoria")
 						);
-			
-				produtos.add(produto);
-			}
-		} catch (SQLException error) {
-			System.err.println(error.getMessage());
-		}
-				
-		return produtos;
+	        	
+	        	return produto;
+	        } else {
+	        	return null;
+	        }
+	        
+	    } catch (SQLException error) {
+//	        System.err.println(error.getMessage());
+	        return null;
+	    }
 	}
 }

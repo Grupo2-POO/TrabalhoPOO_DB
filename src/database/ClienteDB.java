@@ -65,8 +65,6 @@ public class ClienteDB {
 	    return executarConsultaCompletaCliente(sql);
 	}
 	
-	
-	
 	private static Cliente executarConsultaCompletaCliente(String sql) {
 			Cliente cliente = new Cliente();
 			try (Connection connection = DB.connect()) {
@@ -91,6 +89,5 @@ public class ClienteDB {
 		    }
 			return cliente;
 	}
-
 
 }

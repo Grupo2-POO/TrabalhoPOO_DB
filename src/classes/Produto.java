@@ -10,6 +10,8 @@ public record Produto
 		String descricao,
 		String categoria) 
 {
+
+
 	@Override
 	public String toString() {
 		return 	"\nidProduto: " 

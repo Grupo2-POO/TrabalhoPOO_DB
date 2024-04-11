@@ -3,6 +3,8 @@ package menu;
 import java.util.Scanner;
 
 import classes.Cliente;
+import classes.PedidoItens;
+import classes.Produto;
 import util.Util;
 
 public final class MenuPedido extends NossoMenu {
@@ -36,7 +38,8 @@ public final class MenuPedido extends NossoMenu {
 		
 		Util.printMessage("Para efetuar um novo pedido, precisamos de um cliente ");
 		
-		MenuBuscarCliente buscarCliente = new MenuBuscarCliente(ConstantesMenu.menuBuscarCliente, scanner);
+		MenuBuscarCliente buscarCliente = new MenuBuscarCliente(
+				ConstantesMenu.menuBuscarCliente, scanner);
 
 		buscarCliente.executarMenu();
 		
@@ -53,6 +56,36 @@ public final class MenuPedido extends NossoMenu {
 		
 		Util.printMessage("Cliente encontrado: ");
 		System.out.println(cliente.toString());
+		
+		//
+		Util.printMessage("\nAgora vem a seleção de produto por codigo");
+		
+		MenuBuscarProduto buscarProduto = new MenuBuscarProduto(
+				ConstantesMenu.menuBuscarProduto, scanner);
+		
+		buscarProduto.executarMenu();
+		
+		Produto produto = buscarProduto.getProduto();
+		
+		// cria um pedido item a adicionar ao database
+		PedidoItens pedidoItem = new PedidoItens(
+				 produto.getValorVenda(),
+				 0.0, // tem que perguntar se tem desconto?
+				 produto,
+				 cliente,
+				 // CONFERIR ISSO A ID DO PRODUTO não pode ser a idPedidoItems?
+				 produto.getId(),
+				 0 // tem que perguntar a quantidade do produto?
+				);
+				
+		
+		Util.printMessage("\nEsse foi o produto selecionado:");
+
+		
+		System.out.println(produto.toString());
+
+		
+		
 		
 	}
 
