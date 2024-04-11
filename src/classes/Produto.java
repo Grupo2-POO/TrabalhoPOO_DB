@@ -28,4 +28,8 @@ public record Produto
 	public int getId() {
 		return idProduto;
 	}
+	
+	public int getQuantidade() {
+		return quantidade;
+	}
 }

@@ -10,9 +10,10 @@ import classes.Pedido;
 import classes.PedidoItens;
 import classes.Produto;
 
-public class PedidoDB {
+public class PedidoDB implements CRUD<Pedido>{
 		
-	public static ArrayList<Pedido> buscarTodosPedidos() {
+	@Override
+	public ArrayList<Pedido> buscarTodos() {
 		ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 		String sql = """
 				SELECT 
@@ -96,6 +97,23 @@ public class PedidoDB {
 			System.err.println(error.getMessage());
 		}
 		return pedidos;
+	}
+
+	@Override
+	public Pedido buscarUmPor(String nomeAtributo, String valorAtributo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deletar() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void adicionar(String sql) {
+		// TODO Auto-generated method stub
 		
 	}
 }

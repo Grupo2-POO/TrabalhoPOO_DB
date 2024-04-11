@@ -45,10 +45,10 @@ public final class ConstantesMenu {
 	};
 	
 	public static final String[] menuBuscarProduto = {
-			"\n\t- == DESEJA BUSCAR UM PRODUTO? == -",
+			"\n\t- == DESEJA BUSCAR UM NOVO PRODUTO? == -",
 			"  ° Escolha uma opção: \t \n",
-			" 1- Buscar por código\t\n",
-			" 2- Já tem tudo o que precisa?\t\n"
+			" 1- Sim\t\n",
+			" 2- Não\t\n"
 	};
 	
 	public static final String[] menuBuscarPedido = {

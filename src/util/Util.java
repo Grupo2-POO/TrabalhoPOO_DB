@@ -172,5 +172,13 @@ public final class Util {
         return cpf.replaceAll("[^0-9]", "");
     }
 	
+	public static String removerUltimosCaracteres(String texto) {
+	    if (texto == null || texto.length() < 2) {
+	        return texto; 
+	    }
+	    // retorna texto sem os dois últimos caracteres
+	    return texto.substring(0, texto.length() - 2); 
+	}
+	
 	
 }

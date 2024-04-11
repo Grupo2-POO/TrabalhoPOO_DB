@@ -8,25 +8,35 @@ import util.Util;
 public class MenuBuscarProduto extends NossoMenu {
 	
 	private Produto produto;
+	private ProdutoDB produtoDB;
+	private boolean selecionandoProdutos;
 
 	public MenuBuscarProduto(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		// TODO Auto-generated constructor stub
+		
+		produtoDB = new ProdutoDB();
 	}
 	
 	@Override
 	public void executarMenu() {
-		super.executarMenu();
+		selecionandoProdutos = true;
+		while(selecionandoProdutos) {
+			buscaPorCodigo();
+			
+			
+			super.executarMenu();
+		}
+		
 	}
 
 	@Override
 	public void processarOpcao(int opcao) {
 		switch (opcao) {
 
-		case 1: buscaPorCodigo(); break;
+		case 1: executarMenu(); break;
 		case 2: {
-			MenuPrincipal menuPrincipal = new MenuPrincipal(ConstantesMenu.menuPrincipal, scanner);
-			menuPrincipal.executarMenu();
+			selecionandoProdutos = false;
 			break; 
 			}
 		}
@@ -45,7 +55,9 @@ public class MenuBuscarProduto extends NossoMenu {
 		if(codigo > 0) {
 			System.out.println("Buscando o Produto de Código: " + codigo);
 			// todo busca produto por codigo
-			produto = ProdutoDB.buscaProdutoPorCodigo(codigo);
+			String cdString = codigo + "";
+			
+			produto = produtoDB.buscarUmPor("idproduto", cdString.trim());
 			
 			if(produto != null) {
 				System.out.println(produto.toString());

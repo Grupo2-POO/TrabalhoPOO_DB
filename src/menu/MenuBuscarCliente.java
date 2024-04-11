@@ -9,10 +9,11 @@ import util.Util;
 public final class MenuBuscarCliente extends NossoMenu {
 	
 	private Cliente cliente;
+	private ClienteDB clienteDB;
 
 	public MenuBuscarCliente(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
-
+		clienteDB = new ClienteDB();
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public final class MenuBuscarCliente extends NossoMenu {
 			cpf = Util.validateCPF("Informe o CPF:", scanner).trim();
 		}
 		System.out.println("Buscando o CPF: " + cpf);
-		cliente = ClienteDB.buscaClientePorCPF(cpf);
+		cliente = clienteDB.buscarUmPor("cpf", cpf);
 		
 	}
 
@@ -48,16 +49,16 @@ public final class MenuBuscarCliente extends NossoMenu {
 			nome = Util.pedeLinha("Informe o Nome:", scanner).trim();
 		}
 		System.out.println("Buscando o Nome: " + nome);
-		cliente = ClienteDB.buscaClientePorNome(nome);
+		cliente = clienteDB.buscarUmPor("nome", nome);
 	}
 	
 	private void buscaPorCodigo() {
-		int codigo = -1;
-		while(codigo == -1) {
-			codigo = Integer.parseInt(Util.askIntegerInput("Informe o Código:", scanner).trim());
+		String codigo = "";
+		while(codigo.length() < 1) {
+			codigo = Util.askIntegerInput("Informe o Código:", scanner).trim();
 		}
 		System.out.println("Buscando o Código: " + codigo);
-		cliente = ClienteDB.buscaClientePorCodigo(codigo);
+		cliente = clienteDB.buscarUmPor("idcliente", codigo);
 		
 	}
 	
