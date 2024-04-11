@@ -60,10 +60,10 @@ public class PrincipalTeste {
 //				for (Pedido p : todosPedidos) {
 //					System.out.println(p.toString());
 
-				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
-				for (Pedido p : todosPedidos) {
-					System.out.println(p.toString());
-				}
+//				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
+//				for (Pedido p : todosPedidos) {
+//					System.out.println(p.toString());
+//				}
 
 				
 				ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
