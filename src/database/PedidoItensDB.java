@@ -19,10 +19,6 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 		String sql = """
 				SELECT 
 			    pi.idpedidoitem,
-			    p.idpedido,
-				p.dtemissao,
-				p.dtentrega,
-				p.observacao,
 			    c.idcliente,
 			    c.nome,
 			    c.cpf,
@@ -44,8 +40,9 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 				    public.produto pr ON pi.idproduto = pr.idproduto
 				JOIN
 				    public.cliente c ON pi.idcliente = c.idcliente;
+			 
+				   
 				""";
-		
 		try(var conn = DB.connect()){
 			Statement statement = conn.createStatement();
 			
@@ -73,7 +70,6 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 						
 						);
 
-				
 				PedidoItens pedidoItem = new PedidoItens(
 						 produto.getValorVenda(),
 						 response.getDouble("vldesconto"),
