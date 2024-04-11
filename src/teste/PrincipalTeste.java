@@ -30,11 +30,22 @@ public class PrincipalTeste {
 				PedidoItensDB pedidoItensDB = new PedidoItensDB();
 				
 //				Util.wait(10);
+
 				ArrayList<Cliente> todosClientes = clienteDB.buscarTodos();
 				for (int i = 0; i < todosClientes.size(); i++ ) {
 					Cliente cliente = todosClientes.get(i);
 					System.out.println(cliente.toString());
 				}
+
+
+//				ArrayList<Cliente> todosClientes = clienteDB.buscarTodos();
+//				for (int i = 0; i < todosClientes.size(); i++ ) {
+//					Cliente cliente = todosClientes.get(i);
+//					System.out.println(cliente.toString());
+//				}
+
+
+
 //				
 //				ArrayList<Produto> todosProdutos = produtoDB.buscarTodos();
 //				// Exemplo de for each loop:
@@ -44,10 +55,16 @@ public class PrincipalTeste {
 //					System.out.println(p.toString());
 //				}
 //				
+
 //				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
 //				for (Pedido p : todosPedidos) {
 //					System.out.println(p.toString());
-//				}
+
+				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
+				for (Pedido p : todosPedidos) {
+					System.out.println(p.toString());
+				}
+
 				
 				ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
 				for(PedidoItens relacao : relacaoPedidoItem) {
@@ -56,7 +73,6 @@ public class PrincipalTeste {
 			}
 			
 	}
-	
 	
 	public static boolean connectToDatabase() {
 		
