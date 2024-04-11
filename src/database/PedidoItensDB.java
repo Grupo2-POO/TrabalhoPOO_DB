@@ -75,14 +75,15 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 
 				
 				PedidoItens pedidoItem = new PedidoItens(
-														 produto.getValorVenda(),
-														 response.getDouble("vldesconto"),
-														 produto,
-														 cliente,
-														 // CONFERIR ISSO A ID DO PRODUTO
-														 response.getInt("idpedidoitem"),
-														 response.getInt("qtproduto")
-														);
+						 produto.getValorVenda(),
+						 response.getDouble("vldesconto"),
+						 produto,
+						 cliente,
+						 // CONFERIR ISSO A ID DO PRODUTO
+						 response.getInt("idpedidoitem"),
+						 response.getInt("qtproduto")
+						);
+				
 				relacao.add(pedidoItem);
 			}
 			
