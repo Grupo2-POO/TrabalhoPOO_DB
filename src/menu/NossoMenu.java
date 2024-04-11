@@ -33,7 +33,7 @@ public abstract class NossoMenu {
 		}
 	}
 	
-	public int pegarOpcaoInt() {
+	private int pegarOpcaoInt() {
 		int opcao = 0;
 		while (opcao < 1 || opcao > constantes.length + 1) {
 				opcao = Util.pedirOpcaoInt("Digite uma opção válida", scanner);

@@ -1,4 +1,4 @@
-package classes;
+package database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,8 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-import database.DB;
-import util.Util;
+import classes.Cliente;
 
 public class ClienteDB {
 	
@@ -45,6 +44,7 @@ public class ClienteDB {
 	public static Cliente buscaClientePorCPF(String cpf) {
 	    
 	    String sql = "SELECT * FROM cliente WHERE cpf='" + cpf + "'";
+	    
 	    
 	    return executarConsultaCompletaCliente(sql);
 	}

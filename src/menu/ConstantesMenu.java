@@ -1,7 +1,5 @@
 package menu;
 
-import util.Util;
-
 public final class ConstantesMenu {
 	
 	public static final String[] menuPrincipal = {

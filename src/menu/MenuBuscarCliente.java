@@ -3,10 +3,10 @@ package menu;
 import java.util.Scanner;
 
 import classes.Cliente;
-import classes.ClienteDB;
+import database.ClienteDB;
 import util.Util;
 
-public class MenuBuscarCliente extends NossoMenu {
+public final class MenuBuscarCliente extends NossoMenu {
 	
 	private Cliente cliente;
 
