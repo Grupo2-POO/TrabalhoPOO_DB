@@ -90,14 +90,21 @@ public final class Util {
 	}
 
 	public static String askIntegerInput(String message, Scanner input) {
-		String inputString = "";	
+		String inputString = "";
+		
 		while(!inputString.matches("-?\\d+")) {
 			System.out.println(message);
 			inputString = input.next();
+			
+			if(inputString.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+				inputString = Util.removerSimbolosCPF(inputString);
+			}
+			
 			if(!inputString.matches("-?\\d+")) {
 				System.out.println("\nInput inválido!");
 			}
 		}
+		
 		return inputString;
 	}
 	
@@ -172,6 +179,7 @@ public final class Util {
         return cpf.replaceAll("[^0-9]", "");
     }
 	
+
 	public static String removerUltimosCaracteres(String texto) {
 	    if (texto == null || texto.length() < 2) {
 	        return texto; 
@@ -179,6 +187,5 @@ public final class Util {
 	    // retorna texto sem os dois últimos caracteres
 	    return texto.substring(0, texto.length() - 2); 
 	}
-	
 	
 }
