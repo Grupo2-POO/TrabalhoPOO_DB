@@ -24,11 +24,11 @@ public class PrincipalTeste {
 				System.out.println("Conectado com sucesso!");
 				
 //				Util.wait(10);
-//				ArrayList<Cliente> todosClientes = ClienteDB.buscarTodosClientes();
-//				for (int i = 0; i < todosClientes.size(); i++ ) {
-//					Cliente cliente = todosClientes.get(i);
-//					System.out.println(cliente.toString());
-//				}
+				ArrayList<Cliente> todosClientes = ClienteDB.buscarTodosClientes();
+				for (int i = 0; i < todosClientes.size(); i++ ) {
+					Cliente cliente = todosClientes.get(i);
+					System.out.println(cliente.toString());
+				}
 //				
 //				ArrayList<Produto> todosProdutos = ProdutoDB.buscarTodosProdutos();
 //				// Exemplo de for each loop:
@@ -38,11 +38,11 @@ public class PrincipalTeste {
 //					System.out.println(p.toString());
 //				}
 //				
-				ArrayList<Pedido> todosPedidos = PedidoDB.buscarTodosPedidos();
-				for (Pedido p : todosPedidos) {
-					System.out.println(p.toString());
-				
-				}
+//				ArrayList<Pedido> todosPedidos = PedidoDB.buscarTodosPedidos();
+//				for (Pedido p : todosPedidos) {
+//					System.out.println(p.toString());
+//				
+//				}
 				
 //				ArrayList<PedidoItens> relacaoPedidoItem = PedidoItensDB.relacaoPedidoItem();
 //				for(PedidoItens relacao : relacaoPedidoItem) {

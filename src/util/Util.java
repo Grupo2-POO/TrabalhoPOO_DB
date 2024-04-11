@@ -90,14 +90,21 @@ public final class Util {
 	}
 
 	public static String askIntegerInput(String message, Scanner input) {
-		String inputString = "";	
+		String inputString = "";
+		
 		while(!inputString.matches("-?\\d+")) {
 			System.out.println(message);
 			inputString = input.next();
+			
+			if(inputString.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+				inputString = Util.removerSimbolosCPF(inputString);
+			}
+			
 			if(!inputString.matches("-?\\d+")) {
 				System.out.println("\nInput inválido!");
 			}
 		}
+		
 		return inputString;
 	}
 	
@@ -145,5 +152,12 @@ public final class Util {
 		}
 	}
 	
+	public static String formatarCPF(String cpf) {
+        return cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+    }
+	
+	public static String removerSimbolosCPF(String cpf) {
+        return cpf.replaceAll("[^0-9]", "");
+    }
 	
 }

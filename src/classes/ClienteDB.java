@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import database.DB;
+import util.Util;
 
 public class ClienteDB {
 	
@@ -44,7 +45,6 @@ public class ClienteDB {
 	public static Cliente buscaClientePorCPF(String cpf) {
 	    
 	    String sql = "SELECT * FROM cliente WHERE cpf='" + cpf + "'";
-	    
 	    
 	    return executarConsultaCompletaCliente(sql);
 	}
