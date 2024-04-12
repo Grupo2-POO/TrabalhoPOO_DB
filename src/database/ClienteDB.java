@@ -74,8 +74,13 @@ public class ClienteDB implements CRUD<Cliente> {
 				nomeTabela,
 				nomeAtributo,
 				valorAtributo);
-		return executarConsultaCompletaCliente(sql);
 		
+		if(nomeAtributo.equals("nome")) {
+			sql = "select * from " + nomeTabela + " where nome like '%" + valorAtributo + "%'"; 
+		
+		}
+		
+		return executarConsultaCompletaCliente(sql);
 	}
 
 	@Override
