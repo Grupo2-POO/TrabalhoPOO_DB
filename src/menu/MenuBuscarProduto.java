@@ -34,11 +34,12 @@ public class MenuBuscarProduto extends NossoMenu {
 	public void processarOpcao(int opcao) {
 		switch (opcao) {
 
-		case 1: executarMenu(); break;
-		case 2: {
+		case 2: executarMenu(); break;
+		case 1: {
 			selecionandoProdutos = false;
 			break; 
 			}
+		default: break;
 		}
 		
 	}

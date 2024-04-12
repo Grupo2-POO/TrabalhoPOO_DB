@@ -106,14 +106,48 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 				valores[4]
 				);
 		
+		String sqlAlteracao = String.format("update produto set quantidade = (quantidade - %s) where idproduto = %s;", valores[4], valores[1]);
+		
 		try(var conn = DB.connect()){
 			Statement statement = conn.createStatement();
-
 			statement.executeUpdate(sql);
+			statement.executeUpdate(sqlAlteracao);
+		} catch(SQLException e) {
+			System.err.println(e);
+		}
+	}
+	
+	public int adicionarPedidoItens(String[] valores) {
+		String sql = String.format(
+				"insert into %s"
+				+ "(idcliente, idproduto, vlunitario, vldesconto, qtproduto) "
+				+ "values('%s','%s', '%s', '%s', '%s');",
+				"pedidoitens",
+				valores[0],
+				valores[1],
+				valores[2],
+				valores[3],
+				valores[4]
+				);
+		
+		String sqlAlteracao = String.format("update produto set quantidade = (quantidade - %s) where idproduto = %s;", valores[4], valores[1]);
+		
+		
+		try(var conn = DB.connect()){
+			Statement statement = conn.createStatement();
+			var resposta = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			statement.executeUpdate(sqlAlteracao);
+			if(resposta > 0) {
+				var chavesInseridas = statement.getGeneratedKeys();
+				if(chavesInseridas.next()) {
+					return chavesInseridas.getInt(1);
+				}
+			}
 		} catch(SQLException e) {
 			System.err.println(e);
 		}
 		
+		return 0;
 	}
 
 	@Override

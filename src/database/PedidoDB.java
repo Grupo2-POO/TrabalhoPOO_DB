@@ -108,8 +108,18 @@ public class PedidoDB implements CRUD<Pedido>{
 	
 	@Override
 	public void adicionar(String[] valores) {
-		// TODO Auto-generated method stub
+	}
+	
+	public void adicionarPedido(int idpedidoitem, String observacao) {
+		String sql = String.format("insert into public.pedido (idpedidoitem, observacao) "
+				+ "values (%d, '%s')", idpedidoitem + 1, observacao);
 		
+		try(var conn = DB.connect()){
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(sql);
+		} catch(SQLException e) {
+			System.err.println(e);
+		}
 	}
 
 	@Override

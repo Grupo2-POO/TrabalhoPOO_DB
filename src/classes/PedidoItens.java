@@ -10,6 +10,10 @@ public record PedidoItens
 		int idPedidoitem,
 		int quantidadeProduto) 
 {
+	public int getId() {
+		return idPedidoitem;
+	}
+
 	public int getQuantidadeProduto() {
 		return quantidadeProduto;
 	}
