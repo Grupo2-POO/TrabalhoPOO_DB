@@ -54,36 +54,5 @@ VALUES
 	('Carregador Portátil Anker PowerCore 20000', 150.00, 200.00, 15, 'Acessórios Eletrônicos'),
 	('Webcam Logitech C922 Pro', 300.00, 400.00, 10, 'Periféricos de Computador'),
 	('Placa de Vídeo NVIDIA GeForce RTX 3080', 5000.00, 6000.00, 4, 'Componentes de Computador');
-	
-INSERT INTO public.pedidoitens (idcliente, idproduto, vldesconto, qtproduto)
-VALUES
-    (1, 23, 0.60, 4),
-    (1, 32, 0.80, 1),
-    (2, 37, 0.25, 2),
-    (2, 2, 1.05, 4),
-    (2, 8, 0.90, 1),
-    (3, 7, 0.40, 12),
-    (4, 1, 0.75, 13),
-    (5, 2, 0.15, 4),
-    (6, 31, 1.20, 8),
-    (7, 11, 0.70, 1),
-    (8, 26, 0.35, 3),
-    (9, 33, 0.95, 2),
-    (10, 14, 1.10, 1);
-
-
-INSERT INTO public.pedido (idpedidoitem, observacao) 
-VALUES 
-    (1, 'Pedido para cliente A+'),
-    (1, 'Cliente é corno'),
-    (2, 'Urgente: entrega imediata'),
-    (10, 'Pedido grande, necessita transporte especial'),
-    (3, 'Cliente X solicitou alterações no pedido'),
-    (4, 'Pedido internacional, prazo de entrega estendido'),
-    (5, 'Cliente Y pagará adiantado'),
-    (6, 'Pedido padrão, entrega conforme contrato'),
-    (7, 'Cliente X pediu para adicionar itens adicionais'),
-    (8, 'Pedido especial, produtos sob encomenda'),
-    (9, 'Cliente Y solicita entrega em endereço alternativo');
 
 END;
