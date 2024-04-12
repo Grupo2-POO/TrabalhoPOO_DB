@@ -11,7 +11,8 @@ import util.Util;
 
 public class ClienteDB implements CRUD<Cliente> {
 	
-	private static Cliente executarConsultaCompletaCliente(String sql) {
+	@Override
+	public Cliente executarConsultaCompleta(String sql) {
 			Cliente cliente = new Cliente();
 			try (Connection connection = DB.connect()) {
 		        Statement statement = connection.createStatement();
@@ -66,32 +67,13 @@ public class ClienteDB implements CRUD<Cliente> {
 
 	
 	@Override
-	public Cliente buscarUmPor(String nomeAtributo, String valorAtributo) {
-		
-		String nomeTabela = Util.removerUltimosCaracteres(this.getClass().getSimpleName());
-		
-		String sql = String.format("SELECT * FROM %s WHERE %s='%s'", 
-				nomeTabela,
-				nomeAtributo,
-				valorAtributo);
-		
-		if(nomeAtributo.equals("nome")) {
-			sql = "select * from " + nomeTabela + " where nome like '%" + valorAtributo + "%'"; 
-		
-		}
-		
-		return executarConsultaCompletaCliente(sql);
-	}
-
-	@Override
 	public void deletar() {
 		// Não precisa deletar clientes
 		
 	}
 
-
 	@Override
-	public void adicionar(String sql) {
+	public void adicionar(String[] valores) {
 		// TODO Auto-generated method stub
 		
 	}

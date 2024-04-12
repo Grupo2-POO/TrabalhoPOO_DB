@@ -39,7 +39,7 @@ public final class MenuBuscarCliente extends NossoMenu {
 			cpf = Util.validateCPF("Informe o CPF:", scanner).trim();
 		}
 		System.out.println("Buscando o CPF: " + cpf);
-		cliente = clienteDB.buscarUmPor("cpf", cpf);
+		cliente = clienteDB.buscarUmPor("cpf", cpf, "cliente");
 		
 	}
 
@@ -52,7 +52,7 @@ public final class MenuBuscarCliente extends NossoMenu {
 			}
 		}
 		System.out.println("Buscando o Nome: " + nome);
-		cliente = clienteDB.buscarUmPor("nome", nome);
+		cliente = clienteDB.buscarUmPor("nome", nome, "cliente");
 	}
 	
 	private void buscaPorCodigo() {
@@ -61,7 +61,7 @@ public final class MenuBuscarCliente extends NossoMenu {
 			codigo = Util.askIntegerInput("Informe o Código:", scanner).trim();
 		}
 		System.out.println("Buscando o Código: " + codigo);
-		cliente = clienteDB.buscarUmPor("idcliente", codigo);
+		cliente = clienteDB.buscarUmPor("idcliente", codigo, "cliente");
 		
 	}
 	

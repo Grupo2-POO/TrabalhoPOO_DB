@@ -11,31 +11,6 @@ import util.Util;
 
 public class ProdutoDB implements CRUD<Produto> {
 	
-	private static Produto executarConsultaCompletaProduto(String sql) {
-		try (Connection connection = DB.connect()) {
-	        Statement statement = connection.createStatement();
-	        var response = statement.executeQuery(sql);
-	        if (response.next()) {
-	        	Produto produto = new Produto(
-						response.getInt("idproduto"),
-						response.getDouble("vlcusto"),
-						response.getDouble("vlvenda"),
-						response.getInt("quantidade"),
-						response.getString("descricao"),
-						response.getString("categoria")
-						);
-	        	
-	        	return produto;
-	        } else {
-	        	return null;
-	        }
-	        
-	    } catch (SQLException error) {
-//	        System.err.println(error.getMessage());
-	        return null;
-	    }
-	}
-
 	@Override
 	public ArrayList<Produto> buscarTodos() {
 		String sql = "SELECT * FROM produto";
@@ -66,21 +41,35 @@ public class ProdutoDB implements CRUD<Produto> {
 		return produtos;
 	}
 
-	
 	@Override
-	public Produto buscarUmPor(String nomeAtributo, String valorAtributo) {
-		
-		String nomeTabela = Util.removerUltimosCaracteres(this.getClass().getSimpleName());
-		String sql = String.format("SELECT * FROM %s WHERE %s='%s'", 
-				nomeTabela,
-				nomeAtributo,
-				valorAtributo);
-		
-		return executarConsultaCompletaProduto(sql);
+	public Produto executarConsultaCompleta(String sql) {
+
+		try (Connection connection = DB.connect()) {
+	        Statement statement = connection.createStatement();
+	        var response = statement.executeQuery(sql);
+	        if (response.next()) {
+	        	Produto produto = new Produto(
+						response.getInt("idproduto"),
+						response.getDouble("vlcusto"),
+						response.getDouble("vlvenda"),
+						response.getInt("quantidade"),
+						response.getString("descricao"),
+						response.getString("categoria")
+						);
+	        	
+	        	return produto;
+	        } else {
+	        	return null;
+	        }
+	        
+	    } catch (SQLException error) {
+//	        System.err.println(error.getMessage());
+	        return null;
+	    }
 	}
-	
+
 	@Override
-	public void adicionar(String sql) {
+	public void adicionar(String[] valores) {
 		// TODO Auto-generated method stub
 		
 		// não precisa adicionar produtos ao database, certo?
@@ -95,4 +84,6 @@ public class ProdutoDB implements CRUD<Produto> {
 		// não precisa deletar produtos do database,certo?
 		
 	}
+
+	
 }
