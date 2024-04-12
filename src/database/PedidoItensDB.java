@@ -5,6 +5,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import classes.Cliente;
+import classes.Pedido;
 import classes.PedidoItens;
 import classes.Produto;
 import util.Util;
@@ -89,21 +90,21 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 		return relacao;
 	}
 
-	@Override
-	public PedidoItens buscarUmPor(String nomeAtributo, String valorAtributo) {
-		// TODO Auto-generated method stub
-		String nomeTabela = Util.removerUltimosCaracteres(this.getClass().getSimpleName());
-		
-		String sql = String.format("SELECT * FROM %s WHERE %s='%s'", 
-				nomeTabela,
-				nomeAtributo,
-				valorAtributo);
-		
-		return null;
-	}
 	
 	@Override
-	public void adicionar(String sql) {
+	public void adicionar(String[] valores) {
+		
+		String sql = String.format(
+				"insert into %s"
+				+ "(idcliente, idproduto, vlunitario, vldesconto, qtproduto) "
+				+ "values('%s','%s', '%s', '%s', '%s');",
+				"pedidoitens",
+				valores[0],
+				valores[1],
+				valores[2],
+				valores[3],
+				valores[4]
+				);
 		
 		try(var conn = DB.connect()){
 			Statement statement = conn.createStatement();
@@ -120,4 +121,12 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public PedidoItens executarConsultaCompleta(String sql) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

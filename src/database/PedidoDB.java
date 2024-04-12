@@ -99,12 +99,7 @@ public class PedidoDB implements CRUD<Pedido>{
 		return pedidos;
 	}
 
-	@Override
-	public Pedido buscarUmPor(String nomeAtributo, String valorAtributo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void deletar() {
 		// TODO Auto-generated method stub
@@ -112,8 +107,14 @@ public class PedidoDB implements CRUD<Pedido>{
 	}
 	
 	@Override
-	public void adicionar(String sql) {
+	public void adicionar(String[] valores) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Pedido executarConsultaCompleta(String sql) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

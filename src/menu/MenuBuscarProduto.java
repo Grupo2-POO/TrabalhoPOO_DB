@@ -57,7 +57,7 @@ public class MenuBuscarProduto extends NossoMenu {
 			// todo busca produto por codigo
 			String cdString = codigo + "";
 			
-			produto = produtoDB.buscarUmPor("idproduto", cdString.trim());
+			produto = produtoDB.buscarUmPor("idproduto", cdString.trim(), "produto");
 			
 			if(produto != null) {
 				System.out.println(produto.toString());

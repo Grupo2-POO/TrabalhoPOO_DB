@@ -1,10 +1,14 @@
 package menu;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 import classes.Cliente;
 import classes.PedidoItens;
 import classes.Produto;
+import database.DB;
 import database.PedidoItensDB;
 import util.Util;
 
@@ -17,6 +21,8 @@ public final class MenuPedido extends NossoMenu {
 		// TODO Auto-generated constructor stub
 		pedidoItensDB = new PedidoItensDB();
 	}
+
+	
 
 	@Override
 	public void processarOpcao(int opcao) {
@@ -99,24 +105,21 @@ public final class MenuPedido extends NossoMenu {
 		
 		// cria um pedido item a adicionar ao database
 		
-		String sql = String.format(
-				"insert into %s"
-				+ "(idcliente, idproduto, vlunitario, vldesconto, qtproduto) "
-				+ "values('%s','%s', '%s', '%s', '%s');",
-				"pedidoitens",
-				cliente.getIdCliente(),
-				produto.getId(),
-				produto.getValorVenda(),
-				vlDesconto,
-				qtd
-				);
+		String[] valores = { 
+				String.valueOf(cliente.getIdCliente()),
+				String.valueOf(produto.getId()),
+				String.valueOf(produto.getValorVenda()),
+				String.valueOf(vlDesconto),
+				String.valueOf(qtd)
+		};
 		
+		pedidoItensDB.adicionar(valores);
+
 		Util.printMessage(
 				"\nAdicionando o pedidoitem com " 
 						+ qtd + " " + produto.descricao() + "\nNão estamos dando nenhum desconto ainda");
-
-		// adiciona o pedido item
-		pedidoItensDB.adicionar(sql);
+		
+		
 		
 	}
 

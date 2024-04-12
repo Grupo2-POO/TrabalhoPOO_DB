@@ -3,6 +3,7 @@ package teste;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import classes.Cliente;
 import classes.Pedido;
@@ -13,7 +14,9 @@ import database.PedidoDB;
 import database.PedidoItensDB;
 import database.ProdutoDB;
 import filemanager.FileManager;
+import menu.ConstantesMenu;
 import menu.MenuBuscarProduto;
+import menu.MenuPedido;
 
 public class PrincipalTeste {
 		
@@ -56,20 +59,18 @@ public class PrincipalTeste {
 //				}
 //				
 
-//				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
-//				for (Pedido p : todosPedidos) {
-//					System.out.println(p.toString());
 
-//				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
-//				for (Pedido p : todosPedidos) {
-//					System.out.println(p.toString());
-//				}
+				ArrayList<Pedido> todosPedidos = pedidoDB.buscarTodos();
+				for (Pedido p : todosPedidos) {
+					System.out.println(p.toString());
+				}
 
 				
-				ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
-				for(PedidoItens relacao : relacaoPedidoItem) {
-					System.out.println(relacao.toString());
-				}
+//				ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
+//				for(PedidoItens relacao : relacaoPedidoItem) {
+//					System.out.println(relacao.toString());
+//				}
+			
 			}
 			
 	}
