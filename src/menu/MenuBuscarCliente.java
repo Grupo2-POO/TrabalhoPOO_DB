@@ -45,8 +45,11 @@ public final class MenuBuscarCliente extends NossoMenu {
 
 	private void buscaPorNome() {
 		String nome = "";
-		while(nome.length() < 1 || nome.length() > 100) {
+		while(nome.length() < 3 || nome.length() > 100) {
 			nome = Util.pedeLinha("Informe o Nome:", scanner).trim();
+			if(nome.length() < 3) {
+				System.out.println("Nome muito curto para pesquisa!");
+			}
 		}
 		System.out.println("Buscando o Nome: " + nome);
 		cliente = clienteDB.buscarUmPor("nome", nome);
