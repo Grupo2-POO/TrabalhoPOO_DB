@@ -30,8 +30,6 @@ public final class MenuPedido extends NossoMenu {
 		produtosPedido = new ArrayList<>();
 	}
 
-	
-
 	@Override
 	public void processarOpcao(int opcao) {
 		switch (opcao) {
@@ -48,7 +46,16 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	private void cadastraPedidos() {
+		
 		incluirPedido();
+
+		int continuarCadastrando = 0;
+		while(continuarCadastrando < 1 || continuarCadastrando > 2) {
+			continuarCadastrando = Integer.parseInt(Util.askIntegerInput("\nDeseja cadastrar mais um pedido?\n1 - SIM\n2 - NÃO", scanner));
+		}
+		if(continuarCadastrando == 1) {
+			cadastraPedidos();
+		}
 	}
 	
 	private void alterarPedidos() {
@@ -207,7 +214,6 @@ public final class MenuPedido extends NossoMenu {
 	}
 
 	
-
 	private String pegarObservacaoPedido() {
 		//String observacao = Util.pedeLinha("\nobservacao: \n", scanner);
 		String observacao = "";
@@ -218,7 +224,10 @@ public final class MenuPedido extends NossoMenu {
 		
 		if(obsEscolha == 1) {
 			while(observacao.length() < 3) {
-				observacao = Util.pedeLinha("Insira sua observação: ", scanner);
+				observacao = Util.pedeLinha("Insira sua observação. Digite 0 para sair: ", scanner);
+				if(observacao.trim().equals("0")) {
+					break;
+				}
 			}
 		}
 		
