@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS public.pedidoitens
 CREATE TABLE IF NOT EXISTS public.pedido
 (
     idpedido serial NOT NULL,
-    idpedidoitem integer REFERENCES public.pedidoitens(idpedidoitem) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    idcliente integer REFERENCES public.cliente(idcliente) ON UPDATE NO ACTION ON DELETE NO ACTION,
     vltotal numeric(10, 2),
     dtemissao date default now(),
     dtentrega date DEFAULT CURRENT_DATE + (FLOOR(RANDOM() * 35) || ' days')::INTERVAL,

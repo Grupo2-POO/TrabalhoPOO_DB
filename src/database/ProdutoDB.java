@@ -75,14 +75,27 @@ public class ProdutoDB implements CRUD<Produto> {
 		// não precisa adicionar produtos ao database, certo?
 		
 	}
-
-
+	
 	@Override
 	public void deletar() {
 		// TODO Auto-generated method stub
 		
 		// não precisa deletar produtos do database,certo?
 		
+	}
+	
+	public void atualizarQuantidade(String idProduto, String qtProduto) {
+		
+		String sqlAlteracao = String.format(
+				"update produto set quantidade = (quantidade - %s) where idproduto = %s;"
+				,qtProduto, idProduto);
+		
+		try(var conn = DB.connect()){
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(sqlAlteracao);
+		} catch(SQLException e) {
+			System.err.println(e);
+		}
 	}
 
 	

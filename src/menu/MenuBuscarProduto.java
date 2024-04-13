@@ -61,7 +61,7 @@ public class MenuBuscarProduto extends NossoMenu {
 			produto = produtoDB.buscarUmPor("idproduto", cdString.trim(), "produto");
 			
 			if(produto != null) {
-				System.out.println(produto.toString());
+				System.out.println(produto.toStringSemEstoque());
 				
 			} else {
 				System.out.println("Produto não encontrado!\n");

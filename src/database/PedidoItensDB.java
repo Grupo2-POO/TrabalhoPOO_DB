@@ -1,5 +1,6 @@
 package database;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 		}
 		return relacao;
 	}
-
+	
 	
 	@Override
 	public void adicionar(String[] valores) {
@@ -106,12 +107,12 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 				valores[4]
 				);
 		
-		String sqlAlteracao = String.format("update produto set quantidade = (quantidade - %s) where idproduto = %s;", valores[4], valores[1]);
+//		String sqlAlteracao = String.format("update produto set quantidade = (quantidade - %s) where idproduto = %s;", valores[4], valores[1]);
 		
 		try(var conn = DB.connect()){
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(sql);
-			statement.executeUpdate(sqlAlteracao);
+//			statement.executeUpdate(sqlAlteracao);
 		} catch(SQLException e) {
 			System.err.println(e);
 		}
@@ -132,13 +133,18 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 		
 		String sqlAlteracao = String.format("update produto set quantidade = (quantidade - %s) where idproduto = %s;", valores[4], valores[1]);
 		
-		
 		try(var conn = DB.connect()){
+			
 			Statement statement = conn.createStatement();
-			var resposta = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			
+			var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			int resposta = preparedStatement.executeUpdate();
+			
 			statement.executeUpdate(sqlAlteracao);
+			
 			if(resposta > 0) {
-				var chavesInseridas = statement.getGeneratedKeys();
+				ResultSet chavesInseridas = preparedStatement.getGeneratedKeys();
 				if(chavesInseridas.next()) {
 					return chavesInseridas.getInt(1);
 				}
@@ -147,7 +153,7 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 			System.err.println(e);
 		}
 		
-		return 0;
+		return -1;
 	}
 
 	@Override
