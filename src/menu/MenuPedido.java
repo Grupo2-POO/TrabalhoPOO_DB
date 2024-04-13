@@ -55,6 +55,8 @@ public final class MenuPedido extends NossoMenu {
 		}
 		if(continuarCadastrando == 1) {
 			cadastraPedidos();
+		} else {
+			NossoMenu.sairMenuDerivado = true;
 		}
 	}
 	
@@ -94,6 +96,9 @@ public final class MenuPedido extends NossoMenu {
 		while (cliente == null) {
 			
 			cliente = buscarCliente.getCliente();
+			if(NossoMenu.sairMenuDerivado) {
+				return null;
+			}
 			if(cliente == null) {
 				Util.printMessage("Cliente não encontrado! Tente de novo!");
 				buscarCliente.executarMenu();
@@ -126,7 +131,12 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	public void incluirPedido() {
-	    Cliente cliente = incluirCliente();
+	   
+		Cliente cliente = incluirCliente();
+		
+		if(NossoMenu.sairMenuDerivado) {
+			return;
+		}
 	    
 	    boolean maisUM;
 	    do {
@@ -151,7 +161,12 @@ public final class MenuPedido extends NossoMenu {
 		        // de produtos desse pedido
 			    int quantidade = 0;
 		        while (quantidade < 1 || quantidade > qtdMaxima) {
-		            quantidade = Integer.parseInt(Util.askIntegerInput("\nInsira a quantidade de produtos. Estoque atual: " + qtdMaxima +  "\n", scanner));
+		            quantidade = Integer.parseInt(Util.askIntegerInput(
+		            		"Estoque atual: "
+		            		+ qtdMaxima 
+		            		+  "\nInsira a quantidade de produtos.\n", 
+		            		scanner));
+		            
 		            
 		            if (quantidade <= 0) {
 		                System.out.println("Quantidade não pode ser negativa!");
@@ -159,12 +174,21 @@ public final class MenuPedido extends NossoMenu {
 		            
 		            if (quantidade > qtdMaxima) {
 		                System.out.println("Quantidade não pode ser maior que o estoque!");
+		                
+		                // lidar melhor com isso?
+		                if(qtdMaxima == 0) {
+			                System.out.println("\nDesculpe, agora que nossa IA percebeu que não temos mais esse produto!\nObrigado por nos avisar!");
+			                break;
+
+		                }
 		            }
 		        }
 		        
 		        // atualiza a quantidade no estoque do produto, na lista temporária
 		        produto.setQuantidade(qtdMaxima - quantidade);
+		        
 		        produto.setQuantidadePedido(quantidade);
+		        
 		        // guarda o produto temporariamente, se necessario
 		        if(novoProduto) {
 		        	produtosPedido.add(produto);
@@ -193,7 +217,7 @@ public final class MenuPedido extends NossoMenu {
 	    } while (maisUM);
 	    
 	    if(produtosPedido.size() > 0) {
-	    	  // pega observação
+	    	// pega observação
 		    String observacao = pegarObservacaoPedido();
 		    
 		    
@@ -214,6 +238,7 @@ public final class MenuPedido extends NossoMenu {
 		    };
 		    
 		    // adiciona pedido
+		    
 		    pedidoDB.adicionar(valoresAtributosPedido);
 		    
 		    // Atualiza a quantidade dos produtos no db a partir da lista
@@ -223,9 +248,6 @@ public final class MenuPedido extends NossoMenu {
 		    }
 	    	
 	    }
-	    
-	    
-	  
 	}
 
 	private String pegarObservacaoPedido() {
@@ -238,8 +260,8 @@ public final class MenuPedido extends NossoMenu {
 		
 		if(obsEscolha == 1) {
 			while(observacao.length() < 3) {
-				observacao = Util.pedeLinha("Insira sua observação. Digite 0 para sair: ", scanner);
-				if(observacao.trim().equals("0")) {
+				observacao = Util.pedeLinha("Insira sua observação ", scanner);
+				if(observacao.length() == 0) {
 					break;
 				}
 			}

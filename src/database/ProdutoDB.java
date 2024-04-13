@@ -87,7 +87,7 @@ public class ProdutoDB implements CRUD<Produto> {
 	public void atualizarQuantidade(String idProduto, String qtProduto) {
 		
 		String sqlAlteracao = String.format(
-				"update produto set quantidade = (quantidade - %s) where idproduto = %s;"
+				"update produto set quantidade = %s where idproduto = %s;"
 				,qtProduto, idProduto);
 		
 		try(var conn = DB.connect()){

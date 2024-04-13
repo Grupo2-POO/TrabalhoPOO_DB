@@ -3,6 +3,9 @@ package menu;
 import java.util.Scanner;
 
 public class MenuPrincipal extends NossoMenu {
+	// menu principal passa o valor do NossoMenu.sairMenuDerivado para o loop principal
+	// se tiver saido de um menu derivado (que não seja o principal, 
+	// deve repetir o menu principal
 	
 	public static boolean sairMenuDerivado;
 
@@ -20,6 +23,7 @@ public class MenuPrincipal extends NossoMenu {
 			NossoMenu.sairMenuDerivado = false;
 			break;
 		}
+		default: break;
 		}
 		
 	}

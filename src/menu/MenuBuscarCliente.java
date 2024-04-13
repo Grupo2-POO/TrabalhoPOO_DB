@@ -23,14 +23,12 @@ public final class MenuBuscarCliente extends NossoMenu {
 		case 2: buscaPorNome(); break;
 		case 3: buscaPorCodigo(); break; 
 		case 4: {
-				Util.printMessage("Voltando ao menu inicial de pedidos vai rolar aqui"); 
-				// executa o menu inicial
-				
-				MenuPrincipal menuPrincipal = new MenuPrincipal(ConstantesMenu.menuPrincipal, scanner);
-				menuPrincipal.executarMenu();
+				NossoMenu.sairMenuDerivado = true;
 				break; 
 			}
+		default: break;
 		}
+	
 	}
 	
 	private void buscaPorCPF() {
