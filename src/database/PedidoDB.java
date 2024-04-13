@@ -108,11 +108,36 @@ public class PedidoDB implements CRUD<Pedido>{
 	
 	@Override
 	public void adicionar(String[] valores) {
+		// Os valores passados para adicionar o pedido
+		// incluem o indice 2 e 3 que são usados na 
+		// alteração da quantidade em estoque do produto
+
+		String sql = String.format(
+				"insert into %s"
+				+ "(idcliente, observacao) "
+				+ "values('%s','%s');",
+				
+				"pedido",
+				valores[0],
+				valores[1]
+				);
+		
+		
+		try(var conn = DB.connect()){
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(sql);
+		} catch(SQLException e) {
+			System.err.println(e);
+		}
+	
 	}
 	
 	public void adicionarPedido(int idpedidoitem, String observacao) {
+		
+		System.out.println(" ID: " + idpedidoitem);
+		
 		String sql = String.format("insert into public.pedido (idpedidoitem, observacao) "
-				+ "values (%d, '%s')", idpedidoitem + 1, observacao);
+				+ "values ('%d', '%s')", idpedidoitem, observacao);
 		
 		try(var conn = DB.connect()){
 			Statement statement = conn.createStatement();

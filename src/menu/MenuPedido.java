@@ -1,6 +1,8 @@
 package menu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import classes.Cliente;
@@ -8,18 +10,21 @@ import classes.PedidoItens;
 import classes.Produto;
 import database.PedidoDB;
 import database.PedidoItensDB;
+import database.ProdutoDB;
 import util.Util;
 
 public final class MenuPedido extends NossoMenu {
 	
 	PedidoItensDB pedidoItensDB;
 	PedidoDB pedidoDB;
+	ProdutoDB produtoDB;
 
 	public MenuPedido(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		// TODO Auto-generated constructor stub
 		pedidoItensDB = new PedidoItensDB();
 		pedidoDB = new PedidoDB();
+		produtoDB = new ProdutoDB();
 	}
 
 	
@@ -95,10 +100,10 @@ public final class MenuPedido extends NossoMenu {
 		buscarProduto.executarMenu();
 		
 		Produto produto = buscarProduto.getProduto();
-		// mostrar opcao de adicionar mais do mesmo produto
+	
 		Util.printMessage("\nEsse foi o produto selecionado:");
 
-		System.out.println(produto.toString());
+		System.out.println(produto.toStringSemEstoque());
 		
 		return produto;		
 	}
@@ -106,56 +111,112 @@ public final class MenuPedido extends NossoMenu {
 	public void incluirPedido() {
 		Cliente cliente = incluirCliente();
 		
-		boolean maisUM = false;
+		Map<String, String> produtoENovaQuantidade = new HashMap<>();
 		
+		boolean maisUM = false;
+				
 		do {
 			Produto produto = incluirProduto();
 			
 			double vlDesconto = 0.0;
 			
-			int qtdExtra = 1;
+			int quantidade = 0;
+			// antes de decidir a quantidade maxima, checa o mapa
+			// que guarda temporariamente as quantidades dos produtos
+			int qtdMaxima = 0;
+			if(produtoENovaQuantidade.containsKey(String.valueOf(produto.getId()))) {
+		        // Se o produto já foi adicionado, atualiza a qtdMaxima
+		        int qtdAdicionada = Integer.parseInt(produtoENovaQuantidade.get(String.valueOf(produto.getId())));
+		        qtdMaxima = produto.getQuantidade() - qtdAdicionada;
+		    } else {
+		        // Se o produto ainda não foi adicionado, a qtdMaxima é a quantidade total no estoque
+		        qtdMaxima = produto.getQuantidade();
+		    }
+		
 			
-			int qtdMaxima = produto.getQuantidade();
-			
-			while(qtdExtra <= 1 || qtdExtra > qtdMaxima) {
+			while(quantidade < 1 || quantidade > qtdMaxima) {
 				
-				qtdExtra = Integer.parseInt(Util.askIntegerInput("\nInsira a quantidade de produtos: \n", scanner));
+				quantidade = Integer.parseInt(Util.askIntegerInput("\nInsira a quantidade de produtos. Estoque atual: " + qtdMaxima +  "\n", scanner));
 				
-				if(qtdExtra <= 0) {
+				if(quantidade <= 0) {
 					System.out.println("Quantidade não pode ser negativa!");
 				}
 				
-				if(qtdExtra > qtdMaxima) {
+				if(quantidade > qtdMaxima) {
 					System.out.println("Quantidade não pode ser maior que o estoque!");
 				}
 			}
 			
-			String[] valores = { 
+			String[] dadosPedidoItem = { 
 					String.valueOf(cliente.getIdCliente()),
 					String.valueOf(produto.getId()),
 					String.valueOf(produto.getValorVenda()),
 					String.valueOf(vlDesconto),
-					String.valueOf(qtdExtra)
-					
+					String.valueOf(quantidade)
 			};
-					
-				//String observacao = Util.pedeLinha("\nobservacao: \n", scanner);
-				String observacao = "nd";
-				pedidoItensDB.adicionar(valores);
-				int idpedidoitem = pedidoItensDB.adicionarPedidoItens(valores);
-				pedidoDB.adicionarPedido(idpedidoitem, observacao);
 			
-			int opc =  Integer.parseInt(Util.askIntegerInput("\nDeseja adicionar mais produtos?\n1 - SIM\n2 - NÃO", scanner));
+			// salva o produto id e qtdExtra pra atualizar
+			
+			produtoENovaQuantidade.put(dadosPedidoItem[1], dadosPedidoItem[4]);
+					
+			// adiciona o pedido item
+			pedidoItensDB.adicionar(dadosPedidoItem);
+		
+			// pergunta se quer adicionar mais produtos
+			int opc = 0;
+			while(opc < 1 || opc > 2) {
+				opc = Integer.parseInt(Util.askIntegerInput("\nDeseja adicionar mais produtos?\n1 - SIM\n2 - NÃO", scanner));
+			}
+			
 			if(opc == 1) {
 				maisUM = true;
+				
 			}else if(opc == 2) {
+				
 				maisUM = false;
-			}else {
-				System.out.println("nd.....");
+				// terminou de inserir pedidos itens
+				
+				String observacao = pegarObservacaoPedido();
+				
+				
+				// insere o pedido
+				String[] valoresAtributosPedido = { 
+						String.valueOf(cliente.getIdCliente()),
+						observacao	
+				};
+				// adiciona o pedido
+				pedidoDB.adicionar(valoresAtributosPedido);
+				
+				// atualiza a quantidade dos produtos, tirando do map
+				for(Map.Entry<String, String> p : produtoENovaQuantidade.entrySet()) {
+					String idproduto = p.getKey();
+					String quantidadeRetirada = p.getValue();
+					
+					produtoDB.atualizarQuantidade(idproduto, quantidadeRetirada);
+				}
 			}
 					
 		}while(maisUM);
 		
 		
 	}
+	
+
+	private String pegarObservacaoPedido() {
+		//String observacao = Util.pedeLinha("\nobservacao: \n", scanner);
+		String observacao = "";
+		int obsEscolha = 0;
+		while(obsEscolha < 1 || obsEscolha > 2) {
+			obsEscolha = Integer.parseInt(Util.askIntegerInput("\nDeseja adicionar uma observação?\n1 - SIM\n2 - NÃO", scanner));
+		}
+		
+		if(obsEscolha == 1) {
+			while(observacao.length() < 3) {
+				observacao = Util.pedeLinha("Insira sua observação: ", scanner);
+			}
+		}
+		
+		return observacao;
+	}
+ 
 }

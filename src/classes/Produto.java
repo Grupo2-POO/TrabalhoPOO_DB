@@ -20,6 +20,14 @@ public record Produto
 				+ descricao
 				+ "\nQuantidade no estoque:  " + quantidade + "\nCategoria: " + categoria + "\n";
 	}
+	
+	public String toStringSemEstoque() {
+		return 	"\nidProduto: " 
+				+ idProduto 
+				+ "\n" 
+				+ descricao
+				+ "\nCategoria: " + categoria + "\n";
+	}
 
 	public double getValorVenda() {
 		return valorVenda;
