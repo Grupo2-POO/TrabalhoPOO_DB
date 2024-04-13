@@ -27,8 +27,8 @@ public class Principal {
 			do	{
 				
 				menu.executarMenu();
-				
 				programaLigado = conferirProgramaLigado();
+				
 			} while (programaLigado); 
 		} while (hasConnectedToDb && programaLigado);
 		

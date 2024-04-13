@@ -9,7 +9,7 @@ public class MenuBuscarProduto extends NossoMenu {
 	
 	private Produto produto;
 	private ProdutoDB produtoDB;
-	private boolean selecionandoProdutos;
+	private boolean selecionandoProdutos, sair;
 
 	public MenuBuscarProduto(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
@@ -22,10 +22,12 @@ public class MenuBuscarProduto extends NossoMenu {
 	public void executarMenu() {
 		selecionandoProdutos = true;
 		while(selecionandoProdutos) {
-			buscaPorCodigo();
-			
-			
-			super.executarMenu();
+			sair = buscaPorCodigo() <= 0;
+			if(!sair) {
+				super.executarMenu();
+			} else {
+				break;
+			}
 		}
 		
 	}
@@ -44,7 +46,7 @@ public class MenuBuscarProduto extends NossoMenu {
 		
 	}
 	
-	private void buscaPorCodigo() {
+	private int buscaPorCodigo() {
 		int codigo = -1;
 		while(codigo == -1) {
 			codigo = Integer.parseInt(Util.askIntegerInput("Informe o Código do Produto ou Digite 0 para sair:", scanner).trim());
@@ -67,6 +69,7 @@ public class MenuBuscarProduto extends NossoMenu {
 				System.out.println("Produto não encontrado!\n");
 			}
 		}
+		return codigo;
 	}
 
 	public Produto getProduto() {
