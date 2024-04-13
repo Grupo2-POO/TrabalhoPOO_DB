@@ -10,6 +10,8 @@ public abstract class NossoMenu {
 	
 	protected static Scanner scanner;
 	
+	public static boolean sairMenuDerivado;
+	
 	public NossoMenu(String[] constantes, Scanner scanner) {
 		super();
 		this.constantes = constantes;

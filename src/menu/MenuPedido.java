@@ -38,8 +38,8 @@ public final class MenuPedido extends NossoMenu {
 		case 2: Util.printMessage("Consulta de pedidos vai rolar aqui"); break;
 		case 3: alterarPedidos(); break; 
 		case 4: {
-				MenuBuscarPedidoItens MenuBuscarPedidoItens = new MenuBuscarPedidoItens(ConstantesMenu.menuBuscarPedidoItens, scanner);
-				MenuBuscarPedidoItens.executarMenu();
+				// passar uma flag para o menu principal
+				NossoMenu.sairMenuDerivado = true;
 				break; 
 			}
 		}
@@ -61,7 +61,7 @@ public final class MenuPedido extends NossoMenu {
 	private void alterarPedidos() {
 		
 		mostrarPedidos();
-		MenuBuscarPedidoItens MenuBuscarPedidoItens = new MenuBuscarPedidoItens(ConstantesMenu.menuBuscarPedidoItens, scanner);
+		MenuBuscarPedidoItens MenuBuscarPedidoItens = new MenuBuscarPedidoItens(ConstantesMenu.menuAlterarPedido, scanner);
 		MenuBuscarPedidoItens.executarMenu();
 		
 		int continuarAlterando = 0;

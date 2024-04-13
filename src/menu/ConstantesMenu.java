@@ -8,6 +8,7 @@ public final class ConstantesMenu {
 			" 1- Menu pedido\t\n",
 			" 2- Menu cliente\t\n",
 			" 3- Menu produto\t\n",
+			" 4- Sair\t\n"
 	};
 	
 	public static final String[] menuPedido = {
@@ -51,7 +52,7 @@ public final class ConstantesMenu {
 			" 2- Não - Informe outro\t\n"
 	};
 	
-	public static final String[] menuBuscarPedidoItens = {
+	public static final String[] menuAlterarPedido = {
 			"\n\t- == ESTE É O PEDIDO QUE DESEJA ALTERAR? == -",
 			"  ° Escolha uma opção: \t \n",
 			" 1- Sim\t\n",
