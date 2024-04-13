@@ -108,18 +108,16 @@ public class PedidoDB implements CRUD<Pedido>{
 	
 	@Override
 	public void adicionar(String[] valores) {
-		// Os valores passados para adicionar o pedido
-		// incluem o indice 2 e 3 que são usados na 
-		// alteração da quantidade em estoque do produto
 
 		String sql = String.format(
 				"insert into %s"
-				+ "(idcliente, observacao) "
-				+ "values('%s','%s');",
+				+ "(idcliente, vltotal, observacao) "
+				+ "values('%s','%s', '%s');",
 				
 				"pedido",
 				valores[0],
-				valores[1]
+				valores[1],
+				valores[2]
 				);
 		
 		

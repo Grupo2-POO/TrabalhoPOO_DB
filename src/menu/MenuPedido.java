@@ -18,6 +18,8 @@ public final class MenuPedido extends NossoMenu {
 	PedidoItensDB pedidoItensDB;
 	PedidoDB pedidoDB;
 	ProdutoDB produtoDB;
+	
+	ArrayList<Produto> produtosPedido; 
 
 	public MenuPedido(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
@@ -25,6 +27,7 @@ public final class MenuPedido extends NossoMenu {
 		pedidoItensDB = new PedidoItensDB();
 		pedidoDB = new PedidoDB();
 		produtoDB = new ProdutoDB();
+		produtosPedido = new ArrayList<>();
 	}
 
 	
@@ -109,97 +112,100 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	public void incluirPedido() {
-		Cliente cliente = incluirCliente();
-		
-		Map<String, String> produtoENovaQuantidade = new HashMap<>();
-		
-		boolean maisUM = false;
-				
-		do {
-			Produto produto = incluirProduto();
-			
-			double vlDesconto = 0.0;
-			
-			int quantidade = 0;
-			// antes de decidir a quantidade maxima, checa o mapa
-			// que guarda temporariamente as quantidades dos produtos
-			int qtdMaxima = 0;
-			if(produtoENovaQuantidade.containsKey(String.valueOf(produto.getId()))) {
-		        // Se o produto já foi adicionado, atualiza a qtdMaxima
-		        int qtdAdicionada = Integer.parseInt(produtoENovaQuantidade.get(String.valueOf(produto.getId())));
-		        qtdMaxima = produto.getQuantidade() - qtdAdicionada;
-		    } else {
-		        // Se o produto ainda não foi adicionado, a qtdMaxima é a quantidade total no estoque
-		        qtdMaxima = produto.getQuantidade();
-		    }
-		
-			
-			while(quantidade < 1 || quantidade > qtdMaxima) {
-				
-				quantidade = Integer.parseInt(Util.askIntegerInput("\nInsira a quantidade de produtos. Estoque atual: " + qtdMaxima +  "\n", scanner));
-				
-				if(quantidade <= 0) {
-					System.out.println("Quantidade não pode ser negativa!");
-				}
-				
-				if(quantidade > qtdMaxima) {
-					System.out.println("Quantidade não pode ser maior que o estoque!");
-				}
-			}
-			
-			String[] dadosPedidoItem = { 
-					String.valueOf(cliente.getIdCliente()),
-					String.valueOf(produto.getId()),
-					String.valueOf(produto.getValorVenda()),
-					String.valueOf(vlDesconto),
-					String.valueOf(quantidade)
-			};
-			
-			// salva o produto id e qtdExtra pra atualizar
-			
-			produtoENovaQuantidade.put(dadosPedidoItem[1], dadosPedidoItem[4]);
-					
-			// adiciona o pedido item
-			pedidoItensDB.adicionar(dadosPedidoItem);
-		
-			// pergunta se quer adicionar mais produtos
-			int opc = 0;
-			while(opc < 1 || opc > 2) {
-				opc = Integer.parseInt(Util.askIntegerInput("\nDeseja adicionar mais produtos?\n1 - SIM\n2 - NÃO", scanner));
-			}
-			
-			if(opc == 1) {
-				maisUM = true;
-				
-			}else if(opc == 2) {
-				
-				maisUM = false;
-				// terminou de inserir pedidos itens
-				
-				String observacao = pegarObservacaoPedido();
-				
-				
-				// insere o pedido
-				String[] valoresAtributosPedido = { 
-						String.valueOf(cliente.getIdCliente()),
-						observacao	
-				};
-				// adiciona o pedido
-				pedidoDB.adicionar(valoresAtributosPedido);
-				
-				// atualiza a quantidade dos produtos, tirando do map
-				for(Map.Entry<String, String> p : produtoENovaQuantidade.entrySet()) {
-					String idproduto = p.getKey();
-					String quantidadeRetirada = p.getValue();
-					
-					produtoDB.atualizarQuantidade(idproduto, quantidadeRetirada);
-				}
-			}
-					
-		}while(maisUM);
-		
-		
+	    Cliente cliente = incluirCliente();
+	    
+	    boolean maisUM;
+	    int quantidade = 0;
+	    do {
+	        // pega o produto selecionado a partir do database
+	    	Produto produto = incluirProduto();
+	    	
+	    	// confere se já adicionamos esse produto
+	    	boolean novoProduto = true;
+	    	for(Produto p : produtosPedido) {
+	    		if((p.getDescricao().equals(produto.getDescricao()))) {
+	    			produto = p;
+	    			novoProduto = false;
+	    			break;
+	    		}
+	    	}
+	    	
+	    	
+	    	int qtdMaxima = produto.getQuantidade();
+	    	
+	        double vlDesconto = 0.0;
+	       
+	        // confere se o produto já foi adicionado na lista
+	        // de produtos desse pedido
+	       
+	        while (quantidade < 1 || quantidade > qtdMaxima) {
+	            quantidade = Integer.parseInt(Util.askIntegerInput("\nInsira a quantidade de produtos. Estoque atual: " + qtdMaxima +  "\n", scanner));
+	            
+	            if (quantidade <= 0) {
+	                System.out.println("Quantidade não pode ser negativa!");
+	            }
+	            
+	            if (quantidade > qtdMaxima) {
+	                System.out.println("Quantidade não pode ser maior que o estoque!");
+	            }
+	        }
+	        
+	        // atualiza a quantidade no estoque do produto, na lista temporária
+	        produto.setQuantidade(qtdMaxima - quantidade);
+	        produto.setQuantidadePedido(quantidade);
+	        // guarda o produto temporariamente, se necessario
+	        if(novoProduto) {
+	        	produtosPedido.add(produto);
+	        }
+	       
+	        // Adiciona o pedido item
+	        String[] dadosPedidoItem = { 
+	            String.valueOf(cliente.getIdCliente()),
+	            String.valueOf(produto.getId()),
+	            String.valueOf(produto.getValorVenda()),
+	            String.valueOf(vlDesconto),
+	            String.valueOf(quantidade)
+	        };
+	        pedidoItensDB.adicionar(dadosPedidoItem);
+	        
+	        // Pergunta se quer adicionar mais produtos
+	        int opc = 0;
+	        while (opc < 1 || opc > 2) {
+	            opc = Integer.parseInt(Util.askIntegerInput("\nDeseja adicionar mais produtos?\n1 - SIM\n2 - NÃO", scanner));
+	        }
+	        
+	        maisUM = (opc == 1);
+	        
+	    } while (maisUM);
+	    
+	    // pega observação
+	    String observacao = pegarObservacaoPedido();
+	    
+	    
+	    // calcula o valor total, a partir dos produtos na lista do pedido
+	    double valorTotal = 0;
+	  
+	    for (Produto produto : produtosPedido) {
+	    	// a quantidade aqui é a quantidade que o usuario escolheu 
+	    	valorTotal += (produto.getValorVenda() * produto.getQuantidadePedido());
+	    }
+	    
+	    String[] valoresAtributosPedido = { 
+	        String.valueOf(cliente.getIdCliente()),
+	        String.valueOf(valorTotal),
+	        observacao    
+	    };
+	    
+	    // adiciona pedido
+	    pedidoDB.adicionar(valoresAtributosPedido);
+	    
+	    // Atualiza a quantidade dos produtos no db a partir da lista
+	    for (Produto produto : produtosPedido) {
+	    	// aqui o getQuantidade é a quantidade do produto que sobrou no estoque
+	        produtoDB.atualizarQuantidade(String.valueOf(produto.getId()), String.valueOf(produto.getQuantidade()));
+	    }
 	}
+
 	
 
 	private String pegarObservacaoPedido() {
