@@ -11,21 +11,24 @@ public class MenuBuscarPedidoItens extends NossoMenu {
 	
 	private PedidoItens pedidoitens;
 	private PedidoItensDB pedidoitensDB;
-	private boolean selecionandoPedidos;
+	private boolean alterandoPedidos, sair;
 
 	public MenuBuscarPedidoItens(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
-		// TODO Auto-generated constructor stub
 		
 		pedidoitensDB = new PedidoItensDB();
 	}
 	
 	@Override
 	public void executarMenu() {
-		selecionandoPedidos = true;
-		while(selecionandoPedidos) {
-			buscaPorCodigo();
-			super.executarMenu();
+		alterandoPedidos = true;
+		while(alterandoPedidos) {
+			sair = buscaPorCodigo() <= 0;
+			if(!sair) {
+				super.executarMenu();
+			} else {
+				break;
+			}
 		}
 		
 	}
@@ -33,10 +36,9 @@ public class MenuBuscarPedidoItens extends NossoMenu {
 	@Override
 	public void processarOpcao(int opcao) {
 		switch (opcao) {
-
 		case 2: executarMenu(); break;
 		case 1: {
-			selecionandoPedidos = false;
+			alterandoPedidos = false;
 			break; 
 			}
 		default: break;
@@ -44,9 +46,9 @@ public class MenuBuscarPedidoItens extends NossoMenu {
 		
 	}
 	
-	private void buscaPorCodigo() {
+	private int buscaPorCodigo() {
 		int codigo = -1;
-		while(codigo == -1) {
+		while(codigo <= -1) {
 			codigo = Integer.parseInt(Util.askIntegerInput("Informe o Código do Pedido ou Digite 0 para sair:", scanner).trim());
 			if(codigo == 0) {
 				break;
@@ -56,7 +58,6 @@ public class MenuBuscarPedidoItens extends NossoMenu {
 		if(codigo > 0) {
 			System.out.println("Buscando o Pedido de Código: " + codigo);
 			String cdString = codigo + "";
-			
 			pedidoitens = pedidoitensDB.buscarUmPor("idpedidoitens", cdString.trim(), "pedidoitens");
 			
 			if(pedidoitens != null) {
@@ -66,6 +67,8 @@ public class MenuBuscarPedidoItens extends NossoMenu {
 				System.out.println("pedido não encontrado!\n");
 			}
 		}
+		
+		return codigo;
 	}
 
 	public PedidoItens getPedidoItens() {

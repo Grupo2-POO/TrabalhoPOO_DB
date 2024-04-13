@@ -8,6 +8,7 @@ import filemanager.FileManager;
 import util.Util;
 import menu.ConstantesMenu;
 import menu.MenuPrincipal;
+import menu.NossoMenu;
 
 public class Principal {
 	
@@ -28,7 +29,16 @@ public class Principal {
 				
 				menu.executarMenu();
 				
-				programaLigado = conferirProgramaLigado();
+				if(NossoMenu.sairMenuDerivado) {
+					// se a gente sai do menu derivado, executa o principal de novo
+					menu.executarMenu();
+
+				} else {
+					// saiu do menu principal
+					programaLigado = conferirProgramaLigado();
+
+				}
+			
 			} while (programaLigado); 
 		} while (hasConnectedToDb && programaLigado);
 		
