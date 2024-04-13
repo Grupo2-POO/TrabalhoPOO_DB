@@ -15,14 +15,13 @@ public class MenuBuscarPedidoItens extends NossoMenu {
 
 	public MenuBuscarPedidoItens(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
-		// TODO Auto-generated constructor stub
 		
 		pedidoitensDB = new PedidoItensDB();
 	}
 	
 	@Override
 	public void executarMenu() {
-	
+		alterandoPedidos = true;
 		while(alterandoPedidos) {
 			sair = buscaPorCodigo() <= 0;
 			if(!sair) {

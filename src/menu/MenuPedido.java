@@ -60,11 +60,18 @@ public final class MenuPedido extends NossoMenu {
 	
 	private void alterarPedidos() {
 		
-		
 		mostrarPedidos();
-
 		MenuBuscarPedidoItens MenuBuscarPedidoItens = new MenuBuscarPedidoItens(ConstantesMenu.menuBuscarPedidoItens, scanner);
 		MenuBuscarPedidoItens.executarMenu();
+		
+		int continuarAlterando = 0;
+		while(continuarAlterando < 1 || continuarAlterando > 2) {
+			continuarAlterando = Integer.parseInt(Util.askIntegerInput("\nDeseja alterar mais um pedido?\n1 - SIM\n2 - NÃO", scanner));
+		}
+		
+		if(continuarAlterando == 1) {
+			alterarPedidos();
+		}
 	}
 	
 	private void mostrarPedidos() {
@@ -221,7 +228,6 @@ public final class MenuPedido extends NossoMenu {
 	  
 	}
 
-	
 	private String pegarObservacaoPedido() {
 		//String observacao = Util.pedeLinha("\nobservacao: \n", scanner);
 		String observacao = "";
