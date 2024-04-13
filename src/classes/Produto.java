@@ -36,8 +36,29 @@ public class Produto {
                 + idProduto 
                 + "\n" 
                 + descricao
+                + "\n"
+                + "Só " + Util.converterMonetario(valorVenda)
                 + "\nCategoria: " + categoria + "\n";
     }
+    
+    public String toStringQuantidadePedido() {
+    	// Largura fixa para a descrição, 
+    	// parece funcionar com a maioria dos produtos
+        int descricaoWidth = 40; 
+
+        // Formata a descrição com a largura fixa e alinhamento à esquerda
+        String formattedDescricao = String.format("%-" + descricaoWidth + "s", descricao);
+
+        // Formata a quantidade com largura fixa e alinhamento à direita
+        String formattedQuantidade = String.format("%5d", quantidadePedido);
+
+        String formattedValorUnitario = Util.converterMonetario(valorVenda);
+        String formattedTotal = Util.converterMonetario(valorVenda * quantidadePedido);
+
+        return String.format("\n%s %s X %s : %s\n", formattedDescricao, formattedQuantidade, formattedValorUnitario, formattedTotal);
+    }
+
+
 
     public double getValorVenda() {
         return valorVenda;

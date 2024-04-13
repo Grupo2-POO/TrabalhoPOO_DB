@@ -1,5 +1,6 @@
 package menu;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +55,7 @@ public final class MenuPedido extends NossoMenu {
 			continuarCadastrando = Integer.parseInt(Util.askIntegerInput("\nDeseja cadastrar mais um pedido?\n1 - SIM\n2 - NÃO", scanner));
 		}
 		if(continuarCadastrando == 1) {
+			NossoMenu.sairMenuDerivado = false;
 			cadastraPedidos();
 		} else {
 			NossoMenu.sairMenuDerivado = true;
@@ -167,6 +169,12 @@ public final class MenuPedido extends NossoMenu {
 		            		+  "\nInsira a quantidade de produtos.\n", 
 		            		scanner));
 		            
+		            // lidar melhor com isso?
+	                if(qtdMaxima == 0) {
+		                System.out.println("\nDesculpe, agora que nossa IA percebeu que não temos mais esse produto!\nObrigado por nos avisar!");
+		                break;
+
+	                }
 		            
 		            if (quantidade <= 0) {
 		                System.out.println("Quantidade não pode ser negativa!");
@@ -175,12 +183,7 @@ public final class MenuPedido extends NossoMenu {
 		            if (quantidade > qtdMaxima) {
 		                System.out.println("Quantidade não pode ser maior que o estoque!");
 		                
-		                // lidar melhor com isso?
-		                if(qtdMaxima == 0) {
-			                System.out.println("\nDesculpe, agora que nossa IA percebeu que não temos mais esse produto!\nObrigado por nos avisar!");
-			                break;
-
-		                }
+		              
 		            }
 		        }
 		        
@@ -214,40 +217,75 @@ public final class MenuPedido extends NossoMenu {
 	        
 	        maisUM = (opc == 1);
 	        
+	        
 	    } while (maisUM);
 	    
 	    if(produtosPedido.size() > 0) {
+	    	
+	    	
 	    	// pega observação
 		    String observacao = pegarObservacaoPedido();
 		    
+		    double valorTotal = calcularValorTotalPedido();
 		    
-		    // calcula o valor total, a partir dos produtos na lista do pedido
-		    double valorTotal = 0;
+		    // confirma o cliente
+		    int opc = 0;
+	        while (opc < 1 || opc > 2) {
+	            opc = Integer.parseInt(Util.askIntegerInput(
+	            		"\nConfirma o pedido de"
+	            		+ criarRelatorioResumidoProdutosPedido()
+	            		+ "\npara " + cliente.getNome() + " ?"
+	            		+ "\n1 - SIM\n2 - NÃO", scanner));
+	        }
+	        
+	        if(opc == 2) {
+	        	
+	        	// pergunta se deseja trocar de cliente?
+	        }
 		  
-		    for (Produto produto : produtosPedido) {
-		    	
-		    	// a quantidade aqui é a quantidade que o usuario escolheu 
-		    	
-		    	valorTotal += (produto.getValorVenda() * produto.getQuantidadePedido());
-		    }
-		    
+		    // finaliza o pedido
 		    String[] valoresAtributosPedido = { 
 		        String.valueOf(cliente.getIdCliente()),
 		        String.valueOf(valorTotal),
 		        observacao    
 		    };
 		    
-		    // adiciona pedido
-		    
+		    // adiciona pedido no db
+		   
 		    pedidoDB.adicionar(valoresAtributosPedido);
 		    
-		    // Atualiza a quantidade dos produtos no db a partir da lista
+		    // Atualiza a quantidade dos produtos (estoque) no db a partir da lista
 		    for (Produto produto : produtosPedido) {
 		    	// aqui o getQuantidade é a quantidade do produto que sobrou no estoque
 		        produtoDB.atualizarQuantidade(String.valueOf(produto.getId()), String.valueOf(produto.getQuantidade()));
 		    }
 	    	
 	    }
+	}
+	
+	private String criarRelatorioResumidoProdutosPedido() {
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		for (Produto produto : produtosPedido) {
+			stringBuilder.append(produto.toStringQuantidadePedido());
+		}
+		
+		return stringBuilder.toString();
+	}
+	
+	
+	private double calcularValorTotalPedido() {
+		// calcula o valor total, a partir dos produtos na lista do pedido
+	    double valorTotal = 0;
+	  
+	    for (Produto produto : produtosPedido) {
+	    	
+	    	// a quantidade aqui é a quantidade que o usuario escolheu 
+	    	
+	    	valorTotal += (produto.getValorVenda() * produto.getQuantidadePedido());
+	    }
+	    
+	    return valorTotal;
 	}
 
 	private String pegarObservacaoPedido() {
