@@ -65,15 +65,14 @@ public class ClienteDB implements CRUD<Cliente> {
 		return clientes;
 	}
 
-	
 	@Override
-	public void deletar() {
-		// Não precisa deletar clientes
+	public void adicionar(String[] valores) {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void adicionar(String[] valores) {
+	public void deletar() {
 		// TODO Auto-generated method stub
 		
 	}

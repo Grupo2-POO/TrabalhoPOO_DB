@@ -23,6 +23,8 @@ public class Cliente extends Pessoa {
 	public String toString() {
 		return "\nidCliente: " + idCliente + "\n\n" + super.toString() + "\n\nEndereco: " + endereco + " \nContato: " + telefone;
 	}
+	
+
 
 	public String getEndereco() {
 		return endereco;

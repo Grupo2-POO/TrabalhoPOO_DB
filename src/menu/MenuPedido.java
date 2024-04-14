@@ -1,11 +1,13 @@
 package menu;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 import classes.Cliente;
+import classes.Pedido;
 import classes.PedidoItens;
 import classes.Produto;
 import database.PedidoDB;
@@ -54,15 +56,37 @@ public final class MenuPedido extends NossoMenu {
 			continuarCadastrando = Integer.parseInt(Util.askIntegerInput("\nDeseja cadastrar mais um pedido?\n1 - SIM\n2 - NÃO", scanner));
 		}
 		if(continuarCadastrando == 1) {
+			NossoMenu.sairMenuDerivado = false;
 			cadastraPedidos();
+		} else {
+			NossoMenu.sairMenuDerivado = true;
 		}
 	}
 	
 	private void alterarPedidos() {
 		
 		mostrarPedidos();
-		MenuBuscarPedidoItens MenuBuscarPedidoItens = new MenuBuscarPedidoItens(ConstantesMenu.menuAlterarPedido, scanner);
-		MenuBuscarPedidoItens.executarMenu();
+		MenuBuscarPedido menuBuscarPedido= new MenuBuscarPedido(ConstantesMenu.menuAlterarPedido, scanner);
+		
+		
+		menuBuscarPedido.executarMenu();
+		
+		Pedido pedidoAlterar = menuBuscarPedido.getPedido();
+		
+		if(pedidoAlterar != null) {
+			
+			System.out.println("O que deseja alterar no pedido: "
+					+ "\n 1 - Produtos "
+					+ "\n 2 - Observação "
+					+ "\n 3 - Cliente");
+			System.out.println(pedidoAlterar.toString());
+			
+			
+			Pedido novoPedido = new Pedido();
+			
+		}
+		
+		
 		
 		int continuarAlterando = 0;
 		while(continuarAlterando < 1 || continuarAlterando > 2) {
@@ -75,8 +99,13 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	private void mostrarPedidos() {
-		ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
-		for(PedidoItens relacao : relacaoPedidoItem) {
+//		ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
+//		for(PedidoItens relacao : relacaoPedidoItem) {
+//			System.out.println(relacao.toString());
+//		}
+//		
+		ArrayList<Pedido> relacaoPedido = pedidoDB.buscarTodos();
+		for(Pedido relacao : relacaoPedido) {
 			System.out.println(relacao.toString());
 		}
 	}
@@ -94,6 +123,9 @@ public final class MenuPedido extends NossoMenu {
 		while (cliente == null) {
 			
 			cliente = buscarCliente.getCliente();
+			if(NossoMenu.sairMenuDerivado) {
+				return null;
+			}
 			if(cliente == null) {
 				Util.printMessage("Cliente não encontrado! Tente de novo!");
 				buscarCliente.executarMenu();
@@ -107,7 +139,7 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	public Produto incluirProduto() {
-		
+	
 		Util.printMessage("\nAgora vem a seleção de produto por codigo");
 		
 		MenuBuscarProduto buscarProduto = new MenuBuscarProduto(
@@ -126,8 +158,22 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	public void incluirPedido() {
-	    Cliente cliente = incluirCliente();
-	    
+	   
+		Cliente cliente = incluirCliente();
+		
+		if(NossoMenu.sairMenuDerivado) {
+			return;
+		}
+	    // altera o cliente
+		int opcao = 0;
+        while (opcao < 1 || opcao > 2) {
+            opcao = Integer.parseInt(Util.askIntegerInput("\nConfirmar cliente?\n1 - SIM\n2 - NÃO", scanner));
+        }
+        
+        if (opcao == 2) {
+        	incluirPedido();
+        }
+		
 	    boolean maisUM;
 	    do {
 	        // pega o produto selecionado a partir do database
@@ -151,7 +197,18 @@ public final class MenuPedido extends NossoMenu {
 		        // de produtos desse pedido
 			    int quantidade = 0;
 		        while (quantidade < 1 || quantidade > qtdMaxima) {
-		            quantidade = Integer.parseInt(Util.askIntegerInput("\nInsira a quantidade de produtos. Estoque atual: " + qtdMaxima +  "\n", scanner));
+		            quantidade = Integer.parseInt(Util.askIntegerInput(
+		            		"Estoque atual: "
+		            		+ qtdMaxima 
+		            		+  "\nInsira a quantidade de produtos.\n", 
+		            		scanner));
+		            
+		            // lidar melhor com isso?
+	                if(qtdMaxima == 0) {
+		                System.out.println("\nDesculpe, agora que nossa IA percebeu que não temos mais esse produto!\nObrigado por nos avisar!");
+		                break;
+
+	                }
 		            
 		            if (quantidade <= 0) {
 		                System.out.println("Quantidade não pode ser negativa!");
@@ -159,12 +216,16 @@ public final class MenuPedido extends NossoMenu {
 		            
 		            if (quantidade > qtdMaxima) {
 		                System.out.println("Quantidade não pode ser maior que o estoque!");
+		                
+		              
 		            }
 		        }
 		        
 		        // atualiza a quantidade no estoque do produto, na lista temporária
 		        produto.setQuantidade(qtdMaxima - quantidade);
+		        
 		        produto.setQuantidadePedido(quantidade);
+		        
 		        // guarda o produto temporariamente, se necessario
 		        if(novoProduto) {
 		        	produtosPedido.add(produto);
@@ -190,42 +251,60 @@ public final class MenuPedido extends NossoMenu {
 	        
 	        maisUM = (opc == 1);
 	        
+	        
 	    } while (maisUM);
 	    
 	    if(produtosPedido.size() > 0) {
-	    	  // pega observação
+	    	// pega observação
 		    String observacao = pegarObservacaoPedido();
 		    
+		    double valorTotal = calcularValorTotalPedido();
 		    
-		    // calcula o valor total, a partir dos produtos na lista do pedido
-		    double valorTotal = 0;
-		  
-		    for (Produto produto : produtosPedido) {
-		    	
-		    	// a quantidade aqui é a quantidade que o usuario escolheu 
-		    	
-		    	valorTotal += (produto.getValorVenda() * produto.getQuantidadePedido());
-		    }
-		    
+		    // finaliza o pedido
 		    String[] valoresAtributosPedido = { 
 		        String.valueOf(cliente.getIdCliente()),
 		        String.valueOf(valorTotal),
 		        observacao    
 		    };
 		    
-		    // adiciona pedido
+		    // adiciona pedido no db
 		    pedidoDB.adicionar(valoresAtributosPedido);
 		    
-		    // Atualiza a quantidade dos produtos no db a partir da lista
+		    // Atualiza a quantidade dos produtos (estoque) no db a partir da lista
 		    for (Produto produto : produtosPedido) {
 		    	// aqui o getQuantidade é a quantidade do produto que sobrou no estoque
 		        produtoDB.atualizarQuantidade(String.valueOf(produto.getId()), String.valueOf(produto.getQuantidade()));
 		    }
+		    
+			Util.printMessage("\nPedido adicionado com sucesso!");
+			
+			this.executarMenu();
+	    }
+	}
+	
+//	private String criarRelatorioResumidoProdutosPedido() {
+//		StringBuilder stringBuilder = new StringBuilder();
+//		
+//		for (Produto produto : produtosPedido) {
+//			stringBuilder.append(produto.toStringQuantidadePedido());
+//		}
+//		
+//		return stringBuilder.toString();
+//	}
+	
+	
+	private double calcularValorTotalPedido() {
+		// calcula o valor total, a partir dos produtos na lista do pedido
+	    double valorTotal = 0;
+	  
+	    for (Produto produto : produtosPedido) {
 	    	
+	    	// a quantidade aqui é a quantidade que o usuario escolheu 
+	    	
+	    	valorTotal += (produto.getValorVenda() * produto.getQuantidadePedido());
 	    }
 	    
-	    
-	  
+	    return valorTotal;
 	}
 
 	private String pegarObservacaoPedido() {
@@ -237,12 +316,7 @@ public final class MenuPedido extends NossoMenu {
 		}
 		
 		if(obsEscolha == 1) {
-			while(observacao.length() < 3) {
-				observacao = Util.pedeLinha("Insira sua observação. Digite 0 para sair: ", scanner);
-				if(observacao.trim().equals("0")) {
-					break;
-				}
-			}
+			observacao = Util.pedeLinha("Insira sua observação ", scanner);	
 		}
 		
 		return observacao;

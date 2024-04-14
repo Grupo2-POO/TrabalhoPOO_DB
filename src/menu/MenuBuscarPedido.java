@@ -2,21 +2,20 @@ package menu;
 
 import java.util.Scanner;
 
-import classes.PedidoItens;
-import classes.Produto;
-import database.PedidoItensDB;
+import classes.Pedido;
+import database.PedidoDB;
 import util.Util;
 
-public class MenuBuscarPedidoItens extends NossoMenu {
+public class MenuBuscarPedido extends NossoMenu {
 	
-	private PedidoItens pedidoitens;
-	private PedidoItensDB pedidoitensDB;
+	private Pedido pedido;
+	private PedidoDB pedidoDB;
 	private boolean alterandoPedidos, sair;
 
-	public MenuBuscarPedidoItens(String[] constantes, Scanner scanner) {
+	public MenuBuscarPedido(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		
-		pedidoitensDB = new PedidoItensDB();
+		pedidoDB = new PedidoDB();
 	}
 	
 	@Override
@@ -58,10 +57,12 @@ public class MenuBuscarPedidoItens extends NossoMenu {
 		if(codigo > 0) {
 			System.out.println("Buscando o Pedido de Código: " + codigo);
 			String cdString = codigo + "";
-			pedidoitens = pedidoitensDB.buscarUmPor("idpedidoitens", cdString.trim(), "pedidoitens");
 			
-			if(pedidoitens != null) {
-				System.out.println(pedidoitens.toString());
+			
+			pedido = pedidoDB.buscarUmPor("idpedido", cdString.trim(), "pedido");
+			
+			if(pedido != null) {
+				System.out.println(pedido.toString());
 				
 			} else {
 				System.out.println("pedido não encontrado!\n");
@@ -71,8 +72,8 @@ public class MenuBuscarPedidoItens extends NossoMenu {
 		return codigo;
 	}
 
-	public PedidoItens getPedidoItens() {
-		return pedidoitens;
+	public Pedido getPedido() {
+		return pedido;
 	}
 
 }
