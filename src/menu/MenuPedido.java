@@ -140,6 +140,15 @@ public final class MenuPedido extends NossoMenu {
 			return;
 		}
 	    
+		int opcao = 0;
+        while (opcao < 1 || opcao > 2) {
+            opcao = Integer.parseInt(Util.askIntegerInput("\nConfirmar cliente?\n1 - SIM\n2 - NÃO", scanner));
+        }
+        
+        if (opcao == 2) {
+        	incluirPedido();
+        }
+		
 	    boolean maisUM;
 	    do {
 	        // pega o produto selecionado a partir do database
@@ -228,20 +237,6 @@ public final class MenuPedido extends NossoMenu {
 		    
 		    double valorTotal = calcularValorTotalPedido();
 		    
-		    // confirma o cliente
-		    int opc = 0;
-	        while (opc < 1 || opc > 2) {
-	            opc = Integer.parseInt(Util.askIntegerInput(
-	            		"\nConfirma o pedido de"
-	            		+ criarRelatorioResumidoProdutosPedido()
-	            		+ "\npara " + cliente.getNome() + " ?"
-	            		+ "\n1 - SIM\n2 - NÃO", scanner));
-	        }
-	        
-	        if(opc == 2) {
-	        	
-	        	// pergunta se deseja trocar de cliente?
-	        }
 		  
 		    // finaliza o pedido
 		    String[] valoresAtributosPedido = { 
