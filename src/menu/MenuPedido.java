@@ -52,9 +52,11 @@ public final class MenuPedido extends NossoMenu {
 		incluirPedido();
 
 		int continuarCadastrando = 0;
+		
 		while(continuarCadastrando < 1 || continuarCadastrando > 2) {
 			continuarCadastrando = Integer.parseInt(Util.askIntegerInput("\nDeseja cadastrar mais um pedido?\n1 - SIM\n2 - NÃO", scanner));
 		}
+		
 		if(continuarCadastrando == 1) {
 			NossoMenu.sairMenuDerivado = false;
 			cadastraPedidos();
@@ -66,6 +68,7 @@ public final class MenuPedido extends NossoMenu {
 	private void alterarPedidos() {
 		
 		mostrarPedidos();
+		
 		MenuBuscarPedido menuBuscarPedido= new MenuBuscarPedido(ConstantesMenu.menuAlterarPedido, scanner);
 		
 		
@@ -106,7 +109,7 @@ public final class MenuPedido extends NossoMenu {
 //		
 		ArrayList<Pedido> relacaoPedido = pedidoDB.buscarTodos();
 		for(Pedido relacao : relacaoPedido) {
-			System.out.println(relacao.toString());
+			System.out.println(relacao.toStringAll());
 		}
 	}
 	
@@ -190,9 +193,7 @@ public final class MenuPedido extends NossoMenu {
 		    	}
 		    	
 		    	int qtdMaxima = produto.getQuantidade();
-		    	
-		        double vlDesconto = 0.0;
-		       
+		        
 		        // confere se o produto já foi adicionado na lista
 		        // de produtos desse pedido
 			    int quantidade = 0;
@@ -234,11 +235,12 @@ public final class MenuPedido extends NossoMenu {
 		        // Adiciona o pedido item
 		        String[] dadosPedidoItem = { 
 		            String.valueOf(cliente.getIdCliente()),
-		            String.valueOf(produto.getId()),
+		            String.valueOf(produto.getIdProduto()),
 		            String.valueOf(produto.getValorVenda()),
-		            String.valueOf(vlDesconto),
+		            String.valueOf(calcularDesconto(produto.getValorVenda(), quantidade)),
 		            String.valueOf(quantidade)
 		        };
+		        
 		        pedidoItensDB.adicionar(dadosPedidoItem);
 	    	
 	    	}
@@ -273,13 +275,23 @@ public final class MenuPedido extends NossoMenu {
 		    // Atualiza a quantidade dos produtos (estoque) no db a partir da lista
 		    for (Produto produto : produtosPedido) {
 		    	// aqui o getQuantidade é a quantidade do produto que sobrou no estoque
-		        produtoDB.atualizarQuantidade(String.valueOf(produto.getId()), String.valueOf(produto.getQuantidade()));
+		        produtoDB.atualizarQuantidade(String.valueOf(produto.getIdProduto()), String.valueOf(produto.getQuantidade()));
 		    }
 		    
 			Util.printMessage("\nPedido adicionado com sucesso!");
 			
 			this.executarMenu();
 	    }
+	}
+	
+	private double calcularDesconto(double valor, int quantidade) {
+		
+        double desconto = (valor * quantidade <= 100.0)? 0.98 :
+			(valor * quantidade <= 250)? 0.95 :
+			(valor * quantidade <= 500)? 0.93 :
+			(valor * quantidade > 500)? 0.90 : 1.0;
+        
+        return desconto;
 	}
 	
 //	private String criarRelatorioResumidoProdutosPedido() {
@@ -301,7 +313,8 @@ public final class MenuPedido extends NossoMenu {
 	    	
 	    	// a quantidade aqui é a quantidade que o usuario escolheu 
 	    	
-	    	valorTotal += (produto.getValorVenda() * produto.getQuantidadePedido());
+	    	valorTotal += ((produto.getValorVenda() * produto.getQuantidadePedido())
+	    			* calcularDesconto(produto.getValorVenda(), produto.getQuantidadePedido()));
 	    }
 	    
 	    return valorTotal;

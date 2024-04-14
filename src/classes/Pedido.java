@@ -6,12 +6,12 @@ import util.Util;
 
 public class Pedido {
     private int idPedido;
-    private PedidoItens pedidoItens;
     private double valorTotal;
     private Date dtEmissao;
     private Date dtEntrega;
     private String observacaoPed;
     private int idCliente;
+    private PedidoItens pedidoitens;
 
     
     public Pedido(int idPedido, double valorTotal, Date dtEmissao, Date dtEntrega, String observacaoPed, int idCliente) {
@@ -22,7 +22,15 @@ public class Pedido {
         this.observacaoPed = observacaoPed;
         this.idCliente = idCliente;
     }
-
+    
+    public Pedido(int idPedido, double valorTotal, Date dtEmissao, Date dtEntrega, String observacaoPed, PedidoItens pedidoitens) {
+        this.idPedido = idPedido;
+        this.valorTotal = valorTotal;
+        this.dtEmissao = dtEmissao;
+        this.dtEntrega = dtEntrega;
+        this.observacaoPed = observacaoPed;
+        this.setPedidoitens(pedidoitens);
+    }
 
     public Pedido() {
 		// TODO Auto-generated constructor stub
@@ -41,6 +49,18 @@ public class Pedido {
                 + Util.linhaSimples(20)
                 + "\n";
     }
+	
+    public String toStringAll() {
+        return Util.linhaSimples(20) + "\nidPedido: " + idPedido
+                + "\nPedidoItens:" + pedidoitens
+                + "\nData de Emissao: " + Util.novaDT(dtEmissao)
+                + "\nData entrega: " + Util.novaDT(dtEntrega)
+                + "\nValor total: " + Util.converterMonetario(valorTotal)
+                + "\nObservacao: " + observacaoPed
+                + "\n"
+                + Util.linhaSimples(20)
+                + "\n";
+    }
 
     // Getters and setters if needed
     public int getIdPedido() {
@@ -49,14 +69,6 @@ public class Pedido {
 
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
-    }
-
-    public PedidoItens getPedidoItens() {
-        return pedidoItens;
-    }
-
-    public void setPedidoItens(PedidoItens pedidoItens) {
-        this.pedidoItens = pedidoItens;
     }
 
     public double getValorTotal() {
@@ -90,4 +102,16 @@ public class Pedido {
     public void setObservacaoPed(String observacaoPed) {
         this.observacaoPed = observacaoPed;
     }
+    
+    public int getIdCliente() {
+    	return idCliente;
+    }
+
+	public PedidoItens getPedidoitens() {
+		return pedidoitens;
+	}
+
+	public void setPedidoitens(PedidoItens pedidoitens) {
+		this.pedidoitens = pedidoitens;
+	}
 }

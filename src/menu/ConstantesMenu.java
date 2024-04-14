@@ -5,9 +5,9 @@ public final class ConstantesMenu {
 	public static final String[] menuPrincipal = {
 			"\n\t- GERADOR DE PEDIDOS 2MIL! -",
 			"  ° Escolha uma opção: \t \n",
-			" 1- Menu pedido\t\n",
-			" 2- Menu cliente\t\n",
-			" 3- Menu produto\t\n",
+			" 1- Menu pedidos\t\n",
+			" 2- Mostrar todos os clientes\t\n",
+			" 3- Mostrar todos os produtos\t\n",
 			" 4- Sair\t\n"
 	};
 	

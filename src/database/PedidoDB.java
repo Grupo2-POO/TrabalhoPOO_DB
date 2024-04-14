@@ -78,8 +78,10 @@ public class PedidoDB implements CRUD<Pedido>{
 						 response.getDouble("vldesconto"),
 						 produto,
 						 cliente,
-						 produto.getId(),
-						 response.getInt("qtproduto")
+						 response.getInt("idpedidoitem"),
+						 response.getInt("qtproduto"),
+						 produto.getIdProduto(),
+						 cliente.getIdCliente()
 						);
 				
 				Pedido pedido = new Pedido(
@@ -88,10 +90,8 @@ public class PedidoDB implements CRUD<Pedido>{
 						response.getDate("dtemissao"),
 						response.getDate("dtentrega"),
 						response.getString("observacao"),
-						response.getInt("idcliente")
+						pedidoItens
 						);
-				
-		
 				
 				pedidos.add(pedido);
 						

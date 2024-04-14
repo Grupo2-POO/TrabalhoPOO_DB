@@ -25,10 +25,12 @@ public interface CRUD <T> {
 		
 		if(nomeAtributo.equals("idpedido")) {
 			sql = "select * from public.pedido p "
-					+ "join cliente cl on cl.idcliente = p.idcliente";
+					+ "join cliente cl on cl.idcliente = p.idcliente;";
 		}
 		
-		
+		if(nomeAtributo.equals("idcliente") && (nomeTabela.equals("cliente"))) {
+			sql = "select * from public.cliente where idcliente = " + valorAtributo + ";";
+		}
 		
 		return executarConsultaCompleta(sql);
 		

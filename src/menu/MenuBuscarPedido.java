@@ -2,20 +2,35 @@ package menu;
 
 import java.util.Scanner;
 
+import classes.Cliente;
 import classes.Pedido;
+import classes.PedidoItens;
+import classes.Produto;
+import database.ClienteDB;
 import database.PedidoDB;
+import database.PedidoItensDB;
+import database.ProdutoDB;
 import util.Util;
 
 public class MenuBuscarPedido extends NossoMenu {
 	
 	private Pedido pedido;
 	private PedidoDB pedidoDB;
+	private Cliente cliente;
+	private ClienteDB clienteDB;
+	private Produto produto;
+	private ProdutoDB produtoDB;
+	private PedidoItens pedidoitens;
+	private PedidoItensDB pedidoitensDB;
 	private boolean alterandoPedidos, sair;
 
 	public MenuBuscarPedido(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		
 		pedidoDB = new PedidoDB();
+		clienteDB = new ClienteDB();
+		produtoDB = new ProdutoDB();
+		pedidoitensDB = new PedidoItensDB();
 	}
 	
 	@Override
@@ -58,12 +73,13 @@ public class MenuBuscarPedido extends NossoMenu {
 			System.out.println("Buscando o Pedido de Código: " + codigo);
 			String cdString = codigo + "";
 			
-			
 			pedido = pedidoDB.buscarUmPor("idpedido", cdString.trim(), "pedido");
+			pedidoitens = pedidoitensDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "pedidoitens");
+			produto = produtoDB.buscarUmPor("idproduto", pedidoitens.getIdProduto() + "", "produto");
+			cliente = clienteDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "cliente");
 			
 			if(pedido != null) {
 				System.out.println(pedido.toString());
-				
 			} else {
 				System.out.println("pedido não encontrado!\n");
 			}

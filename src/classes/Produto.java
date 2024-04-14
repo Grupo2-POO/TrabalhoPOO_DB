@@ -64,7 +64,7 @@ public class Produto {
         return valorVenda;
     }
 
-    public int getId() {
+    public int getIdProduto() {
         return idProduto;
     }
 
@@ -74,7 +74,6 @@ public class Produto {
 
 	public void setQuantidade(int i) {
 		this.quantidadeEstoque = i;
-		
 	}
 	
 	 public String getDescricao() {

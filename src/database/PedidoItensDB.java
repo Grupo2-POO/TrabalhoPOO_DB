@@ -1,5 +1,6 @@
 package database;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -78,7 +79,9 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 						 cliente,
 						 // CONFERIR ISSO A ID DO PRODUTO
 						 response.getInt("idpedidoitem"),
-						 response.getInt("qtproduto")
+						 response.getInt("qtproduto"),
+						 produto.getIdProduto(),
+						 cliente.getIdCliente()
 						);
 				
 				relacao.add(pedidoItem);
@@ -163,8 +166,28 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 	
 	@Override
 	public PedidoItens executarConsultaCompleta(String sql) {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection connection = DB.connect()) {
+	        Statement statement = connection.createStatement();
+	        var response = statement.executeQuery(sql);
+	        if (response.next()) {
+	        	PedidoItens pedidoitens = new PedidoItens(
+						response.getDouble("vlunitario"),
+						response.getDouble("vldesconto"),
+						response.getInt("idpedidoitem"),
+						response.getInt("qtproduto"),
+						response.getInt("idproduto"),
+						response.getInt("idcliente")
+						);
+	        	
+	        	return pedidoitens;
+	        } else {
+	        	return null;
+	        }
+	        
+	    } catch (SQLException error) {
+//	        System.err.println(error.getMessage());
+	        return null;
+	    }
 	}
 
 
