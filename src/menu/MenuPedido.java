@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import classes.Cliente;
+import classes.Pedido;
 import classes.PedidoItens;
 import classes.Produto;
 import database.PedidoDB;
@@ -65,8 +66,27 @@ public final class MenuPedido extends NossoMenu {
 	private void alterarPedidos() {
 		
 		mostrarPedidos();
-		MenuBuscarPedidoItens MenuBuscarPedidoItens = new MenuBuscarPedidoItens(ConstantesMenu.menuAlterarPedido, scanner);
-		MenuBuscarPedidoItens.executarMenu();
+		MenuBuscarPedido menuBuscarPedido= new MenuBuscarPedido(ConstantesMenu.menuAlterarPedido, scanner);
+		
+		
+		menuBuscarPedido.executarMenu();
+		
+		Pedido pedidoAlterar = menuBuscarPedido.getPedido();
+		
+		if(pedidoAlterar != null) {
+			
+			System.out.println("O que deseja alterar no pedido: "
+					+ "\n 1 - Produtos "
+					+ "\n 2 - Observação "
+					+ "\n 3 - Cliente");
+			System.out.println(pedidoAlterar.toString());
+			
+			
+			Pedido novoPedido = new Pedido();
+			
+		}
+		
+		
 		
 		int continuarAlterando = 0;
 		while(continuarAlterando < 1 || continuarAlterando > 2) {
@@ -79,8 +99,13 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	private void mostrarPedidos() {
-		ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
-		for(PedidoItens relacao : relacaoPedidoItem) {
+//		ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
+//		for(PedidoItens relacao : relacaoPedidoItem) {
+//			System.out.println(relacao.toString());
+//		}
+//		
+		ArrayList<Pedido> relacaoPedido = pedidoDB.buscarTodos();
+		for(Pedido relacao : relacaoPedido) {
 			System.out.println(relacao.toString());
 		}
 	}
@@ -114,7 +139,7 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	public Produto incluirProduto() {
-		
+	
 		Util.printMessage("\nAgora vem a seleção de produto por codigo");
 		
 		MenuBuscarProduto buscarProduto = new MenuBuscarProduto(
@@ -139,7 +164,7 @@ public final class MenuPedido extends NossoMenu {
 		if(NossoMenu.sairMenuDerivado) {
 			return;
 		}
-	    
+	    // altera o cliente
 		int opcao = 0;
         while (opcao < 1 || opcao > 2) {
             opcao = Integer.parseInt(Util.askIntegerInput("\nConfirmar cliente?\n1 - SIM\n2 - NÃO", scanner));
@@ -230,14 +255,11 @@ public final class MenuPedido extends NossoMenu {
 	    } while (maisUM);
 	    
 	    if(produtosPedido.size() > 0) {
-	    	
-	    	
 	    	// pega observação
 		    String observacao = pegarObservacaoPedido();
 		    
 		    double valorTotal = calcularValorTotalPedido();
 		    
-		  
 		    // finaliza o pedido
 		    String[] valoresAtributosPedido = { 
 		        String.valueOf(cliente.getIdCliente()),
@@ -246,7 +268,6 @@ public final class MenuPedido extends NossoMenu {
 		    };
 		    
 		    // adiciona pedido no db
-		   
 		    pedidoDB.adicionar(valoresAtributosPedido);
 		    
 		    // Atualiza a quantidade dos produtos (estoque) no db a partir da lista
@@ -254,19 +275,22 @@ public final class MenuPedido extends NossoMenu {
 		    	// aqui o getQuantidade é a quantidade do produto que sobrou no estoque
 		        produtoDB.atualizarQuantidade(String.valueOf(produto.getId()), String.valueOf(produto.getQuantidade()));
 		    }
-	    	
+		    
+			Util.printMessage("\nPedido adicionado com sucesso!");
+			
+			this.executarMenu();
 	    }
 	}
 	
-	private String criarRelatorioResumidoProdutosPedido() {
-		StringBuilder stringBuilder = new StringBuilder();
-		
-		for (Produto produto : produtosPedido) {
-			stringBuilder.append(produto.toStringQuantidadePedido());
-		}
-		
-		return stringBuilder.toString();
-	}
+//	private String criarRelatorioResumidoProdutosPedido() {
+//		StringBuilder stringBuilder = new StringBuilder();
+//		
+//		for (Produto produto : produtosPedido) {
+//			stringBuilder.append(produto.toStringQuantidadePedido());
+//		}
+//		
+//		return stringBuilder.toString();
+//	}
 	
 	
 	private double calcularValorTotalPedido() {
@@ -292,12 +316,7 @@ public final class MenuPedido extends NossoMenu {
 		}
 		
 		if(obsEscolha == 1) {
-			while(observacao.length() < 3) {
-				observacao = Util.pedeLinha("Insira sua observação ", scanner);
-				if(observacao.length() == 0) {
-					break;
-				}
-			}
+			observacao = Util.pedeLinha("Insira sua observação ", scanner);	
 		}
 		
 		return observacao;

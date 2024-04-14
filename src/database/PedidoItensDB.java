@@ -42,8 +42,7 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 				    public.produto pr ON pi.idproduto = pr.idproduto
 				JOIN
 				    public.cliente c ON pi.idcliente = c.idcliente;
-			 
-				   
+	
 				""";
 		try(var conn = DB.connect()){
 			Statement statement = conn.createStatement();

@@ -21,6 +21,7 @@ public class PedidoDB implements CRUD<Pedido>{
 				p.dtemissao,
 				p.dtentrega,
 				p.observacao,
+				p.vltotal,
 			    c.idcliente,
 			    c.nome,
 			    c.cpf,
@@ -35,15 +36,17 @@ public class PedidoDB implements CRUD<Pedido>{
 			    pr.categoria,
 			    pi.vlunitario,
 			    pi.qtproduto,
-			    pi.vldesconto
+			    pi.vldesconto,
+			    pi.idpedidoitem
 				FROM 
 				    public.pedido p
-			    JOIN
-				   public.pedidoitens pi ON pi.idpedidoitem = p.idpedidoitem
-				JOIN 
-				    public.produto pr ON pr.idproduto = pi.idproduto
 				JOIN
-				    public.cliente c ON pi.idcliente = c.idcliente;
+				    public.cliente c ON p.idcliente = c.idcliente
+			    JOIN
+				   public.pedidoitens pi ON pi.idcliente = c.idcliente
+				JOIN 
+				    public.produto pr ON pr.idproduto = pi.idproduto;
+			
 				""";
 		
 		
@@ -81,11 +84,11 @@ public class PedidoDB implements CRUD<Pedido>{
 				
 				Pedido pedido = new Pedido(
 						response.getInt("idpedido"),
-						pedidoItens,
-						produto.getValorVenda() * pedidoItens.getQuantidadeProduto(),
+						response.getDouble("vltotal"),
 						response.getDate("dtemissao"),
 						response.getDate("dtentrega"),
-						response.getString("observacao")
+						response.getString("observacao"),
+						response.getInt("idcliente")
 						);
 				
 		
@@ -119,8 +122,6 @@ public class PedidoDB implements CRUD<Pedido>{
 				valores[1],
 				valores[2]
 				);
-		
-		
 		try(var conn = DB.connect()){
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(sql);
@@ -147,7 +148,29 @@ public class PedidoDB implements CRUD<Pedido>{
 
 	@Override
 	public Pedido executarConsultaCompleta(String sql) {
-		// TODO Auto-generated method stub
-		return null;
+		Pedido pedido = new Pedido();
+		try (Connection connection = DB.connect()) {
+	        Statement statement = connection.createStatement();
+	        var response = statement.executeQuery(sql);
+	        if (response.next()) {
+	        		pedido = new Pedido(
+						response.getInt("idpedido"),
+						response.getDouble("vltotal"),
+						response.getDate("dtemissao"),
+						response.getDate("dtentrega"),
+						response.getString("observacao"),
+						response.getInt("idcliente")
+						);
+	 
+	        } else {
+	            return null;
+	        }
+	        
+	    } catch (SQLException error) {
+//	        System.err.println(error.getMessage());
+	        return null;
+	    }
+		return pedido;
+		
 	}
 }
