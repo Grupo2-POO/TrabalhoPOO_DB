@@ -22,11 +22,11 @@ public interface CRUD <T> {
 		if(nomeAtributo.equals("nome")) {
 			sql = "select * from " + nomeTabela + " where nome ilike '%" + valorAtributo + "%'"; 
 		}
-		
-		if(nomeAtributo.equals("idpedido")) {
-			sql = "select * from public.pedido p "
-					+ "join cliente cl on cl.idcliente = p.idcliente;";
-		}
+		// Não precisa mais do cliente para a localização do pedido
+//		if(nomeAtributo.equals("idpedido")) {
+//			sql = "select * from public.pedido p "
+//					+ "join cliente cl on cl.idcliente = p.idcliente;";
+//		}
 		
 		if(nomeAtributo.equals("idcliente") && (nomeTabela.equals("cliente"))) {
 			sql = "select * from public.cliente where idcliente = " + valorAtributo + ";";

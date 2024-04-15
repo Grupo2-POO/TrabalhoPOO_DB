@@ -46,9 +46,6 @@ public class Pedido {
  
     }
 
-    
-
-
 	@Override
     public String toString() {
         return "\nCódigo do Pedido:\t" + idPedido

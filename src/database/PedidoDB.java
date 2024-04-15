@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -174,6 +175,46 @@ public class PedidoDB implements CRUD<Pedido>{
 		}
 	}
 	
+	public void atualizarObservacaoPedido(int idpedido, String novaObservacao) {
+	    String sql = "UPDATE public.pedido SET observacao = ? WHERE idpedido = ?";
+	    
+	    try (var conn = DB.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        preparedStatement.setString(1, novaObservacao);
+	        preparedStatement.setInt(2, idpedido);
+	        
+	        int rowsUpdated = preparedStatement.executeUpdate();
+	        
+	        if (rowsUpdated > 0) {
+	            System.out.println("Observação do pedido atualizada com sucesso.");
+	        } else {
+	            System.out.println("Nenhum pedido foi atualizado. Verifique o ID do pedido.");
+	        }
+	    } catch (SQLException e) {
+	        System.err.println(e);
+	    }
+	}
+	
+	public void atualizarIdClientePedido(int idPedido, int novoIdCliente) {
+	    String sql = "UPDATE public.pedido SET idcliente = ? WHERE idpedido = ?";
+	    
+	    try (var conn = DB.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        preparedStatement.setInt(1, novoIdCliente);
+	        preparedStatement.setInt(2, idPedido);
+	        
+	        int rowsUpdated = preparedStatement.executeUpdate();
+	        
+	        if (rowsUpdated > 0) {
+	            System.out.println("ID do cliente no pedido atualizado com sucesso.");
+	        } else {
+	            System.out.println("Nenhum pedido foi atualizado. Verifique o ID do pedido.");
+	        }
+	    } catch (SQLException e) {
+	        System.err.println(e);
+	    }
+	}
+
+
+	
 	public void atualizarPedido(int idpedido, String[] valores) {
 		
 	    String sql = String.format("UPDATE public.pedido SET "
@@ -244,6 +285,49 @@ public class PedidoDB implements CRUD<Pedido>{
 		return pedido;
 		
 	}
+	
+	public void excluirPedidoPorId(int idPedido) {
+	    String sql = "DELETE FROM public.pedido WHERE idpedido = ?";
+	    
+	    try (var conn = DB.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        preparedStatement.setInt(1, idPedido);
+	        
+	        int rowsAffected = preparedStatement.executeUpdate();
+	        
+	        if (rowsAffected > 0) {
+	            System.out.println("Pedido com ID " + idPedido + " excluído com sucesso.");
+	        } else {
+	            System.out.println("Nenhum pedido foi excluído. Verifique o ID do pedido.");
+	        }
+	    } catch (SQLException e) {
+	        System.err.println(e);
+	    }
+	}
+
+	
+	public void excluirPedidosComCamposNulosOuVazios() {
+	    String sql = "DELETE FROM public.pedido WHERE ";
+	    
+	    // Verificar se qualquer coluna (observacao, idcliente, vltotal) é nula ou vazia
+	    sql += "idcliente IS NULL ";
+	    sql += "OR vltotal IS NULL ";
+	    sql += "OR dtemissao IS NULL ";
+	    sql += "OR dtentrega IS NULL ";
+	    
+	    try (var conn = DB.connect()){
+	        Statement statement = conn.createStatement();
+	        int rowsAffected = statement.executeUpdate(sql);
+	        
+	        if(rowsAffected >= 1) {
+	        	 String string = rowsAffected > 1 ? " pedidos vazios excluídos " : "pedido vazio excluído ";
+	        	 System.out.println(rowsAffected + string + "com sucesso.");
+	        }
+	        
+	    } catch(SQLException e) {
+	        System.err.println(e);
+	    }
+	}
+
 
 	@Override
 	public ArrayList<Pedido> executarConsultaCompletaDeTodos(String sql) {
