@@ -3,7 +3,7 @@ package menu;
 import java.util.Scanner;
 
 import classes.Cliente;
-import classes.PedidoItens;
+import classes.PedidoItem;
 import classes.Produto;
 import util.Util;
 

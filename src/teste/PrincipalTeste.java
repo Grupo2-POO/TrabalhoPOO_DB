@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 import classes.Cliente;
 import classes.Pedido;
-import classes.PedidoItens;
+import classes.PedidoItem;
 import database.ClienteDB;
 import database.DB;
 import database.PedidoDB;
-import database.PedidoItensDB;
+import database.PedidoItemDB;
 import database.ProdutoDB;
 import filemanager.FileManager;
 import menu.ConstantesMenu;
@@ -30,7 +30,7 @@ public class PrincipalTeste {
 				ClienteDB clienteDB = new ClienteDB();
 				ProdutoDB produtoDB = new ProdutoDB();
 				PedidoDB pedidoDB = new PedidoDB();
-				PedidoItensDB pedidoItensDB = new PedidoItensDB();
+				PedidoItemDB pedidoItensDB = new PedidoItemDB();
 				
 //				Util.wait(10);
 

@@ -4,11 +4,12 @@ import java.text.DecimalFormat;
 
 import util.Util;
 
-public class PedidoItens{
+public class PedidoItem{
 	double valorUnitario;
 	double valorDesconto;
 	Produto produto;
 	Cliente cliente;
+	
 	int idPedidoitem;
 	int quantidadeProduto;
 	int idProduto;
@@ -33,7 +34,7 @@ public class PedidoItens{
 	}
 
 
-	public PedidoItens(double valorUnitario, double valorDesconto, Produto produto, Cliente cliente, int idPedidoitem,
+	public PedidoItem(double valorUnitario, double valorDesconto, Produto produto, Cliente cliente, int idPedidoitem,
 			int quantidadeProduto, int idProduto, int idCliente) {
 		super();
 		this.valorUnitario = valorUnitario;
@@ -46,7 +47,7 @@ public class PedidoItens{
 		this.idCliente = idCliente;
 	}
 	
-	public PedidoItens(double valorUnitario, double valorDesconto, int idPedidoitem,
+	public PedidoItem(double valorUnitario, double valorDesconto, int idPedidoitem,
 			int quantidadeProduto, int idProduto, int idCliente) {
 		super();
 		this.valorUnitario = valorUnitario;
@@ -77,13 +78,25 @@ public class PedidoItens{
 	public String toStringAlt() {
 		return  "\nidPedidoitem: " 
 				+ idPedidoitem
-				+ "\nIdCliente: " + idCliente + "\n"
 				+ "\nIdProduto: " + idProduto
 				+ "\nQuantidade pedido: " + quantidadeProduto 
 				+ "\nValor Unitário do Produto: " + Util.converterMonetario(valorUnitario)
 				+ "\nValor Desconto: " + DF.format((1.0 - valorDesconto) * 100) + "%"
 				+ "\n";
 	}
+	
+	public String toStringAlterarPedido() {
+		return  
+			"\n  Valor Desconto: " + DF.format((1.0 - valorDesconto) * 100) + "%"
+			+ "\n  Quantidade pedido: " + quantidadeProduto 
+			+ "\n";
+	}
+	
+	public String toStringSoProduto() {
+		return  "" + produto
+				+ "\n";
+	}
+	
 	
 	public double getValorTotal() {
 		return valorUnitario * quantidadeProduto;
@@ -92,5 +105,10 @@ public class PedidoItens{
 	public double getValorDesconto() {
 		return valorDesconto;
 	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
 
 }

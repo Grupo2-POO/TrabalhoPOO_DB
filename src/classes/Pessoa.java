@@ -35,6 +35,6 @@ public abstract class Pessoa {
 	
 	@Override
 	public String toString() {
-		return "Nome: " + nome + " \nCPF: " + Util.formatarCPF(cpf) + " \nData de nascimento: " + Util.novaDT(data_nascimento);
+		return "Nome:\t\t\t" + nome + " \nCPF:\t\t\t" + Util.formatarCPF(cpf) + "\nData de nascimento:\t" + Util.novaDT(data_nascimento);
 	}
 }

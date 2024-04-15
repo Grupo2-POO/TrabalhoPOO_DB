@@ -8,27 +8,29 @@ import java.util.Scanner;
 
 import classes.Cliente;
 import classes.Pedido;
-import classes.PedidoItens;
+import classes.PedidoItem;
 import classes.Produto;
+import database.ClienteDB;
 import database.PedidoDB;
-import database.PedidoItensDB;
+import database.PedidoItemDB;
 import database.ProdutoDB;
 import util.Util;
 
 public final class MenuPedido extends NossoMenu {
 	
-	PedidoItensDB pedidoItensDB;
+	PedidoItemDB pedidoItensDB;
 	PedidoDB pedidoDB;
 	ProdutoDB produtoDB;
-	
+	private ClienteDB clienteDB;
 	ArrayList<Produto> produtosPedido; 
 
 	public MenuPedido(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		// TODO Auto-generated constructor stub
-		pedidoItensDB = new PedidoItensDB();
+		pedidoItensDB = new PedidoItemDB();
 		pedidoDB = new PedidoDB();
 		produtoDB = new ProdutoDB();
+		clienteDB = new ClienteDB();
 		produtosPedido = new ArrayList<>();
 	}
 
@@ -67,10 +69,9 @@ public final class MenuPedido extends NossoMenu {
 	
 	private void alterarPedidos() {
 		
-		mostrarPedidos();
+		mostrarPedidos(true);
 		
 		MenuBuscarPedido menuBuscarPedido= new MenuBuscarPedido(ConstantesMenu.menuAlterarPedido, scanner);
-		
 		
 		menuBuscarPedido.executarMenu();
 		
@@ -84,12 +85,7 @@ public final class MenuPedido extends NossoMenu {
 					+ "\n 3 - Cliente");
 			System.out.println(pedidoAlterar.toString());
 			
-			
-			Pedido novoPedido = new Pedido();
-			
 		}
-		
-		
 		
 		int continuarAlterando = 0;
 		while(continuarAlterando < 1 || continuarAlterando > 2) {
@@ -101,15 +97,44 @@ public final class MenuPedido extends NossoMenu {
 		}
 	}
 	
-	private void mostrarPedidos() {
-//		ArrayList<PedidoItens> relacaoPedidoItem = pedidoItensDB.buscarTodos();
-//		for(PedidoItens relacao : relacaoPedidoItem) {
-//			System.out.println(relacao.toString());
-//		}
-//		
-		ArrayList<Pedido> relacaoPedido = pedidoDB.buscarTodos();
-		for(Pedido relacao : relacaoPedido) {
-			System.out.println(relacao.toStringAll());
+	private void mostrarPedidos(boolean mostrarProdutos) {
+
+		ArrayList<Pedido> relacaoPedido = pedidoDB.buscarTodosPedidos();
+		
+		for(Pedido pedido : relacaoPedido) {
+			
+			Cliente cliente = clienteDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "cliente");
+			
+			if(cliente == null) {
+				continue;
+			}
+			
+			StringBuilder builder = new StringBuilder();
+			builder.append("\n");
+			builder.append(pedido.toString());
+			builder.append("\n");
+			builder.append("Informações do Cliente:\n");
+			builder.append(cliente.toString());
+			
+			
+			if(mostrarProdutos) {
+				builder.append("\n\n\nItens do Pedido:\n");
+				
+				ArrayList<PedidoItem> pedidoitem = pedidoItensDB.buscarTodosPor("idpedido", pedido.getIdPedido() + "", "pedidoitens");
+
+				for(PedidoItem item : pedidoitem) {
+					
+					Produto produto = produtoDB.buscarUmPor("idproduto", item.getIdProduto() + "", "produto");
+					builder.append("\n" + produto.toStringAlterarPedido());
+					builder.append("\t" + item.toStringAlterarPedido());
+				}
+			}
+			
+		
+			builder.append("\n==================================================");
+
+			System.out.println(builder.toString());
+
 		}
 	}
 	
@@ -161,22 +186,27 @@ public final class MenuPedido extends NossoMenu {
 	}
 	
 	public void incluirPedido() {
-	   
+		
 		Cliente cliente = incluirCliente();
+
+		int idPedido = pedidoDB.adicionarPedido("");
 		
 		if(NossoMenu.sairMenuDerivado) {
 			return;
 		}
 	    // altera o cliente
+		
 		int opcao = 0;
         while (opcao < 1 || opcao > 2) {
             opcao = Integer.parseInt(Util.askIntegerInput("\nConfirmar cliente?\n1 - SIM\n2 - NÃO", scanner));
         }
         
         if (opcao == 2) {
+        	// pra fazer
+        	// deletar o pedido vazio que foi criado
         	incluirPedido();
         }
-		
+        
 	    boolean maisUM;
 	    do {
 	        // pega o produto selecionado a partir do database
@@ -217,8 +247,6 @@ public final class MenuPedido extends NossoMenu {
 		            
 		            if (quantidade > qtdMaxima) {
 		                System.out.println("Quantidade não pode ser maior que o estoque!");
-		                
-		              
 		            }
 		        }
 		        
@@ -238,7 +266,8 @@ public final class MenuPedido extends NossoMenu {
 		            String.valueOf(produto.getIdProduto()),
 		            String.valueOf(produto.getValorVenda()),
 		            String.valueOf(calcularDesconto(produto.getValorVenda(), quantidade)),
-		            String.valueOf(quantidade)
+		            String.valueOf(quantidade),
+		            String.valueOf(idPedido)
 		        };
 		        
 		        pedidoItensDB.adicionar(dadosPedidoItem);
@@ -252,8 +281,7 @@ public final class MenuPedido extends NossoMenu {
 	        }
 	        
 	        maisUM = (opc == 1);
-	        
-	        
+
 	    } while (maisUM);
 	    
 	    if(produtosPedido.size() > 0) {
@@ -270,7 +298,8 @@ public final class MenuPedido extends NossoMenu {
 		    };
 		    
 		    // adiciona pedido no db
-		    pedidoDB.adicionar(valoresAtributosPedido);
+		    
+		    pedidoDB.atualizarPedido(idPedido, valoresAtributosPedido);
 		    
 		    // Atualiza a quantidade dos produtos (estoque) no db a partir da lista
 		    for (Produto produto : produtosPedido) {

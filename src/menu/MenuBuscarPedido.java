@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 import classes.Cliente;
 import classes.Pedido;
-import classes.PedidoItens;
+import classes.PedidoItem;
 import classes.Produto;
 import database.ClienteDB;
 import database.PedidoDB;
-import database.PedidoItensDB;
+import database.PedidoItemDB;
 import database.ProdutoDB;
 import util.Util;
 
@@ -20,8 +20,8 @@ public class MenuBuscarPedido extends NossoMenu {
 	private ClienteDB clienteDB;
 	private Produto produto;
 	private ProdutoDB produtoDB;
-	private PedidoItens pedidoitens;
-	private PedidoItensDB pedidoitensDB;
+	private PedidoItem pedidoitem;
+	private PedidoItemDB pedidoitemDB;
 	private boolean alterandoPedidos, sair;
 
 	public MenuBuscarPedido(String[] constantes, Scanner scanner) {
@@ -30,7 +30,7 @@ public class MenuBuscarPedido extends NossoMenu {
 		pedidoDB = new PedidoDB();
 		clienteDB = new ClienteDB();
 		produtoDB = new ProdutoDB();
-		pedidoitensDB = new PedidoItensDB();
+		pedidoitemDB = new PedidoItemDB();
 	}
 	
 	@Override
@@ -74,8 +74,9 @@ public class MenuBuscarPedido extends NossoMenu {
 			String cdString = codigo + "";
 			
 			pedido = pedidoDB.buscarUmPor("idpedido", cdString.trim(), "pedido");
-			pedidoitens = pedidoitensDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "pedidoitens");
-			produto = produtoDB.buscarUmPor("idproduto", pedidoitens.getIdProduto() + "", "produto");
+			
+			pedidoitem = pedidoitemDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "pedidoitens");
+			produto = produtoDB.buscarUmPor("idproduto", pedidoitem.getIdProduto() + "", "produto");
 			cliente = clienteDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "cliente");
 			
 			if(pedido != null) {

@@ -8,16 +8,16 @@ import java.util.ArrayList;
 
 import classes.Cliente;
 import classes.Pedido;
-import classes.PedidoItens;
+import classes.PedidoItem;
 import classes.Produto;
 import util.Util;
 
-public class PedidoItensDB implements CRUD<PedidoItens>{
+public class PedidoItemDB implements CRUD<PedidoItem>{
 	
 	@Override
-	public ArrayList<PedidoItens> buscarTodos() {
+	public ArrayList<PedidoItem> buscarTodos() {
 		
-		ArrayList<PedidoItens> relacao = new ArrayList<PedidoItens>();
+		ArrayList<PedidoItem> relacao = new ArrayList<PedidoItem>();
 		
 		String sql = """
 				SELECT 
@@ -72,7 +72,7 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 						
 						);
 
-				PedidoItens pedidoItem = new PedidoItens(
+				PedidoItem pedidoItem = new PedidoItem(
 						 produto.getValorVenda(),
 						 response.getDouble("vldesconto"),
 						 produto,
@@ -93,20 +93,20 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 		return relacao;
 	}
 	
-	
 	@Override
 	public void adicionar(String[] valores) {
 		
 		String sql = String.format(
 				"insert into %s"
-				+ "(idcliente, idproduto, vlunitario, vldesconto, qtproduto) "
-				+ "values('%s','%s', '%s', '%s', '%s');",
+				+ "(idcliente, idproduto, vlunitario, vldesconto, qtproduto, idpedido) "
+				+ "values('%s','%s', '%s', '%s', '%s', '%s');",
 				"pedidoitens",
 				valores[0],
 				valores[1],
 				valores[2],
 				valores[3],
-				valores[4]
+				valores[4],
+				valores[5]
 				);
 		
 //		String sqlAlteracao = String.format("update produto set quantidade = (quantidade - %s) where idproduto = %s;", valores[4], valores[1]);
@@ -165,12 +165,12 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 	}
 	
 	@Override
-	public PedidoItens executarConsultaCompleta(String sql) {
+	public PedidoItem executarConsultaCompleta(String sql) {
 		try (Connection connection = DB.connect()) {
 	        Statement statement = connection.createStatement();
 	        var response = statement.executeQuery(sql);
 	        if (response.next()) {
-	        	PedidoItens pedidoitens = new PedidoItens(
+	        	PedidoItem pedidoitens = new PedidoItem(
 						response.getDouble("vlunitario"),
 						response.getDouble("vldesconto"),
 						response.getInt("idpedidoitem"),
@@ -178,6 +178,7 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 						response.getInt("idproduto"),
 						response.getInt("idcliente")
 						);
+	        	
 	        	
 	        	return pedidoitens;
 	        } else {
@@ -188,6 +189,35 @@ public class PedidoItensDB implements CRUD<PedidoItens>{
 //	        System.err.println(error.getMessage());
 	        return null;
 	    }
+	}
+
+	@Override
+	public ArrayList<PedidoItem> executarConsultaCompletaDeTodos(String sql) {
+		ArrayList<PedidoItem> todos = new ArrayList<PedidoItem>();
+		try (Connection connection = DB.connect()) {
+	        Statement statement = connection.createStatement();
+	        var response = statement.executeQuery(sql);
+
+	        while (response.next()) {
+
+	        	PedidoItem pedidoitens = new PedidoItem(
+						response.getDouble("vlunitario"),
+						response.getDouble("vldesconto"),
+						response.getInt("idpedidoitem"),
+						response.getInt("qtproduto"),
+						response.getInt("idproduto"),
+						response.getInt("idcliente")
+						);
+	        	
+	        	
+	        	todos.add(pedidoitens);
+	        }
+	        
+	    } catch (SQLException error) {
+//	        System.err.println(error.getMessage());
+	        return null;
+	    }
+		return todos;
 	}
 
 

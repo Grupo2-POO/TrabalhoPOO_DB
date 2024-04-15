@@ -11,7 +11,8 @@ public class Pedido {
     private Date dtEntrega;
     private String observacaoPed;
     private int idCliente;
-    private PedidoItens pedidoitens;
+    
+    private PedidoItem pedidoItem;
 
     
     public Pedido(int idPedido, double valorTotal, Date dtEmissao, Date dtEntrega, String observacaoPed, int idCliente) {
@@ -23,7 +24,7 @@ public class Pedido {
         this.idCliente = idCliente;
     }
     
-    public Pedido(int idPedido, double valorTotal, Date dtEmissao, Date dtEntrega, String observacaoPed, PedidoItens pedidoitens) {
+    public Pedido(int idPedido, double valorTotal, Date dtEmissao, Date dtEntrega, String observacaoPed, PedidoItem pedidoitens) {
         this.idPedido = idPedido;
         this.valorTotal = valorTotal;
         this.dtEmissao = dtEmissao;
@@ -35,12 +36,33 @@ public class Pedido {
     public Pedido() {
 		// TODO Auto-generated constructor stub
 	}
+    
+    public Pedido(int idPedido, double valorTotal, Date dtEmissao, Date dtEntrega, String observacaoPed) {
+        this.idPedido = idPedido;
+        this.valorTotal = valorTotal;
+        this.dtEmissao = dtEmissao;
+        this.dtEntrega = dtEntrega;
+        this.observacaoPed = observacaoPed;
+ 
+    }
+
+    
 
 
 	@Override
     public String toString() {
+        return "\nCódigo do Pedido:\t" + idPedido
+                + "\nData de Emissao:\t" + Util.novaDT(dtEmissao)
+                + "\nData de Entrega:\t" + Util.novaDT(dtEntrega)
+                + "\nValor Total:\t\t" + Util.converterMonetario(valorTotal)
+                + "\nObservacao:\t\t" + observacaoPed
+                + "\n";
+
+    }
+	
+    public String toStringAll() {
         return Util.linhaSimples(20) + "\nidPedido: " + idPedido
-                + "\nidCliente: " + idCliente 
+                + "\nPedidoItens:" + pedidoItem
                 + "\nData de Emissao: " + Util.novaDT(dtEmissao)
                 + "\nData entrega: " + Util.novaDT(dtEntrega)
                 + "\nValor total: " + Util.converterMonetario(valorTotal)
@@ -49,16 +71,21 @@ public class Pedido {
                 + Util.linhaSimples(20)
                 + "\n";
     }
-	
-    public String toStringAll() {
+    
+    public String toStringSemPedidoItem() {
         return Util.linhaSimples(20) + "\nidPedido: " + idPedido
-                + "\nPedidoItens:" + pedidoitens
                 + "\nData de Emissao: " + Util.novaDT(dtEmissao)
                 + "\nData entrega: " + Util.novaDT(dtEntrega)
                 + "\nValor total: " + Util.converterMonetario(valorTotal)
                 + "\nObservacao: " + observacaoPed
                 + "\n"
                 + Util.linhaSimples(20)
+                + "\n";
+    }
+    
+    public String toStringSoPedidoItem() {
+        return Util.linhaSimples(20) + pedidoItem.toStringAlterarPedido()
+              
                 + "\n";
     }
 
@@ -107,11 +134,11 @@ public class Pedido {
     	return idCliente;
     }
 
-	public PedidoItens getPedidoitens() {
-		return pedidoitens;
+	public PedidoItem getPedidoitens() {
+		return pedidoItem;
 	}
 
-	public void setPedidoitens(PedidoItens pedidoitens) {
-		this.pedidoitens = pedidoitens;
+	public void setPedidoitens(PedidoItem pedidoitens) {
+		this.pedidoItem = pedidoitens;
 	}
 }
