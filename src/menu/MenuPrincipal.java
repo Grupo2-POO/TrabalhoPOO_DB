@@ -2,6 +2,9 @@ package menu;
 
 import java.util.Scanner;
 
+import classes.Cliente;
+import util.Util;
+
 public class MenuPrincipal extends NossoMenu {
 	// menu principal passa o valor do NossoMenu.sairMenuDerivado para o loop principal
 	// se tiver saido de um menu derivado (que não seja o principal, 
@@ -35,7 +38,30 @@ public class MenuPrincipal extends NossoMenu {
 	}
 	
 	private static void menuCliente() {
+		MenuBuscarCliente buscarCliente = new MenuBuscarCliente(
+				ConstantesMenu.menuBuscarCliente, scanner);
+
+		buscarCliente.executarMenu();
 		
+		Cliente cliente = buscarCliente.getCliente();
+		
+		while (cliente == null) {
+			
+			cliente = buscarCliente.getCliente();
+			if(NossoMenu.sairMenuDerivado) {
+				return;
+			}
+			if(cliente == null) {
+				Util.printMessage("\nCliente não encontrado! Tente de novo!");
+				buscarCliente.executarMenu();
+			}
+		} 
+		
+		Util.printMessage(
+				"-----------------------------------------\n" +
+				"Cliente encontrado: "
+				);
+		System.out.println(cliente.toString());
 	}
 	
 	private static void menuProduto() {

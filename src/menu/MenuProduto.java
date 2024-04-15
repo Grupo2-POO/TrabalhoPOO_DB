@@ -32,7 +32,8 @@ public final class MenuProduto extends NossoMenu {
 		MenuBuscarProduto buscarProduto = new MenuBuscarProduto(
 				ConstantesMenu.menuBuscarProduto, scanner);
 
-		buscarProduto.executarMenu();
+		buscarProduto.buscaPorCodigo();
+
 	}
 
 }
