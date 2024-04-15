@@ -43,7 +43,7 @@ public class MenuBuscarProduto extends NossoMenu {
 		
 	}
 	
-	private void buscaPorCodigo() {
+	public void buscaPorCodigo() {
 		int codigo = -1;
 		while(codigo <= -1) {
 			codigo = Integer.parseInt(Util.askIntegerInput("Informe o Código do Produto:", scanner).trim());

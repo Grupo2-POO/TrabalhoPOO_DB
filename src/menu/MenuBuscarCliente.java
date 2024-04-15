@@ -53,7 +53,7 @@ public final class MenuBuscarCliente extends NossoMenu {
 		cliente = clienteDB.buscarUmPor("nome", nome, "cliente");
 	}
 	
-	private void buscaPorCodigo() {
+	public void buscaPorCodigo() {
 		String codigo = "";
 		while(codigo.length() < 1) {
 			codigo = Util.askIntegerInput("Informe o Código:", scanner).trim();

@@ -1,5 +1,6 @@
 package util;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -187,5 +188,7 @@ public final class Util {
 	    // retorna texto sem os dois últimos caracteres
 	    return texto.substring(0, texto.length() - 2); 
 	}
+	
+	public final static DecimalFormat DF = new DecimalFormat("0");
 	
 }

@@ -15,7 +15,6 @@ public class PedidoItem{
 	int idProduto;
 	int idCliente;
 	
-	final static DecimalFormat DF = new DecimalFormat("0");
 	
 	public void setIdProduto(int idProduto) {
 		this.idProduto = idProduto;
@@ -71,7 +70,7 @@ public class PedidoItem{
 				+ idPedidoitem + cliente + "\n"
 				+ produto + "\nQuantidade pedido: " + quantidadeProduto 
 				+ "\nValor Unitário do Produto: " + Util.converterMonetario(valorUnitario)
-				+ "\nValor Desconto: " + DF.format((1.0 - valorDesconto) * 100) + "%"
+				+ "\nValor Desconto: " + Util.DF.format((1.0 - valorDesconto) * 100) + "%"
 				+ "\n";
 	}
 	
@@ -81,13 +80,13 @@ public class PedidoItem{
 				+ "\nIdProduto: " + idProduto
 				+ "\nQuantidade pedido: " + quantidadeProduto 
 				+ "\nValor Unitário do Produto: " + Util.converterMonetario(valorUnitario)
-				+ "\nValor Desconto: " + DF.format((1.0 - valorDesconto) * 100) + "%"
+				+ "\nValor Desconto: " + Util.DF.format((1.0 - valorDesconto) * 100) + "%"
 				+ "\n";
 	}
 	
 	public String toStringAlterarPedido() {
 		return  
-			"\n  Valor Desconto: " + DF.format((1.0 - valorDesconto) * 100) + "%"
+			"\n  Valor Desconto: " + Util.DF.format((1.0 - valorDesconto) * 100) + "%"
 			+ "\n  Quantidade pedido: " + quantidadeProduto 
 			+ "\n";
 	}

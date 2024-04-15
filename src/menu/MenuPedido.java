@@ -42,8 +42,9 @@ public final class MenuPedido extends NossoMenu {
 		switch (opcao) {
 
 		case 1: cadastraPedidos(); break;
-		case 2: Util.printMessage("Consulta de pedidos vai rolar aqui"); break;
-		case 3: alterarPedidos(); break; 
+		
+		case 2: consultaPedidos();
+		case 3: alterarPedidos();
 		case 4: {
 				// passar uma flag para o menu principal
 				NossoMenu.sairMenuDerivado = true;
@@ -70,12 +71,12 @@ public final class MenuPedido extends NossoMenu {
 		}
 	}
 	
-	private void alterarPedidos() {
-		
+	
+	private void consultaPedidos() {
 		int opcImprimir = 0;
 		while(opcImprimir < 1 || opcImprimir > 3) {
 			opcImprimir = Integer.parseInt(Util.askIntegerInput("\nComo deseja visualizar os pedidos?\n1 - Pedido + Cliente\n2 - Pedido + Cliente + Produtos?\n3 - Voltar ao Menu", scanner));
-
+	
 		}
 		
 		boolean mostrarProdutos = opcImprimir == 2;
@@ -86,6 +87,11 @@ public final class MenuPedido extends NossoMenu {
 			NossoMenu.sairMenuDerivado = true;
 			return;
 		}
+		
+	}
+	
+	private void alterarPedidos() {
+		
 		
 		MenuBuscarPedido menuBuscarPedido= new MenuBuscarPedido(ConstantesMenu.menuAlterarPedido, scanner);
 		
@@ -591,5 +597,28 @@ public final class MenuPedido extends NossoMenu {
 		
 		return observacao;
 	}
- 
+	
+	private void mostrarMenuCLiente() {
+		int opcImprimir = 0;
+		while(opcImprimir < 1 || opcImprimir > 3) {
+			opcImprimir = Integer.parseInt(Util.askIntegerInput("\nComo deseja visualizar os pedidos?\n1 - Pedido + Cliente\n2 "
+										+ "- Pedido + Cliente + Produtos?\n3 - Voltar ao Menu", scanner));
+
+		}
+		
+		boolean mostrarProdutos = opcImprimir == 2;
+		
+		boolean temPedidos = mostrarPedidos(mostrarProdutos);
+		
+		if(!temPedidos) {
+			NossoMenu.sairMenuDerivado = true;
+			return;
+		}
+		
+		MenuBuscarPedido menuBuscarPedido= new MenuBuscarPedido(ConstantesMenu.menuAlterarPedido, scanner);
+		
+		menuBuscarPedido.executarMenu();
+		
+		Pedido pedidoAlterar = menuBuscarPedido.getPedido();
+	}
 }
