@@ -9,6 +9,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+./db.properties
+./confirmainicio
 
 # External tool builders
 .externalToolBuilders/
