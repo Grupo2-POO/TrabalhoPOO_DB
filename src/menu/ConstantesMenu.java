@@ -46,7 +46,7 @@ public final class ConstantesMenu {
 	};
 	
 	public static final String[] menuBuscarProduto = {
-			"\n\t- == ESTE É O PRODUTO QUE DESEJA INCLUIR NO PEDIDO? == -",
+			"\n\t- == ESTE É O PRODUTO QUE DESEJA? == -",
 			"  ° Escolha uma opção: \t \n",
 			" 1- Sim\t\n",
 			" 2- Não - Informe outro\t\n"

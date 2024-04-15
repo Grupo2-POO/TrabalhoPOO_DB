@@ -1,5 +1,6 @@
 package menu;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import classes.Cliente;
@@ -16,12 +17,9 @@ public class MenuBuscarPedido extends NossoMenu {
 	
 	private Pedido pedido;
 	private PedidoDB pedidoDB;
-	private Cliente cliente;
 	private ClienteDB clienteDB;
-	private Produto produto;
 	private ProdutoDB produtoDB;
-	private PedidoItem pedidoitem;
-	private PedidoItemDB pedidoitemDB;
+	PedidoItemDB pedidoItensDB;
 	private boolean alterandoPedidos, sair;
 
 	public MenuBuscarPedido(String[] constantes, Scanner scanner) {
@@ -30,7 +28,7 @@ public class MenuBuscarPedido extends NossoMenu {
 		pedidoDB = new PedidoDB();
 		clienteDB = new ClienteDB();
 		produtoDB = new ProdutoDB();
-		pedidoitemDB = new PedidoItemDB();
+		pedidoItensDB = new PedidoItemDB();
 	}
 	
 	@Override
@@ -75,12 +73,16 @@ public class MenuBuscarPedido extends NossoMenu {
 			
 			pedido = pedidoDB.buscarUmPor("idpedido", cdString.trim(), "pedido");
 			
-			pedidoitem = pedidoitemDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "pedidoitens");
-			produto = produtoDB.buscarUmPor("idproduto", pedidoitem.getIdProduto() + "", "produto");
-			cliente = clienteDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "cliente");
-			
 			if(pedido != null) {
-				System.out.println(pedido.toString());
+		
+				int opcImprimir = 0;
+				while(opcImprimir < 1 || opcImprimir > 3) {
+					opcImprimir = Integer.parseInt(Util.askIntegerInput("\nPedido encontrado! Como deseja visualizá-lo?\n1 - Pedido + Cliente\n2 - Pedido + Cliente + Produtos?\n3 - Voltar ao Menu", scanner));
+
+				}
+				boolean mostrarProdutos = opcImprimir == 2;
+				mostrarPedido(pedido, mostrarProdutos);
+				
 			} else {
 				System.out.println("pedido não encontrado!\n");
 			}
@@ -91,6 +93,36 @@ public class MenuBuscarPedido extends NossoMenu {
 
 	public Pedido getPedido() {
 		return pedido;
+	}
+	
+	private void mostrarPedido(Pedido pedido, boolean mostrarProdutos) {
+		
+		Cliente cliente = clienteDB.buscarUmPor("idcliente", pedido.getIdCliente() + "", "cliente");
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
+		builder.append(pedido.toString());
+		builder.append("\n");
+		builder.append("Informações do Cliente:\n");
+		builder.append(cliente.toString());
+		
+		if(mostrarProdutos) {
+			builder.append("\n\n\nItens do Pedido:\n");
+			
+			ArrayList<PedidoItem> pedidoitem = pedidoItensDB.buscarTodosPor("idpedido", pedido.getIdPedido() + "", "pedidoitens");
+
+			for(PedidoItem item : pedidoitem) {
+				
+				Produto produto = produtoDB.buscarUmPor("idproduto", item.getIdProduto() + "", "produto");
+				builder.append("\n" + produto.toStringAlterarPedido());
+				builder.append("\t" + item.toStringAlterarPedido());
+			}
+		}
+		
+		builder.append("\n==================================================");
+
+		System.out.println(builder.toString());
+		
 	}
 
 }
