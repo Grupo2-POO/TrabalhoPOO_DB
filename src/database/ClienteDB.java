@@ -77,6 +77,12 @@ public class ClienteDB implements CRUD<Cliente> {
 		
 	}
 
+	@Override
+	public ArrayList<Cliente> executarConsultaCompletaDeTodos(String sql) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 	

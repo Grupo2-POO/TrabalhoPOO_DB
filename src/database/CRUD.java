@@ -36,6 +36,20 @@ public interface CRUD <T> {
 		
 	}
 	
+	public default ArrayList<T> buscarTodosPor(String nomeAtributo, String valorAtributo, String nomeTabela) {
+		
+		String sql = String.format("SELECT * FROM %s WHERE %s='%s'", 
+				nomeTabela,
+				nomeAtributo,
+				valorAtributo);
+		
+		
+		return executarConsultaCompletaDeTodos(sql);
+		
+	}
+	
+	public ArrayList<T> executarConsultaCompletaDeTodos(String sql);
+
 	public T executarConsultaCompleta(String sql);
 	
 	public void deletar();

@@ -98,5 +98,11 @@ public class ProdutoDB implements CRUD<Produto> {
 		}
 	}
 
+	@Override
+	public ArrayList<Produto> executarConsultaCompletaDeTodos(String sql) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

@@ -21,7 +21,7 @@ public class Cliente extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "\nidCliente: " + idCliente + "\n\n" + super.toString() + "\n\nEndereco: " + endereco + " \nContato: " + telefone;
+		return "\nCódigo do Cliente:\t" + idCliente + "\n" + super.toString() + "\n\nEndereco:" + endereco + " \nContato:" + telefone;
 	}
 	
 

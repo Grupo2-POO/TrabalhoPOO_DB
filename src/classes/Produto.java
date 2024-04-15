@@ -41,6 +41,18 @@ public class Produto {
                 + "\nCategoria: " + categoria + "\n";
     }
     
+    public String toStringAlterarPedido() {
+        return  "  >> " + descricao
+        		+ "\n  Categoria: " + categoria + "\n"
+        		+ "\n  Código do Produto: " 
+                + idProduto 
+                + "\n" 
+                + "  Valor do Produto: " + Util.converterMonetario(valorVenda);
+                
+    }
+    
+    
+    
     public String toStringQuantidadePedido() {
     	// Largura fixa para a descrição, 
     	// parece funcionar com a maioria dos produtos
