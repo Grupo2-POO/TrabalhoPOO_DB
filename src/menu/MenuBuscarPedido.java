@@ -7,28 +7,28 @@ import classes.Cliente;
 import classes.Pedido;
 import classes.PedidoItem;
 import classes.Produto;
-import database.ClienteDB;
-import database.PedidoDB;
-import database.PedidoItemDB;
-import database.ProdutoDB;
+import database.ClienteDAO;
+import database.PedidoDAO;
+import database.PedidoItemDAO;
+import database.ProdutoDAO;
 import util.Util;
 
 public class MenuBuscarPedido extends NossoMenu {
 	
 	private Pedido pedido;
-	private PedidoDB pedidoDB;
-	private ClienteDB clienteDB;
-	private ProdutoDB produtoDB;
-	PedidoItemDB pedidoItensDB;
+	private PedidoDAO pedidoDB;
+	private ClienteDAO clienteDB;
+	private ProdutoDAO produtoDB;
+	PedidoItemDAO pedidoItensDB;
 	private boolean alterandoPedidos, sair;
 
 	public MenuBuscarPedido(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		
-		pedidoDB = new PedidoDB();
-		clienteDB = new ClienteDB();
-		produtoDB = new ProdutoDB();
-		pedidoItensDB = new PedidoItemDB();
+		pedidoDB = new PedidoDAO();
+		clienteDB = new ClienteDAO();
+		produtoDB = new ProdutoDAO();
+		pedidoItensDB = new PedidoItemDAO();
 	}
 	
 	@Override

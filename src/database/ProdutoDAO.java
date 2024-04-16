@@ -9,7 +9,7 @@ import classes.Cliente;
 import classes.Produto;
 import util.Util;
 
-public class ProdutoDB implements CRUD<Produto> {
+public class ProdutoDAO implements CRUD<Produto> {
 	
 	@Override
 	public ArrayList<Produto> buscarTodos() {
@@ -17,7 +17,7 @@ public class ProdutoDB implements CRUD<Produto> {
 		
 		ArrayList<Produto> produtos = new ArrayList<Produto>();
 	
-		try (Connection connection = DB.connect()) {
+		try (Connection connection = DAO.connect()) {
 			Statement statement = connection.createStatement();
 			// O var eh utilizado para declarar uma variavel sem precisar explicitar o tipo, normalmente utilizado dentro de funcoes de forma encapsulada
 			var response = statement.executeQuery(sql);
@@ -44,7 +44,7 @@ public class ProdutoDB implements CRUD<Produto> {
 	@Override
 	public Produto executarConsultaCompleta(String sql) {
 
-		try (Connection connection = DB.connect()) {
+		try (Connection connection = DAO.connect()) {
 	        Statement statement = connection.createStatement();
 	        var response = statement.executeQuery(sql);
 	        if (response.next()) {
@@ -90,7 +90,7 @@ public class ProdutoDB implements CRUD<Produto> {
 				"update produto set quantidade = %s where idproduto = %s;"
 				,qtProduto, idProduto);
 		
-		try(var conn = DB.connect()){
+		try(var conn = DAO.connect()){
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(sqlAlteracao);
 		} catch(SQLException e) {

@@ -13,7 +13,7 @@ import classes.PedidoItem;
 import classes.Produto;
 import util.Util;
 
-public class PedidoItemDB implements CRUD<PedidoItem>{
+public class PedidoItemDAO implements CRUD<PedidoItem>{
 	
 	@Override
 	public ArrayList<PedidoItem> buscarTodos() {
@@ -46,7 +46,7 @@ public class PedidoItemDB implements CRUD<PedidoItem>{
 				    public.cliente c ON pi.idcliente = c.idcliente;
 	
 				""";
-		try(var conn = DB.connect()){
+		try(var conn = DAO.connect()){
 			Statement statement = conn.createStatement();
 			
 			var response = statement.executeQuery(sql);
@@ -99,8 +99,9 @@ public class PedidoItemDB implements CRUD<PedidoItem>{
 	    String sql = "INSERT INTO pedidoitens (idcliente, idproduto, vlunitario, vldesconto, qtproduto, idpedido) " +
 	                 "VALUES (?, ?, ?, ?, ?, ?)";
 	    
-	    try (var conn = DB.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-	        preparedStatement.setInt(1, Integer.parseInt(valores[0]));
+	    try (var conn = DAO.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        
+	    	preparedStatement.setInt(1, Integer.parseInt(valores[0]));
 	        preparedStatement.setInt(2, Integer.parseInt(valores[1]));
 	        preparedStatement.setDouble(3, Double.parseDouble(valores[2]));
 	        preparedStatement.setDouble(4, Double.parseDouble(valores[3]));
@@ -129,7 +130,7 @@ public class PedidoItemDB implements CRUD<PedidoItem>{
 		
 		String sqlAlteracao = String.format("update produto set quantidade = (quantidade - %s) where idproduto = %s;", valores[4], valores[1]);
 		
-		try(var conn = DB.connect()){
+		try(var conn = DAO.connect()){
 			
 			Statement statement = conn.createStatement();
 			
@@ -161,7 +162,7 @@ public class PedidoItemDB implements CRUD<PedidoItem>{
 	public void atualizarIdClientePedidoItens(int idPedido, int novoIdCliente) {
 	    String sql = "UPDATE pedidoitens SET idcliente = ? WHERE idpedido = ?";
 	    
-	    try (var conn = DB.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	    try (var conn = DAO.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 	        preparedStatement.setInt(1, novoIdCliente);
 	        preparedStatement.setInt(2, idPedido);
 	        
@@ -181,7 +182,7 @@ public class PedidoItemDB implements CRUD<PedidoItem>{
 	public void deletarPedidoItens(int idpedido) {
 	    String sql = "DELETE FROM pedidoitens WHERE idpedido = ?";
 	    
-	    try (var conn = DB.connect()) {
+	    try (var conn = DAO.connect()) {
 	        PreparedStatement preparedStatement = conn.prepareStatement(sql);
 	        preparedStatement.setInt(1, idpedido);
 	     
@@ -201,7 +202,7 @@ public class PedidoItemDB implements CRUD<PedidoItem>{
 	public void deletarPedidoItens(int idpedido, int idproduto) {
 	    String sql = "DELETE FROM pedidoitens WHERE idpedido = ? AND idproduto = ?";
 	    
-	    try (var conn = DB.connect()) {
+	    try (var conn = DAO.connect()) {
 	        PreparedStatement preparedStatement = conn.prepareStatement(sql);
 	        preparedStatement.setInt(1, idpedido);
 	        preparedStatement.setInt(2, idproduto);
@@ -220,7 +221,7 @@ public class PedidoItemDB implements CRUD<PedidoItem>{
 	
 	@Override
 	public PedidoItem executarConsultaCompleta(String sql) {
-		try (Connection connection = DB.connect()) {
+		try (Connection connection = DAO.connect()) {
 	        Statement statement = connection.createStatement();
 	        var response = statement.executeQuery(sql);
 	        if (response.next()) {
@@ -248,7 +249,7 @@ public class PedidoItemDB implements CRUD<PedidoItem>{
 	@Override
 	public ArrayList<PedidoItem> executarConsultaCompletaDeTodos(String sql) {
 		ArrayList<PedidoItem> todos = new ArrayList<PedidoItem>();
-		try (Connection connection = DB.connect()) {
+		try (Connection connection = DAO.connect()) {
 	        Statement statement = connection.createStatement();
 	        var response = statement.executeQuery(sql);
 

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import classes.Cliente;
 import classes.Pedido;
-import database.ClienteDB;
+import database.ClienteDAO;
 
 public class MenuPrincipal extends NossoMenu {
 	// menu principal passa o valor do NossoMenu.sairMenuDerivado para o loop principal

@@ -3,17 +3,17 @@ package menu;
 import java.util.Scanner;
 
 import classes.Cliente;
-import database.ClienteDB;
+import database.ClienteDAO;
 import util.Util;
 
 public final class MenuBuscarCliente extends NossoMenu {
 	
 	private Cliente cliente;
-	private ClienteDB clienteDB;
+	private ClienteDAO clienteDB;
 
 	public MenuBuscarCliente(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
-		clienteDB = new ClienteDB();
+		clienteDB = new ClienteDAO();
 	}
 
 	@Override

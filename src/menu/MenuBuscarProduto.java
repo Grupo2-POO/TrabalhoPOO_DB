@@ -2,20 +2,20 @@ package menu;
 
 import java.util.Scanner;
 import classes.Produto;
-import database.ProdutoDB;
+import database.ProdutoDAO;
 import util.Util;
 
 public class MenuBuscarProduto extends NossoMenu {
 	
 	private Produto produto;
-	private ProdutoDB produtoDB;
+	private ProdutoDAO produtoDB;
 	private boolean selecionandoProdutos, sair;
 
 	public MenuBuscarProduto(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		// TODO Auto-generated constructor stub
 		
-		produtoDB = new ProdutoDB();
+		produtoDB = new ProdutoDAO();
 	}
 	
 	@Override

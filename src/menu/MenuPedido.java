@@ -10,18 +10,18 @@ import classes.Cliente;
 import classes.Pedido;
 import classes.PedidoItem;
 import classes.Produto;
-import database.ClienteDB;
-import database.PedidoDB;
-import database.PedidoItemDB;
-import database.ProdutoDB;
+import database.ClienteDAO;
+import database.PedidoDAO;
+import database.PedidoItemDAO;
+import database.ProdutoDAO;
 import util.Util;
 
 public final class MenuPedido extends NossoMenu {
 	
-	PedidoItemDB pedidoItensDB;
-	PedidoDB pedidoDB;
-	ProdutoDB produtoDB;
-	private ClienteDB clienteDB;
+	PedidoItemDAO pedidoItensDB;
+	PedidoDAO pedidoDB;
+	ProdutoDAO produtoDB;
+	private ClienteDAO clienteDB;
 	
 	ArrayList<Produto> produtosPedido; 
 	
@@ -30,10 +30,10 @@ public final class MenuPedido extends NossoMenu {
 	public MenuPedido(String[] constantes, Scanner scanner) {
 		super(constantes, scanner);
 		// TODO Auto-generated constructor stub
-		pedidoItensDB = new PedidoItemDB();
-		pedidoDB = new PedidoDB();
-		produtoDB = new ProdutoDB();
-		clienteDB = new ClienteDB();
+		pedidoItensDB = new PedidoItemDAO();
+		pedidoDB = new PedidoDAO();
+		produtoDB = new ProdutoDAO();
+		clienteDB = new ClienteDAO();
 		produtosPedido = new ArrayList<>();
 	}
 

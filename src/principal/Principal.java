@@ -3,7 +3,7 @@ package principal;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
-import database.DB;
+import database.DAO;
 import filemanager.FileManager;
 import util.Util;
 import menu.ConstantesMenu;
@@ -57,7 +57,7 @@ public class Principal {
 	
 	public static boolean conectarAoDatabase() {
 		
-		try (var connection = DB.connect()) {
+		try (var connection = DAO.connect()) {
 			
 			System.out.println("Conectado ao PostgreSQL database com sucesso!");
 			

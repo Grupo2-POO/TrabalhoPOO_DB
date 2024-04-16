@@ -12,7 +12,7 @@ import classes.Pedido;
 import classes.PedidoItem;
 import classes.Produto;
 
-public class PedidoDB implements CRUD<Pedido>{
+public class PedidoDAO implements CRUD<Pedido>{
 		
 	@Override
 	public ArrayList<Pedido> buscarTodos() {
@@ -52,7 +52,7 @@ public class PedidoDB implements CRUD<Pedido>{
 				""";
 		
 		
-		try (Connection connection = DB.connect()) {
+		try (Connection connection = DAO.connect()) {
 			Statement statement = connection.createStatement();
 			var response = statement.executeQuery(sql);
 			while (response.next()) {
@@ -107,7 +107,7 @@ public class PedidoDB implements CRUD<Pedido>{
 	public ArrayList<Pedido> buscarTodosPedidos() {
 		ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 		String sql = "SELECT * FROM pedido";
-		try (Connection connection = DB.connect()) {
+		try (Connection connection = DAO.connect()) {
 			Statement statement = connection.createStatement();
 			// O var eh utilizado para declarar uma variavel sem precisar explicitar o tipo, normalmente utilizado dentro de funcoes de forma encapsulada
 			var response = statement.executeQuery(sql);
@@ -151,7 +151,7 @@ public class PedidoDB implements CRUD<Pedido>{
 				valores[1],
 				valores[2]
 				);
-		try(var conn = DB.connect()){
+		try(var conn = DAO.connect()){
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(sql);
 		} catch(SQLException e) {
@@ -167,7 +167,7 @@ public class PedidoDB implements CRUD<Pedido>{
 		String sql = String.format("insert into public.pedido (idpedidoitem, observacao) "
 				+ "values ('%d', '%s')", idpedidoitem, observacao);
 		
-		try(var conn = DB.connect()){
+		try(var conn = DAO.connect()){
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(sql);
 		} catch(SQLException e) {
@@ -178,7 +178,7 @@ public class PedidoDB implements CRUD<Pedido>{
 	public void atualizarObservacaoPedido(int idpedido, String novaObservacao) {
 	    String sql = "UPDATE public.pedido SET observacao = ? WHERE idpedido = ?";
 	    
-	    try (var conn = DB.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	    try (var conn = DAO.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 	        preparedStatement.setString(1, novaObservacao);
 	        preparedStatement.setInt(2, idpedido);
 	        
@@ -197,7 +197,7 @@ public class PedidoDB implements CRUD<Pedido>{
 	public void atualizarIdClientePedido(int idPedido, int novoIdCliente) {
 	    String sql = "UPDATE public.pedido SET idcliente = ? WHERE idpedido = ?";
 	    
-	    try (var conn = DB.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	    try (var conn = DAO.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 	        preparedStatement.setInt(1, novoIdCliente);
 	        preparedStatement.setInt(2, idPedido);
 	        
@@ -227,7 +227,7 @@ public class PedidoDB implements CRUD<Pedido>{
 	    		valores[1],
 	    		idpedido);
 		
-		try(var conn = DB.connect()){
+		try(var conn = DAO.connect()){
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(sql);
 		} catch(SQLException e) {
@@ -240,7 +240,7 @@ public class PedidoDB implements CRUD<Pedido>{
 			String sql = String.format("insert into public.pedido (observacao) "
 					+ "values ('%s')", observacao);
 			
-			try(var conn = DB.connect()){
+			try(var conn = DAO.connect()){
 				var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 				int resposta = preparedStatement.executeUpdate();
@@ -261,7 +261,7 @@ public class PedidoDB implements CRUD<Pedido>{
 	@Override
 	public Pedido executarConsultaCompleta(String sql) {
 		Pedido pedido = new Pedido();
-		try (Connection connection = DB.connect()) {
+		try (Connection connection = DAO.connect()) {
 	        Statement statement = connection.createStatement();
 	        var response = statement.executeQuery(sql);
 	        if (response.next()) {
@@ -289,7 +289,7 @@ public class PedidoDB implements CRUD<Pedido>{
 	public void excluirPedidoPorId(int idPedido) {
 	    String sql = "DELETE FROM public.pedido WHERE idpedido = ?";
 	    
-	    try (var conn = DB.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	    try (var conn = DAO.connect(); PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 	        preparedStatement.setInt(1, idPedido);
 	        
 	        int rowsAffected = preparedStatement.executeUpdate();
@@ -314,7 +314,7 @@ public class PedidoDB implements CRUD<Pedido>{
 	    sql += "OR dtemissao IS NULL ";
 	    sql += "OR dtentrega IS NULL ";
 	    
-	    try (var conn = DB.connect()){
+	    try (var conn = DAO.connect()){
 	        Statement statement = conn.createStatement();
 	        int rowsAffected = statement.executeUpdate(sql);
 	        
